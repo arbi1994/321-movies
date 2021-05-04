@@ -1,0 +1,19 @@
+{
+  "name": "321-movies_local",
+  "version": "1.0.0",
+  "description": "a website where you can find all the info about worldwide movies",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arbi1994/321-movies.git"
+  },
+  "author": "Arber Shyti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arbi1994/321-movies/issues"
+  },
+  "homepage": "https://github.com/arbi1994/321-movies#readme"
+}
