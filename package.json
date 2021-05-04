@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/arbi1994/321-movies/issues"
   },
-  "homepage": "https://github.com/arbi1994/321-movies#readme"
+  "homepage": "https://github.com/arbi1994/321-movies#readme",
+  "devDependencies": {
+    "sass": "^1.32.12"
+  }
 }
