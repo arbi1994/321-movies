@@ -1,0 +1,52 @@
+@use "./buttons";
+@use "./burger-menu";
+@use "../abstracts" as *;
+
+@include media("<=phone") {
+  .navbar {
+    //@include flex(row, space-between, center);
+    @include grid(4);
+    min-height: 10vh;
+    padding: 1rem 0;
+
+    &__left {
+      grid-column: 2/3;
+      @include flex(column, center, auto);
+    }
+
+    &__logo{
+        width: 100%;
+        height: 100%;
+        @include flex(row, center, center);
+        svg{
+            width: 7.8rem;
+            height: 4.8rem;
+        }
+    }
+
+    &__right {
+      grid-column: 4/6;
+      @include flex(row, space-between, center);
+    }
+
+    &__menu {
+      display: none;
+    }
+
+    &__subscribe {
+      input {
+        display: none;
+      }
+    }
+
+    &__burger{
+        width: 100%;
+        height: 100%;
+        @include flex(row, center, center);
+        img{
+            width: 2.5rem;
+            height: 1.5rem;
+        }
+    }
+  }
+}

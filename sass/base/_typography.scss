@@ -1,0 +1,28 @@
+@use "../abstracts" as *;
+@use "./font-face" as *;
+
+h1,
+h2,
+h3,
+h4,
+a,
+p {
+  font-family: $font;
+  color: $text;
+}
+
+$font-sizes: (
+  h1: clamp(4rem , 5vw, 7.2rem),
+  h2: clamp(3rem, 5vw, 5.6rem),
+  h3: clamp(2.8rem, 5vw, 3.6rem),
+  h4: clamp(2rem, 1.5vw, 2.4rem),
+  h5: 1.8rem,
+  a: auto,
+  p: 1.8rem,
+);
+
+@each $tag, $size in $font-sizes {
+    #{$tag}{
+        font-size: $size;
+    }
+}

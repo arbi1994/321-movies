@@ -1,0 +1,11 @@
+@use "../base/index";
+@use "../abstracts/" as *;
+
+.navbar__button {
+  border: none;
+  width: 10rem;
+  height: 4rem;
+  border-radius: 10px;
+  color: $text;
+  background: linear-gradient(180deg, $search-1, $search-2);
+}
