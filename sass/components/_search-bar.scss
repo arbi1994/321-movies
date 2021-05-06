@@ -1,0 +1,75 @@
+@use "../abstracts" as *;
+
+.menu__search {
+  //border: 1px solid white;
+  width: 31.4rem;
+  height: 22rem;
+  @include flex(column, flex-start, center);
+  margin-top: 5rem;
+}
+
+.search__header {
+  //border: 1px solid white;
+  width: 100%;
+  height: 11.6rem;
+  @include flex(column, center, center);
+
+  .search__title {
+    line-height: 2.5rem;
+    color: $text;
+    letter-spacing: 0.5px;
+    span {
+      @include flex(row, center, center);
+    }
+  }
+}
+
+.search__container {
+  //border: 1px solid white;
+  width: 100%;
+  height: 11rem;
+  @include flex(column, flex-start, center);
+
+  .search__bar {
+    //border: 1px solid white;
+    height: 3.9rem;
+    @include flex(row, center, center);
+    position: relative;
+    &:hover {
+      .search__underline {
+        display: block;
+      }
+      .fa-play {
+        display: flex;
+      }
+    }
+
+    i {
+      font-size: 1.4rem;
+      color: $text;
+    }
+    input {
+      border: none;
+      width: 20rem;
+      background: transparent;
+      color: $text;
+      padding-left: 1rem;
+      font-size: 1.6rem;
+      outline-style: none;
+    }
+    .fa-play {
+      display: none;
+    }
+
+    .search__underline {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      margin-top: 17px;
+      background: $text;
+      border-bottom: 1px solid $text;
+      display: none;
+    }
+  }
+}

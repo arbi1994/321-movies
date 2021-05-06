@@ -1,17 +1,28 @@
 @use "../abstracts/" as *;
 
-.hero{
-    min-height: 80vh;
-    @include flex(column, center, center);
+.hero {
+  min-height: 80vh;
+  @include flex(column, center, center);
 
-    &__container{
-        text-align: center;
+  &__container {
+    text-align: center;
 
-        h2{
-            padding: 1rem 0;
-        }
-        h1{
-            padding: 0 0 2rem 0;
-        }
+    h2 {
+      padding: 1rem 0;
     }
+    h1 {
+      padding: 0 0 2rem 0;
+    }
+  }
+  .hero__title {
+    letter-spacing: 1.5px;
+  }
+  .hero__title--main {
+    background: linear-gradient($deg1, $search-1, $search-2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+  }
 }

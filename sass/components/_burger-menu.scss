@@ -1,0 +1,71 @@
+@use "./buttons";
+@use "../abstracts" as *;
+
+$minHeight: 100vh;
+
+.navbar__menu--mobile {
+  @include flex(column, flex-start, center);
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100vw;
+  min-height: $minHeight;
+  background: linear-gradient(
+    135deg,
+    $background-1,
+    $background-2,
+    $background-1
+  );
+  z-index: 1;
+
+  transform: translateX(0);
+  transition: all 0.5s ease;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .menu--mobile__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+  }
+
+  .menu__list {
+    //border: 1px solid white;
+    width: 31.4rem;
+    min-height: 30.3rem;
+    margin-top: 8rem;
+    @include flex(column, space-around, center);
+
+    .list__item {
+      text-align: center;
+
+      a {
+        font-size: 2.2rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: $text;
+        letter-spacing: 1.5px;
+        &:hover {
+          background: linear-gradient($deg1, $search-1, $search-2);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          -moz-background-clip: text;
+          -moz-text-fill-color: transparent;
+        }
+      }
+    }
+  }
+}
+.navbar__menu--mobile.open {
+  transform: translateX(-100%);
+}

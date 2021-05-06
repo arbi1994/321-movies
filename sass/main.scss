@@ -2,7 +2,7 @@
 @use "pages";
 @use "components";
 @use "base";
-@use "abstracts/colors" as *;
+@use "abstracts" as *;
 
 :root {
   font-size: 62.5%;
@@ -13,6 +13,12 @@
   padding: 0;
 }
 body {
-  background: linear-gradient(135deg, $background-1, $background-2, $background-1);
+  background: linear-gradient(
+    135deg,
+    $background-1,
+    $background-2,
+    $background-1
+  );
   overflow-x: hidden;
+  position: relative;
 }

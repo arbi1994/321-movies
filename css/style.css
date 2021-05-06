@@ -1,12 +1,46 @@
+header {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 /**
 *
 * Testing
 *
 **/
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hero__container {
+  text-align: center;
+}
+.hero__container h2 {
+  padding: 1rem 0;
+}
+.hero__container h1 {
+  padding: 0 0 2rem 0;
+}
+.hero .hero__title {
+  letter-spacing: 1.5px;
+}
+.hero .hero__title--main {
+  background: linear-gradient(180deg, #AAB2FF, #ECA0FF);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
 h1,
 h2,
 h3,
 h4,
+h5,
 a,
 p {
   font-family: "Montserrat", sans-serif;
@@ -48,12 +82,13 @@ p {
   border-radius: 10px;
   color: #F4F0FA;
   background: linear-gradient(180deg, #AAB2FF, #ECA0FF);
+  letter-spacing: 0.5px;
 }
 
-@media (max-width: 415px) {
+@media (max-width: 426px) {
   .navbar {
     display: grid;
-    grid-template-columns: 0em repeat(4, minmax(80px, 1fr)) 0em;
+    grid-template-columns: 0.5em repeat(4, minmax(80px, 1fr)) 0em;
     grid-template-rows: auto;
     min-height: 10vh;
     padding: 1rem 0;
@@ -83,6 +118,7 @@ p {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
   }
   .navbar__menu {
     display: none;
@@ -103,25 +139,145 @@ p {
     height: 1.5rem;
   }
 }
-.hero {
-  min-height: 80vh;
+.menu__search {
+  width: 31.4rem;
+  height: 22rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.search__header {
+  width: 100%;
+  height: 11.6rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.hero__container {
-  text-align: center;
+.search__header .search__title {
+  line-height: 2.5rem;
+  color: #F4F0FA;
+  letter-spacing: 0.5px;
 }
-.hero__container h2 {
-  padding: 1rem 0;
-}
-.hero__container h1 {
-  padding: 0 0 2rem 0;
+.search__header .search__title span {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-header {
+.search__container {
+  width: 100%;
+  height: 11rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.search__container .search__bar {
+  height: 3.9rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.search__container .search__bar:hover .search__underline {
+  display: block;
+}
+.search__container .search__bar:hover .fa-play {
+  display: flex;
+}
+.search__container .search__bar i {
+  font-size: 1.4rem;
+  color: #F4F0FA;
+}
+.search__container .search__bar input {
+  border: none;
+  width: 20rem;
+  background: transparent;
+  color: #F4F0FA;
+  padding-left: 1rem;
+  font-size: 1.6rem;
+  outline-style: none;
+}
+.search__container .search__bar .fa-play {
+  display: none;
+}
+.search__container .search__bar .search__underline {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  margin-top: 17px;
+  background: #F4F0FA;
+  border-bottom: 1px solid #F4F0FA;
+  display: none;
+}
+
+.navbar__menu--mobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100vw;
   min-height: 100vh;
+  background: linear-gradient(135deg, #070014, #10002B, #070014);
+  z-index: 1;
+  transform: translateX(0);
+  transition: all 0.5s ease;
+}
+.navbar__menu--mobile::before {
+  content: "";
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.navbar__menu--mobile .menu--mobile__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+}
+.navbar__menu--mobile .menu__list {
+  width: 31.4rem;
+  min-height: 30.3rem;
+  margin-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.navbar__menu--mobile .menu__list .list__item {
+  text-align: center;
+}
+.navbar__menu--mobile .menu__list .list__item a {
+  font-size: 2.2rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #F4F0FA;
+  letter-spacing: 1.5px;
+}
+.navbar__menu--mobile .menu__list .list__item a:hover {
+  background: linear-gradient(180deg, #AAB2FF, #ECA0FF);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+.navbar__menu--mobile.open {
+  transform: translateX(-100%);
 }
 
 :root {
@@ -137,6 +293,7 @@ header {
 body {
   background: linear-gradient(135deg, #070014, #10002B, #070014);
   overflow-x: hidden;
+  position: relative;
 }
 
 /*# sourceMappingURL=style.css.map */
