@@ -10,25 +10,20 @@ $minHeight: 100vh;
   left: 100%;
   width: 100vw;
   min-height: $minHeight;
-  background: linear-gradient(
-    135deg,
-    $background-1,
-    $background-2,
-    $background-1
-  );
+  background: $background;
   z-index: 1;
 
   transform: translateX(0);
   transition: all 0.5s ease;
 
-  &::before {
-    content: "";
-    width: 100%;
-    height: 50px;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+  // &::before {
+  //   content: "";
+  //   width: 100%;
+  //   height: 50px;
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  // }
 
   .menu--mobile__close {
     position: absolute;
@@ -38,10 +33,9 @@ $minHeight: 100vh;
   }
 
   .menu__list {
-    //border: 1px solid white;
     width: 31.4rem;
     min-height: 30.3rem;
-    margin-top: 8rem;
+    margin-top: 3rem;
     @include flex(column, space-around, center);
 
     .list__item {
@@ -55,7 +49,7 @@ $minHeight: 100vh;
         color: $text;
         letter-spacing: 1.5px;
         &:hover {
-          background: linear-gradient($deg1, $search-1, $search-2);
+          background: $background;
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;

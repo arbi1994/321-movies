@@ -1,51 +1,89 @@
 @use "./buttons";
 @use "../abstracts" as *;
 
-@include media("<=phone") {
-  .navbar {
-    //@include flex(row, space-between, center);
-    @include grid(4);
-    min-height: 10vh;
-    padding: 1rem 0;
+.navbar {
+  @include grid(4);
+  padding: 1rem 0;
+  &__left {
+    grid-column: 2/3;
+    @include flex(column, center, auto);
+  }
 
-    &__left {
-      grid-column: 2/3;
-      @include flex(column, center, auto);
+  &__logo {
+    width: 100%;
+    height: 100%;
+    @include flex(row, center, center);
+    svg {
+      width: 5.8rem;
     }
+  }
+
+  &__right {
+    grid-column: 4/6;
+    @include flex(row, space-between, center);
+    position: relative;
+  }
+
+  &__menu {
+    display: none;
+  }
+
+  &__subscribe {
+    input {
+      display: none;
+    }
+  }
+
+  &__burger {
+    width: 100%;
+    height: 100%;
+    @include flex(row, center, center);
+    img {
+      width: 2.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+@include media("<=tablet", ">phoneL") {
+  .navbar {
+    @include grid(8);
 
     &__logo {
-      width: 100%;
-      height: 100%;
-      @include flex(row, center, center);
       svg {
-        width: 7.8rem;
-        height: 4.8rem;
+        width: 8rem;
+        height: 5rem;
       }
     }
 
     &__right {
-      grid-column: 4/6;
-      @include flex(row, space-between, center);
-      position: relative;
-    }
-
-    &__menu {
-      display: none;
+      grid-column: 6/10;
     }
 
     &__subscribe {
+      width: 100%;
+      height: 100%;
+      @include flex(row, space-between, center);
       input {
-        display: none;
+        display: block;
+        border: none;
+        height: 3rem;
+        width: 18rem;
+        margin-right: 1rem;
+        padding: 1rem;
+        font-size: 1.4rem;
+        border-radius: 10px;
+        background: $input;
+        color: $text;
+        font-weight: 400;
+        letter-spacing: 0.5px;
       }
     }
 
     &__burger {
-      width: 100%;
-      height: 100%;
-      @include flex(row, center, center);
       img {
-        width: 2.5rem;
-        height: 1.5rem;
+        width: 3rem;
+        height: 2rem;
       }
     }
   }

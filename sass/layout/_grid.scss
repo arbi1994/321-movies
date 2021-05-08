@@ -1,0 +1,5 @@
+@use "../abstracts/" as *;
+
+@if $media <= "tablet"{
+    @include grid(8);
+}

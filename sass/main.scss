@@ -13,12 +13,7 @@
   padding: 0;
 }
 body {
-  background: linear-gradient(
-    135deg,
-    $background-1,
-    $background-2,
-    $background-1
-  );
+  background: $background;
   overflow-x: hidden;
   position: relative;
 }

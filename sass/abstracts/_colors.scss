@@ -1,10 +1,21 @@
-$background-1:#070014;
-$background-2: #10002B;
+$background: linear-gradient(
+  131.99deg,
+  #070014 4.74%,
+  #10002b 50.68%,
+  #070014 100%
+);
 
 $btn-1: rgba(71, 67, 67, 0.1);
 $btn-2: rgba(234, 234, 234, 0.05);
 
-$search-1: #AAB2FF;
-$search-2: #ECA0FF;
+$search-1: #aab2ff;
+$search-2: #eca0ff;
 
-$text:#F4F0FA;
+$text: #f4f0fa;
+
+$input: linear-gradient(
+  92.04deg,
+  rgba(255, 255, 255, 0.05) -0.03%,
+  rgba(255, 255, 255, 0.025) 52.41%,
+  rgba(255, 255, 255, 0.05) 99.97%
+);

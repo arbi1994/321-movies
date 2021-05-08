@@ -1,4 +1,4 @@
-
+@use "./breakpoints" as *;
 
 @mixin flex($direction, $content, $align) {
   display: flex;
@@ -9,7 +9,7 @@
 
 @mixin grid($num) {
   display: grid;
-  grid-template-columns: .5em repeat($num, minmax(80px, 1fr)) 0em;
+  grid-template-columns: .5em repeat($num, minmax(auto, 1fr)) 0em;
   grid-template-rows: auto;
 }
 
