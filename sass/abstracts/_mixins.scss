@@ -10,7 +10,7 @@
 @mixin grid($num) {
   display: grid;
   grid-template-columns: .5em repeat($num, minmax(auto, 1fr)) 0em;
-  grid-template-rows: auto;
+  grid-template-rows: 1em auto 1em;
 }
 
 @mixin clamp(

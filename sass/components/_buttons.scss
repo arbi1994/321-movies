@@ -6,7 +6,22 @@
   width: 10rem;
   height: 4rem;
   border-radius: 10px;
-  color: $text;
+  color: $background;
   background: linear-gradient(180deg, $search-1, $search-2);
   letter-spacing: 0.5px;
+
+  @include media(">tablet") {
+    width: 15rem;
+    height: 5rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+    &:hover{
+      color: $text;
+    }
+  }
+
+  @include media(">desktop") {
+    margin-right: 2rem;
+  }
 }
