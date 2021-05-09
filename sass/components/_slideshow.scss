@@ -1,1 +1,57 @@
 @use "./buttons";
+@use "../abstracts/" as *;
+
+.hero {
+  .hero__nav {
+    height: 10rem;
+    width: 100vw;
+    @include flex(row, center, center);
+    margin-top: 2rem;
+
+    .line {
+      width: 100vw;
+      height: 0.5px;
+      background: $search-2;
+      border: none;
+      left: 0;
+
+      &__top {
+        top: 1rem;
+      }
+      &__bottom {
+        bottom: 1rem;
+      }
+    }
+
+    @include media(">phoneL") {
+      .line {
+        width: 80%;
+        transform: translateX(-50%);
+        left: 50%;
+      }
+    }
+  }
+
+  &__genres {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    height: 5rem;
+    width: 100%;
+    @include flex(row, flex-start, center);
+
+    .genres__btn {
+      margin: 0 2.5rem;
+    }
+
+    @include media(">desktop") {
+      @include flex(row, center, center);
+    }
+  }
+  &__genres::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__container {
+    display: none;
+  }
+}

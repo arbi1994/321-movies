@@ -7,7 +7,7 @@ h3,
 h4,
 h5,
 a,
-p {
+p{
   font-family: $font;
   color: $text;
 }
@@ -19,7 +19,7 @@ $font-sizes: (
   h4: clamp(2rem, 1.5vw, 2.4rem),
   h5: 1.8rem,
   a: auto,
-  p: 1.8rem,
+  p: 1.8rem
 );
 
 @each $tag, $size in $font-sizes {

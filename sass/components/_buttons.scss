@@ -1,14 +1,18 @@
-@use "../base/index";
 @use "../abstracts/" as *;
+@use "../base/font-face" as *;
 
+button {
+  font-family: $font;
+}
 .navbar__button {
   border: none;
   width: 10rem;
-  height: 4rem;
+  height: 3.5rem;
   border-radius: 10px;
   color: $background;
   background: linear-gradient(180deg, $search-1, $search-2);
   letter-spacing: 0.5px;
+  font-weight: 500;
 
   @include media(">tablet") {
     width: 15rem;
@@ -16,7 +20,7 @@
     font-size: 1.6rem;
     cursor: pointer;
     transition: 0.2s ease;
-    &:hover{
+    &:hover {
       color: $text;
     }
   }
@@ -24,4 +28,23 @@
   @include media(">desktop") {
     margin-right: 2rem;
   }
+}
+
+.genre_btn {
+  border: none;
+  height: 4rem;
+  width: 15rem;
+  border-radius: 10px;
+  background: $genre-btn;
+  color: $text;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 5px 1px $search-1;
+  }
+  //margin: 0 2rem;
 }
