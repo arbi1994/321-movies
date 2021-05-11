@@ -1,14 +1,16 @@
 @use "./buttons";
 @use "../abstracts/" as *;
 
-.hero {
-  .hero__nav {
+.movies {
+  .movies__nav {
+    position: relative;
     height: 10rem;
     width: 100vw;
     @include flex(row, center, center);
     margin-top: 2rem;
 
     .line {
+      position: absolute;
       width: 100vw;
       height: 0.5px;
       background: $search-2;
@@ -67,12 +69,4 @@
   // ::-webkit-scrollbar-thumb:hover {
   //   background: linear-gradient(90deg, $search-2 30%, $search-1);
   // }
-
-  &__container {
-    display: none;
-    @include media(">tablet"){
-      display: block;
-      @include flex(column, center, center);
-    }
-  }
 }

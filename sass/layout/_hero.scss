@@ -1,20 +1,6 @@
 @use "../abstracts/" as *;
 
 .hero {
-  .hero__nav {
-    position: relative;
-    .line {
-      position: absolute;
-      width: 100vw;
-      height: 1px;
-      background: $search-2;
-    }
-  }
-
-  &__genres {
-    height: 5rem;
-  }
-
   &__container {
     display: none;
   }
@@ -22,12 +8,10 @@
 
 @include media(">tablet") {
   .hero {
-    @include flex(column, center, center);
-
     &__container {
       display: block;
-      text-align: center;
       min-height: 80vh;
+      @include flex(column, center, center);
 
       h2 {
         padding: 1rem 0;

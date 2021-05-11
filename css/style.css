@@ -8,33 +8,18 @@ header {
 * Testing
 *
 **/
-.hero .hero__nav {
-  position: relative;
-}
-.hero .hero__nav .line {
-  position: absolute;
-  width: 100vw;
-  height: 1px;
-  background: #eca0ff;
-}
-.hero__genres {
-  height: 5rem;
-}
 .hero__container {
   display: none;
 }
 
 @media (min-width: 769px) {
-  .hero {
+  .hero__container {
+    display: block;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .hero__container {
-    display: block;
-    text-align: center;
-    min-height: 80vh;
   }
   .hero__container h2 {
     padding: 1rem 0;
@@ -370,6 +355,45 @@ button {
     margin-top: 24px;
   }
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+a,
+p {
+  font-family: "Montserrat", sans-serif;
+  color: #f4f0fa;
+}
+
+h1 {
+  font-size: clamp(4rem , 5vw, 7.2rem);
+}
+
+h2 {
+  font-size: clamp(3rem, 5vw, 5.6rem);
+}
+
+h3 {
+  font-size: clamp(2.8rem, 5vw, 3.6rem);
+}
+
+h4 {
+  font-size: clamp(2rem, 1.5vw, 2.4rem);
+}
+
+h5 {
+  font-size: 1.8rem;
+}
+
+a {
+  font-size: auto;
+}
+
+p {
+  font-size: 1.8rem;
+}
+
 .navbar__menu--mobile {
   display: flex;
   flex-direction: column;
@@ -431,7 +455,8 @@ button {
   transform: translateX(-100%);
 }
 
-.hero .hero__nav {
+.movies .movies__nav {
+  position: relative;
   height: 10rem;
   width: 100vw;
   display: flex;
@@ -440,27 +465,28 @@ button {
   align-items: center;
   margin-top: 2rem;
 }
-.hero .hero__nav .line {
+.movies .movies__nav .line {
+  position: absolute;
   width: 100vw;
   height: 0.5px;
   background: #eca0ff;
   border: none;
   left: 0;
 }
-.hero .hero__nav .line__top {
+.movies .movies__nav .line__top {
   top: 1rem;
 }
-.hero .hero__nav .line__bottom {
+.movies .movies__nav .line__bottom {
   bottom: 1rem;
 }
 @media (min-width: 427px) {
-  .hero .hero__nav .line {
+  .movies .movies__nav .line {
     width: 80%;
     transform: translateX(-50%);
     left: 50%;
   }
 }
-.hero__genres {
+.movies__genres {
   overflow-y: hidden;
   overflow-x: scroll;
   height: 5rem;
@@ -470,70 +496,19 @@ button {
   justify-content: flex-start;
   align-items: center;
 }
-.hero__genres .genres__btn {
+.movies__genres .genres__btn {
   margin: 0 2.5rem;
 }
 @media (min-width: 1367px) {
-  .hero__genres {
+  .movies__genres {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
   }
 }
-.hero ::-webkit-scrollbar {
+.movies ::-webkit-scrollbar {
   height: 0px;
-}
-.hero__container {
-  display: none;
-}
-@media (min-width: 769px) {
-  .hero__container {
-    display: block;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-a,
-p {
-  font-family: "Montserrat", sans-serif;
-  color: #f4f0fa;
-}
-
-h1 {
-  font-size: clamp(4rem , 5vw, 7.2rem);
-}
-
-h2 {
-  font-size: clamp(3rem, 5vw, 5.6rem);
-}
-
-h3 {
-  font-size: clamp(2.8rem, 5vw, 3.6rem);
-}
-
-h4 {
-  font-size: clamp(2rem, 1.5vw, 2.4rem);
-}
-
-h5 {
-  font-size: 1.8rem;
-}
-
-a {
-  font-size: auto;
-}
-
-p {
-  font-size: 1.8rem;
 }
 
 .navbar__subscribe {
