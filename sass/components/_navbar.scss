@@ -37,6 +37,7 @@
   &__burger {
     width: 5rem;
     height: 100%;
+    margin-right: 1rem;
     @include flex(row, center, center);
     cursor: pointer;
 

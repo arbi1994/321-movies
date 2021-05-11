@@ -11,7 +11,7 @@
     }
   }
 
-  &__genres{
+  &__genres {
     height: 5rem;
   }
 
@@ -22,12 +22,12 @@
 
 @include media(">tablet") {
   .hero {
-    //min-height: 80vh;
     @include flex(column, center, center);
 
     &__container {
       display: block;
       text-align: center;
+      min-height: 80vh;
 
       h2 {
         padding: 1rem 0;
@@ -46,6 +46,9 @@
       -webkit-text-fill-color: transparent;
       -moz-background-clip: text;
       -moz-text-fill-color: transparent;
+    }
+    .hero__search {
+      margin-top: 2rem;
     }
   }
 }
