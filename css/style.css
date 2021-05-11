@@ -9,7 +9,13 @@ header {
 *
 **/
 .hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-top: 20vh;
+  position: relative;
+  overflow: hidden;
 }
 .hero__container {
   display: none;
@@ -309,6 +315,7 @@ button {
 }
 .search__container .search__bar .fa-play {
   visibility: hidden;
+  cursor: pointer;
 }
 .search__container .search__bar .search__underline {
   position: absolute;
@@ -361,9 +368,38 @@ button {
     margin-top: 24px;
   }
 }
+@media (min-width: 769px) {
+  .menu__search {
+    box-shadow: 0 0 10px 0 #ffffff;
+  }
+
+  .search__header {
+    text-align: center;
+  }
+  .search__header h3 {
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .search__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .search__container .search__bar i {
+    font-size: 2rem;
+  }
+  .search__container .search__bar input {
+    width: 100%;
+    font-size: 2.4rem;
+  }
+  .search__container .search__bar .search__underline {
+    margin-top: 24px;
+  }
+}
 h1,
 h2,
-h3,
 h4,
 h5,
 h6,
@@ -372,6 +408,11 @@ p,
 title {
   font-family: "Montserrat", sans-serif;
   color: #f4f0fa;
+}
+
+h3 {
+  font-family: "Montserrat", sans-serif;
+  color: auto;
 }
 
 h1 {
@@ -669,6 +710,37 @@ title {
   }
 }
 
+.search__popup {
+  visibility: hidden;
+  height: 0;
+}
+
+@media (min-width: 769px) {
+  .search__popup.show {
+    display: block;
+    visibility: visible;
+    width: 50%;
+    height: 24em;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #aab2ff, #eca0ff);
+    bottom: 10%;
+    left: 0%;
+  }
+  .search__popup.show .fa-times {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .search__popup {
+    position: absolute;
+    bottom: -50%;
+    transform: translateX(50%);
+    transition: bottom 0.5s ease;
+  }
+}
 :root {
   font-size: 62.5%;
   scroll-behavior: smooth;

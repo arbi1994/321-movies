@@ -35,6 +35,7 @@
     height: 3.9rem;
     @include flex(row, center, center);
     position: relative;
+
     &:hover {
       .search__underline {
         visibility: visible;
@@ -60,6 +61,7 @@
     }
     .fa-play {
       visibility: hidden;
+      cursor: pointer;
     }
 
     .search__underline {
@@ -108,6 +110,39 @@
       }
       input {
         width: 30rem;
+        font-size: 2.4rem;
+      }
+
+      .search__underline {
+        margin-top: 24px;
+      }
+    }
+  }
+}
+
+@include media(">tablet") {
+  .menu__search {
+    box-shadow: 0 0 10px 0 #ffffff;
+  }
+
+  .search__header {
+    text-align: center;
+    h3 {
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+  }
+
+  .search__container {
+    @include flex(column, center, center);
+
+    .search__bar {
+      
+      i {
+        font-size: 2rem;
+      }
+      input {
+        width: 100%;
         font-size: 2.4rem;
       }
 

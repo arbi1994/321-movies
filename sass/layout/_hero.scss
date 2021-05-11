@@ -1,10 +1,13 @@
 @use "../abstracts/" as *;
 
 .hero {
-  //min-height: 80vh;
+  @include flex(column, center, center);
   padding-top: 20vh;
+  position: relative;
+  overflow: hidden;
   &__container {
     display: none;
+    //position: relative;
   }
 }
 
