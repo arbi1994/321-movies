@@ -17,6 +17,60 @@
     <title>Movie web app</title>
   </head>
   <body>
+    <!-- Burger menu -->
+    <div class="nav__menu--mobile">
+      <span class="menu--mobile__close">
+        <svg
+          width="35"
+          height="25"
+          viewBox="0 0 35 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M30.6668 5.615L28.3168 3.5L19.0002 11.885L9.6835 3.5L7.3335 5.615L16.6502 14L7.3335 22.385L9.6835 24.5L19.0002 16.115L28.3168 24.5L30.6668 22.385L21.3502 14L30.6668 5.615Z"
+            fill="url(#paint0_linear)"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear"
+              x1="19.0002"
+              y1="3.5"
+              x2="19.0002"
+              y2="24.5"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#AAB2FF" />
+              <stop offset="1" stop-color="#ECA0FF" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+
+      <ul class="menu__list">
+        <li class="list__item"><a href="#home">Home</a></li>
+        <li class="list__item"><a href="#movies">Movies</a></li>
+        <li class="list__item"><a href="">About</a></li>
+      </ul>
+
+      <div class="menu__search">
+        <div class="search__header">
+          <h5 class="search__title">
+            Search your favourite <br /><span>movie</span>
+          </h5>
+        </div>
+
+        <div class="search__container">
+          <form class="search__bar">
+            <i class="fas fa-search"></i>
+            <input type="text" />
+            <i class="fas fa-play"></i>
+
+            <span class="search__underline"></span>
+          </form>
+        </div>
+      </div>
+    </div>
     <header>
       <!-- navbar -->
       <nav class="navbar grid">
@@ -159,60 +213,6 @@
             <li class="list__item"><a href="">About</a></li>
           </ul>
 
-          <div class="navbar__menu navbar__menu--mobile">
-            <span class="menu--mobile__close">
-              <svg
-                width="35"
-                height="25"
-                viewBox="0 0 35 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M30.6668 5.615L28.3168 3.5L19.0002 11.885L9.6835 3.5L7.3335 5.615L16.6502 14L7.3335 22.385L9.6835 24.5L19.0002 16.115L28.3168 24.5L30.6668 22.385L21.3502 14L30.6668 5.615Z"
-                  fill="url(#paint0_linear)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear"
-                    x1="19.0002"
-                    y1="3.5"
-                    x2="19.0002"
-                    y2="24.5"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stop-color="#AAB2FF" />
-                    <stop offset="1" stop-color="#ECA0FF" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </span>
-
-            <ul class="menu__list">
-              <li class="list__item"><a href="#home">Home</a></li>
-              <li class="list__item"><a href="#movies">Movies</a></li>
-              <li class="list__item"><a href="">About</a></li>
-            </ul>
-
-            <div class="menu__search">
-              <div class="search__header">
-                <h5 class="search__title">
-                  Search your favourite <br /><span>movie</span>
-                </h5>
-              </div>
-
-              <div class="search__container">
-                <form class="search__bar">
-                  <i class="fas fa-search"></i>
-                  <input type="text" />
-                  <i class="fas fa-play"></i>
-
-                  <span class="search__underline"></span>
-                </form>
-              </div>
-            </div>
-          </div>
-
           <div class="navbar__subscribe">
             <input
               type="email"
@@ -226,7 +226,10 @@
             <img src="./images/burger_icon.svg" alt="burger menu icon" />
           </div>
         </div>
+        
       </nav>
+
+      
 
       <!-- Hero section -->
       <section id="home" class="hero">
@@ -263,7 +266,8 @@
           </div>
         </div>
       </section>
-
+    </header>
+    <main>
       <!-- Movies section -->
       <section id="movies" class="movies">
         <!-- Movie genres slider -->
@@ -449,7 +453,7 @@
           </div>
         </div>
       </section>
-    </header>
+    </main>
 
     <script src="./main.js"></script>
   </body>
