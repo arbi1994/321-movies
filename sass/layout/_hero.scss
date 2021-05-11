@@ -1,6 +1,8 @@
 @use "../abstracts/" as *;
 
 .hero {
+  //min-height: 80vh;
+  padding-top: 20vh;
   &__container {
     display: none;
   }

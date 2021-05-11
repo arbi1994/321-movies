@@ -2,6 +2,7 @@
 @use "../base/" as *;
 
 .cards {
+  z-index: -1;
   min-height: 100vh;
   margin-top: 4em;
   @include flex(row, center, flex-start);

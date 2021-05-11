@@ -6,6 +6,7 @@
 
 :root {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 * {
   box-sizing: border-box;
@@ -15,5 +16,6 @@
 body {
   background: $background;
   overflow-x: hidden;
+  scroll-behavior: smooth;
   position: relative;
 }
