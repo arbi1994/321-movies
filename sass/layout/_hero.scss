@@ -13,9 +13,10 @@
 
 @include media(">tablet") {
   .hero {
+    min-height: 100vh;
+    padding-top: 20vh;
     &__container {
-      display: block;
-      min-height: 80vh;
+      display: flex;
       @include flex(column, center, center);
 
       h2 {
@@ -41,3 +42,4 @@
     }
   }
 }
+

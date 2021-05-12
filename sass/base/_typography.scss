@@ -3,7 +3,6 @@
 
 h1,
 h2,
-h4,
 h5,
 h6,
 a,
@@ -13,7 +12,7 @@ title{
   color: $text;
 }
 
-h3{
+h4, h3{
   font-family: $font;
   color: auto;
 }

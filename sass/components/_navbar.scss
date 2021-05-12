@@ -54,7 +54,7 @@
 
 @include media(">phoneL") {
   .navbar {
-    @include grid(auto-fit);
+    @include grid(10);
 
     &__logo {
       svg {
@@ -64,7 +64,7 @@
     }
 
     &__right {
-      grid-column: 6/10;
+      grid-column: 5/12;
     }
 
     &__subscribe {
@@ -80,6 +80,14 @@
     }
   }
 }
+
+// @include media(">phoneL"){
+//   .navbar{
+//     &__right{
+//       grid-column: 6/1;
+//     }
+//   }
+// }
 
 @include media(">tablet") {
   .navbar {

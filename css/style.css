@@ -22,9 +22,12 @@ header {
 }
 
 @media (min-width: 769px) {
+  .hero {
+    min-height: 100vh;
+    padding-top: 20vh;
+  }
   .hero__container {
-    display: block;
-    min-height: 80vh;
+    display: flex;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -168,7 +171,7 @@ button {
 @media (min-width: 427px) {
   .navbar {
     display: grid;
-    grid-template-columns: 0.5em repeat(auto-fit, minmax(auto, 1fr)) 0em;
+    grid-template-columns: 0.5em repeat(10, minmax(auto, 1fr)) 0em;
     grid-template-rows: 1em auto 1em;
   }
   .navbar__logo svg {
@@ -176,7 +179,7 @@ button {
     height: 5rem;
   }
   .navbar__right {
-    grid-column: 6/10;
+    grid-column: 5/12;
   }
   .navbar__subscribe {
     margin-right: 2rem;
@@ -336,7 +339,7 @@ button {
   visibility: hidden;
 }
 
-@media (min-width: 426px) and (max-width: 768px) {
+@media (min-width: 426px) {
   .menu__search {
     width: 100%;
   }
@@ -376,39 +379,8 @@ button {
     margin-top: 24px;
   }
 }
-@media (min-width: 769px) {
-  .menu__search {
-    box-shadow: 0 0 10px 0 #ffffff;
-  }
-
-  .search__header {
-    text-align: center;
-  }
-  .search__header h3 {
-    letter-spacing: 1px;
-    font-weight: 500;
-  }
-
-  .search__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .search__container .search__bar i {
-    font-size: 2rem;
-  }
-  .search__container .search__bar input {
-    width: 100%;
-    font-size: 2.4rem;
-  }
-  .search__container .search__bar .search__underline {
-    margin-top: 24px;
-  }
-}
 h1,
 h2,
-h4,
 h5,
 h6,
 a,
@@ -418,7 +390,7 @@ title {
   color: #f4f0fa;
 }
 
-h3 {
+h4, h3 {
   font-family: "Montserrat", sans-serif;
   color: auto;
 }
@@ -571,7 +543,6 @@ title {
   min-height: 100vh;
   background: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
   z-index: 100;
-  -webkit-overscroll-behavior-y: contain;
   transform: translateX(0);
   transition: all 0.5s ease;
 }
@@ -748,6 +719,10 @@ title {
     bottom: -50%;
     transform: translateX(50%);
     transition: bottom 0.5s ease;
+  }
+  .search__popup .search__header h4 {
+    color: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+    font-weight: 500;
   }
 }
 :root {
