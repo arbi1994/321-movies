@@ -509,26 +509,38 @@ title {
   font-weight: 400;
 }
 .cards__rating .rating__stars {
-  flex: 0 0 15em;
-  background: linear-gradient(135deg, #aab2ff, #eca0ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-.cards__rating .rating__stars .fa-star {
-  font-size: 1.5rem;
-  color: rgba(0, 0, 0, 0.5);
-}
-.cards__rating .checked {
+  font-size: 2rem;
+  background: linear-gradient(135deg, #aab3ff77, #eca0ff77);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+.cards__rating .rating__stars i {
+  padding-right: 1rem;
+}
+.cards__rating .rating__stars--inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #aab2ff, #eca0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+.cards__rating .rating__stars--inner i {
+  padding-right: 1rem;
 }
 
 .nav__menu--mobile {

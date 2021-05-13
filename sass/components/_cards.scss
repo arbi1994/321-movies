@@ -77,26 +77,37 @@
     }
 
     .rating__stars {
-      flex: 0 0 15em;
-      background: linear-gradient($deg2, $search-1, $search-2);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -moz-background-clip: text;
-
-      @include flex(row, space-around, center);
-      .fa-star {
-        font-size: 1.5rem;
-        color: rgba(0, 0, 0, 0.5);
-      }
-    }
-
-    //class made to color the stars based on rating
-    .checked {
+      font-size: 2rem;
+      background: linear-gradient($deg2, #aab3ff77, #eca0ff77);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       -moz-background-clip: text;
       -moz-text-fill-color: transparent;
+      @include flex(row, space-around, center);
+      position: relative;
+      i {
+        padding-right: 1rem;
+      }
+
+      &--inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        display: flex;
+        align-items: center;
+        background: linear-gradient($deg2, $search-1, $search-2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+
+        i {
+          padding-right: 1rem;
+        }
+      }
     }
   }
 }
