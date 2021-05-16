@@ -114,7 +114,7 @@ async function populateCards(){
                       <img src="${imgURL}${posterPath}" alt="">
 
                       <div class="cards__title">
-                        <h5>${movieTitle}</h5>
+                        <h6>${movieTitle}</h6>
                       </div>
                       <div class="cards__rating">
                         <h6>Rating</h6>
@@ -158,7 +158,7 @@ function loadNextPage(){
   //once bottom reached increase page number by one
   pageNum++;
   populateCards()
-  
+
   //set the isScrolled variable to false in order to re-execute the if statement
   setTimeout(() => {
     isScrolled = false

@@ -453,8 +453,8 @@ title {
   flex-wrap: wrap;
 }
 .cards__card {
-  width: 25em;
-  height: 35em;
+  width: 22em;
+  height: 30em;
   border-radius: 5px;
   margin-bottom: 5rem;
   overflow: hidden;
@@ -489,8 +489,8 @@ title {
   transition: top 0.5s ease;
   cursor: auto;
 }
-.cards__title h5 {
-  font-weight: 500;
+.cards__title h6 {
+  font-weight: 600;
 }
 .cards__rating {
   background: rgba(0, 0, 0, 0.5);
@@ -513,7 +513,7 @@ title {
   font-weight: 400;
 }
 .cards__rating .rating__stars {
-  font-size: 2rem;
+  font-size: 1.6rem;
   background: linear-gradient(135deg, #aab3ff77, #eca0ff77);
   background-clip: text;
   -webkit-background-clip: text;
