@@ -1,5 +1,5 @@
 /* BURGER MENU */
-{
+(function(){
   const burgerIcon = document.querySelector(".navbar__burger img") //open icon
   const closeIcon = document.querySelector(".menu--mobile__close") //close icon
   const menu = document.querySelector(".nav__menu--mobile") //menu
@@ -16,7 +16,7 @@
       menu.classList.remove("open")
     })
   })
-}
+})()
 
 /* Show/Hide navbar when scrolling */
 {
@@ -27,7 +27,7 @@
     showHideNavbar()
   })
 
-  function showHideNavbar(){
+  const showHideNavbar = () => {
     let currScrollPos = window.pageYOffset
     //console.log(currScrollPos)
 
@@ -46,8 +46,9 @@
   }
 }
 
+
 /* Show search popup */
-{
+(function(){
   const searchIcon = document.querySelector(".hero__search")//search icon
   const popup = document.querySelector(".search__popup")
 
@@ -61,17 +62,20 @@
     //close down search popup
     popup.classList.remove("show")
   })
-}
+})()
 
+
+let moviesArr = []
+let pageNum = 1;
+let isScrolled = false;
 //api key
 const APIKEY = "f569c35640a9131fdf30825f47683372"
-//we need api url
-const APIURL = `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=ads`
-//get cards container where we are going to display our cards
-const cardsContainer = document.querySelector(".cards__container")
 
 //function to call the api (asyn/await)
-async function getLatestMoviesData(){
+async function getLatestMoviesData(pageNum){
+  //api url
+  const APIURL = `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_watch_monetization_types=ads`
+  console.log(`page number: ${pageNum}`)
   //response
   const resp = await fetch(APIURL)
   //convert response to json format
@@ -84,8 +88,10 @@ async function getLatestMoviesData(){
 }
 
 async function populateCards(){
-  const movies = await getLatestMoviesData()
-  console.log(movies)
+  //get cards container where we are going to display our cards
+  const cardsContainer = document.querySelector(".cards__container")  
+  //init data
+  const movies = await getLatestMoviesData(pageNum)
   //get img URL
   const imgURL = "https://image.tmdb.org/t/p/w500"
 
@@ -104,7 +110,7 @@ async function populateCards(){
     //get ratings
     const rating = getRatings(movie)
 
-    card.innerHTML = `
+    card.innerHTML += `
                       <img src="${imgURL}${posterPath}" alt="">
 
                       <div class="cards__title">
@@ -131,7 +137,6 @@ async function populateCards(){
                       </div>
                     `
   })
-
 }
 populateCards()
 
@@ -144,5 +149,29 @@ function getRatings(movie){
 
     return votePercent
 }
+
+//load more data
+function loadNextPage(){
+  //set isScrolled back to false to prevent further execution 
+  isScrolled = true;
+
+  //once bottom reached increase page number by one
+  pageNum++;
+  populateCards()
+  
+  //set the isScrolled variable to false in order to re-execute the if statement
+  setTimeout(() => {
+    isScrolled = false
+  }, 500)
+}
+
+//apply infinite scrolling to the website
+window.addEventListener("scroll", () => {
+  //determine when we reach the bottom of the document
+  if(window.scrollY > (document.body.offsetHeight - 800) && !isScrolled){
+    console.log("bottom page reached")
+    loadNextPage()
+  }
+})
 
 

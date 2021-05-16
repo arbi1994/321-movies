@@ -41,6 +41,10 @@ header {
   }
   .hero .hero__title {
     letter-spacing: 1.5px;
+    font-weight: 500;
+  }
+  .hero .hero__title--main {
+    font-weight: 700;
   }
   .hero .hero__title--main {
     background: linear-gradient(180deg, #aab2ff, #eca0ff);
