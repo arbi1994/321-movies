@@ -1,7 +1,7 @@
 @use "./buttons";
 @use "../abstracts" as *;
 
-$minHeight: 100vh;
+$minHeight: 102vh;
 
 .nav__menu--mobile {
   @include flex(column, flex-start, center);
@@ -35,7 +35,12 @@ $minHeight: 100vh;
     min-height: 30.3rem;
     margin-top: 3rem;
     @include flex(column, space-around, center);
-
+    @include media(">phoneL"){
+      transform: translateY(50%);
+    }
+    @include media(">tablet"){
+      transform: translateY(-0%);
+    }
     .list__item {
       text-align: center;
 

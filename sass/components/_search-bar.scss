@@ -1,17 +1,18 @@
 @use "../abstracts" as *;
 
 .menu__search {
-  //border: 1px solid white;
-  width: 31.4rem;
-  height: 22rem;
-  @include flex(column, flex-start, center);
-  margin-top: 5rem;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 5em;
+  //width: 31.4rem;
+  min-height: 22em;
+  @include flex(column, center, center);
+  backdrop-filter: blur(10px);
 }
 
 .search__header {
-  //border: 1px solid white;
   width: 100%;
-  height: 11.6rem;
+  height: 11.6em;
   @include flex(column, center, center);
 
   .search__title {
@@ -80,6 +81,8 @@
 @include media(">=phoneL") {
   .menu__search {
     width: 100%;
+    margin-bottom: 0;
+    transform: translateY(-50%);
   }
 
   .search__title {
@@ -117,5 +120,11 @@
         margin-top: 24px;
       }
     }
+  }
+}
+
+@include media(">tablet"){
+  .menu__search{
+    transform: none;
   }
 }
