@@ -1,0 +1,6 @@
+@use "../abstracts/" as *;
+
+.error{
+    color: white;
+    @include flex(row, center, center);
+}

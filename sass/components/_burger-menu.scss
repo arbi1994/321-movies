@@ -8,7 +8,7 @@ $minHeight: 100vh;
   position: fixed;
   top: -1rem;
   left: 100%;
-  width: 100vw;
+  width: 100%;
   min-height: $minHeight;
   background: $background;
   z-index: 100;
@@ -19,7 +19,7 @@ $minHeight: 100vh;
   transition: all 0.5s ease;
 
   @include media(">tablet") {
-    left: 102%;
+    left: 100%;
   }
 
   .menu--mobile__close {

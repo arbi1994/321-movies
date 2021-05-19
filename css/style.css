@@ -555,7 +555,7 @@ title {
   position: fixed;
   top: -1rem;
   left: 100%;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   background: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
   z-index: 100;
@@ -564,7 +564,7 @@ title {
 }
 @media (min-width: 769px) {
   .nav__menu--mobile {
-    left: 102%;
+    left: 100%;
   }
 }
 .nav__menu--mobile .menu--mobile__close {
@@ -608,6 +608,11 @@ title {
   transform: translateX(-100%);
 }
 
+.movies {
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
 .movies .movies__nav {
   position: relative;
   height: 10rem;
@@ -642,8 +647,9 @@ title {
 .movies__genres {
   overflow-y: hidden;
   overflow-x: scroll;
-  height: 5rem;
-  width: 100%;
+  min-height: 5rem;
+  width: 70%;
+  padding: 1rem 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -652,16 +658,27 @@ title {
 .movies__genres .genres__btn {
   margin: 0 2.5rem;
 }
-@media (min-width: 1367px) {
+@media (min-width: 769px) {
   .movies__genres {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
   }
 }
 .movies ::-webkit-scrollbar {
-  height: 0px;
+  height: 10px;
+}
+.movies ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+.movies ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #aab2ff, #eca0ff);
+  border-radius: 10px;
+}
+.movies ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #eca0ff 30%, #aab2ff);
 }
 
 .navbar__subscribe {
@@ -741,6 +758,14 @@ title {
     font-weight: 500;
   }
 }
+.error {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 :root {
   font-size: 62.5%;
   scroll-behavior: smooth;
