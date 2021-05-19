@@ -680,6 +680,11 @@ title {
 .movies ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(90deg, #eca0ff 30%, #aab2ff);
 }
+@media (max-width: 767px) {
+  .movies ::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 .navbar__subscribe {
   width: 100%;

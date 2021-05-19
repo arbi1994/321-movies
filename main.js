@@ -234,7 +234,7 @@ let isScrolled = false
 const infiniteScroll = () => {
   const {scrollHeight, scrollTop, clientHeight} = document.documentElement
   
-  if((scrollTop + clientHeight) >= scrollHeight & !isScrolled){
+  if((scrollTop + clientHeight + 100) >= scrollHeight & !isScrolled){
 
       isScrolled = true
       console.log("bottom")

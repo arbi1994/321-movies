@@ -70,4 +70,10 @@
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(90deg, $search-2 30%, $search-1);
   }
+
+  @include media("<tablet") {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
