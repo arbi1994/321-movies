@@ -3,15 +3,15 @@
 .menu__search {
   position: absolute;
   bottom: 0;
-  margin-bottom: 5em;
-  //width: 31.4rem;
+  margin-bottom: 0em;
+  width: 100%;
   min-height: 22em;
   @include flex(column, center, center);
   backdrop-filter: blur(10px);
+  transform: translateY(-25%);
 }
 
 .search__header {
-  width: 100%;
   height: 11.6em;
   @include flex(column, center, center);
 
@@ -28,7 +28,6 @@
 .search__container {
   //border: 1px solid white;
   width: 100%;
-  height: 11rem;
   @include flex(column, flex-start, center);
 
   .search__bar {

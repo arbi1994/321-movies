@@ -205,6 +205,8 @@ const getMovies = async (page, url) => {
                           </div>
                         </div>
                       `
+      
+      card.setAttribute("onClick", "linkMovieDetails()")
     })
   }catch(err){
     console.log(err.message)
@@ -256,6 +258,10 @@ window.onload = () => {
   getMovies(pageNum, genre)
 }
 
+function linkMovieDetails(){
+  window.location = "pages/info.html"
+  console.log("linked")
+}
 
 
 
