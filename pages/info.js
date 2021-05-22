@@ -34,7 +34,7 @@ async function getMovieDetails() {
 
     try {
         //root path to the image files
-        const imgURL = "https://image.tmdb.org/t/p/w500";
+        const imgURL = "https://image.tmdb.org/t/p/original";
         //response
         const resp = await fetch(url);
         //convert response to json format
