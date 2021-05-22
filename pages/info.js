@@ -91,6 +91,7 @@ async function getMovieCastDirectors() {
     
         //set cast
         let cast = json.cast.map(cast => cast.name)
+        cast = spaceAfterComma(cast)
         document.querySelector(".movie__main-cast p").innerHTML = cast
         
     } catch (err) {
