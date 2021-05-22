@@ -258,9 +258,10 @@ window.onload = () => {
   getMovies(pageNum, genre)
 }
 
+//Link curren page with Movie details page
 function linkMovieDetails(id) {
   sessionStorage.setItem("movie id", id);
-  window.location = "pages/info.html";
+  window.open("pages/info.html", "_blank");
   console.log("linked");
 }
 
