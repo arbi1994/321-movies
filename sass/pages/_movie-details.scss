@@ -28,8 +28,7 @@
     }
 
     &__image {
-      height: 50em;
-      width: 100%;
+      flex: 1.2;
       position: relative;
 
       @include media("<desktop", ">tablet") {
@@ -58,21 +57,21 @@
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
       }
     }
 
     &__details {
-      height: 40em;
+      flex: 1;
       margin: 0 2em;
       @include flex(column, space-around, flex-start);
 
       @include media("<desktop") {
-        height: 28em;
+        //height: 28em;
       }
 
       @include media("<desktop", ">tablet") {
-        height: 42em;
+        //height: 42em;
       }
 
       @include media("<=tablet") {
@@ -85,6 +84,7 @@
 
       p {
         color: $text;
+        word-spacing: 0rem;
       }
       h4 {
         font-weight: 600;
@@ -102,6 +102,16 @@
     &__title {
       letter-spacing: 1px;
       color: $text;
+      margin-bottom: 1em;
+    }
+
+    &__main-cast{
+      // border: 1px solid white;
+      width: 100%;
+      margin: 1em 0;
+    }
+    &__description{
+      margin-top: 1em;
     }
   }
 }
