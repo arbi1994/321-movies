@@ -55,12 +55,14 @@
   searchIcon.addEventListener("click", () => {
     //open up search popup
     popup.classList.add("show")
+    document.querySelector("#home").style.boxShadow = "inset 0px 0px 500px 200px rgb(0, 0, 0, 0.5)"
   })
 
   const closePopup = document.querySelector(".fa-times")//close icon
   closePopup.addEventListener("click", () => {
     //close down search popup
     popup.classList.remove("show")
+    document.querySelector("#home").style.boxShadow = "none"
   })
 })()
 
@@ -69,8 +71,9 @@
 const cardsContainer = document.querySelector(".cards__container")  
 const APIKEY = "f569c35640a9131fdf30825f47683372" //api key
 let movies = [] //empty movies array where we are going to store our movies data
-let pageNum = 1; 
-let genre = ""
+let pageNum = 1; //set page number to 1
+let genre = "" 
+let endPoint = ""
 
 /**
  * Get all movies genres
@@ -86,7 +89,7 @@ async function getMoviesGenres(){
     const json = await resp.json()
     //convert json into an array of objects
     const genres = Object.values(json)[0]
-    console.log(genres)
+    //console.log(genres)
 
     return genres
   }catch(err){
@@ -124,7 +127,7 @@ const genreId = () => {
             genre = btn.id 
             console.log(genre)
 
-            let url = `https://api.themoviedb.org/3/discover/movie?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_genres=${genre}`;
+            let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_genres=${genre}`;
             
             //call function to get and populate data
             getMovies(pageNum, url)
@@ -140,16 +143,21 @@ genreId()
  * @param {Number} page 
  * @param {String} url 
  */
-const getMovies = async (page, url) => {
+const getMovies = (page, url) => {
   // when the user changes genres or year, we need to clear
   // the movies array out instead of just filtering
   // so it doesn’t add the same movie twice
   if (page === 1) { movies = [] }
 
-  // url to the API
-  url = `https://api.themoviedb.org/3/discover/movie/?&api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=ads&with_genres=${genre}`
-  console.log(url)
+  //path
+  endPoint = "/discover/movie"
+  // url
+  url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_genres=${genre}`;  console.log(url)
 
+  displayMovies(url)
+}
+
+const displayMovies = async (url) => {
   try{
     //root path to the image files
     const imgURL = "https://image.tmdb.org/t/p/w500"
@@ -158,7 +166,7 @@ const getMovies = async (page, url) => {
     //convert response to json format
     const json = await resp.json()
     //convert json object into array of objects
-    const movies = Object.values(json)[1]
+    movies = Object.values(json)[1]
 
     movies.forEach((movie, index) => {
       movies.push(movie)
@@ -218,7 +226,7 @@ const getMovies = async (page, url) => {
  * @param {Object} movie 
  * @returns {Number}
  */
-function getRatings(movie){
+const getRatings = (movie) => {
   //get average vote
   const vote = movie.vote_average
   //transform vote into percentage
@@ -230,40 +238,95 @@ function getRatings(movie){
 /**
  * Apply Infinite scrolling
  */
-
-let isScrolled = false
-
+let isScrolled = false //set scrolling to false
 const infiniteScroll = () => {
   const {scrollHeight, scrollTop, clientHeight} = document.documentElement
   
   if((scrollTop + clientHeight + 100) >= scrollHeight & !isScrolled){
 
-      isScrolled = true
+      isScrolled = true //set isScrolled to true to continue scrolling after bottom reached 
       console.log("bottom")
 
       pageNum++;
-      getMovies(pageNum)
+
+      //if no data don't increase page number
+      if(movies.length == 0){
+        return 
+      }
+      
+      if(endPoint == "/discover/movie"){
+        getMovies(pageNum)
+      }
+      if(endPoint == "/search/multi"){
+        getSearchedMovies(pageNum)
+      }
 
       setTimeout(() => {
           isScrolled = false;
       }, 1000);
   }
 }
+
 //Bind the infiniteScroll function to the onscroll event
-window.onscroll = function(){
+window.onscroll = () => {
   infiniteScroll()
 }
 //Load movies on page load
 window.onload = () => {
-  getMovies(pageNum, genre)
+  getMovies()
 }
 
-//Link curren page with Movie details page
-function linkMovieDetails(id) {
+/**
+ * Link current page with Movie details page
+ * @param {Integer} id 
+ */
+const linkMovieDetails = (id) => {
   sessionStorage.setItem("movie id", id);
   window.open("pages/info.html", "_blank");
   console.log("linked");
 }
+
+/**
+ * Get input value
+ * @returns {String}
+ */
+const getSearchInput = () => {
+  return document.querySelector(".search__bar .input").value
+}
+
+const getSearchedMovies = (page) => {
+  if (page === 1) { movies = [] } //make sure it does not load same movies twice
+
+  const input = getSearchInput() //new reference
+  
+  endPoint = "/search/multi" //path
+
+  let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&query=${input}&page=${page}` //search url
+  console.log(url)
+
+  displayMovies(url) //display movies
+}
+
+//Display results on click
+const playIcon = document.querySelector(".search__bar a") //select play icon
+playIcon.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  cardsContainer.innerHTML = "" //empty container before loading new data
+  // const input = getSearchInput
+  // //if there is no text inserted then display message
+  // if(input.length == 0){
+  //   alert("Please type something...")
+  // }
+
+  document.querySelector(".search__popup").classList.remove("show") //close search popup
+  
+
+  getSearchedMovies()
+
+
+  //document.querySelector(".search__bar .input").value = "" //reset input container
+})
 
 
 

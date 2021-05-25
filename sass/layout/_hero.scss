@@ -9,6 +9,7 @@
     display: none;
     //position: relative;
   }
+  transition: box-shadow 1s ease-in;
 }
 
 @include media(">tablet") {

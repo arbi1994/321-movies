@@ -83,7 +83,7 @@ async function getMovieCastDirectors() {
         });
         //remove all commas
         crew = crew.toString();
-        crew = crew.replace(/,/g, "");
+        crew = crew.replace(/,/g, " ");
         //display
         document.querySelector(
         ".movie__director p"
