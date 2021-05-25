@@ -3,15 +3,15 @@
 
 .navbar {
   position: fixed;
+  width: 100%;
+  padding: 1em;
   top: 0;
   z-index: 1;
   transition: opacity 0.3s ease;
-  @include grid(8);
+  // @include grid(12);
+  @include flex(row, space-between, center);
 
   &__left {
-    grid-column: 2/3;
-    grid-row: 2/3;
-    @include flex(column, center, auto);
   }
 
   &__logo {
@@ -24,9 +24,7 @@
   }
 
   &__right {
-    grid-column: 5/10;
-    grid-row: 2/3;
-    @include flex(row, space-between, center);
+    @include flex(row, flex-end, center);
     position: relative;
 
     .menu__list {
@@ -38,10 +36,13 @@
     display: none;
   }
 
+  &__search {
+    margin-right: 2em;
+  }
+
   &__burger {
-    width: 5rem;
     height: 100%;
-    margin-right: 1rem;
+    margin-right: .5em;
     @include flex(row, center, center);
     cursor: pointer;
 
@@ -54,17 +55,15 @@
 
 @include media(">phoneL") {
   .navbar {
-    @include grid(10);
+    @include flex(row, space-between, center);
 
     &__logo {
       svg {
         width: 8rem;
-        height: 5rem;
       }
     }
 
     &__right {
-      grid-column: 5/12;
     }
 
     &__subscribe {
@@ -81,50 +80,41 @@
   }
 }
 
-// @include media(">phoneL"){
-//   .navbar{
-//     &__right{
-//       grid-column: 6/1;
-//     }
-//   }
-// }
-
-@include media(">tablet") {
+@include media("<desktop",">tablet") {
   .navbar {
-    @include grid(12);
+    @include flex(row, space-between, center);
 
     &__logo {
-      margin-left: 1rem;
+      // margin-left: 1rem;
       svg {
         width: 10rem;
-        height: 10rem;
       }
     }
 
     &__right {
-      grid-column: 7/14;
       margin-right: 1rem;
+    }
+
+    &__burger {
+      margin-right: 0;
     }
   }
 }
 
 @include media("<=LGdesktop", ">desktop") {
   .navbar {
-    @include grid(10);
+    @include flex(row, space-between, center);
 
     &__logo {
-      margin-top: 1rem;
       svg {
         width: 10rem;
       }
     }
 
     &__right {
-      grid-column: 7/12;
-      margin-right: 0rem;
-
       .menu__list {
         width: 40rem;
+        //margin-right: 5em;
         @include flex(row, space-around, center);
 
         .list__item {
@@ -149,8 +139,8 @@
       }
     }
 
-    &__subscribe {
-      margin-right: 0;
+    &__search {
+      margin-right: 3em;
     }
 
     &__burger {

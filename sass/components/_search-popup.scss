@@ -14,7 +14,7 @@
     height: 24em;
     border-radius: 10px;
     background: linear-gradient(180deg, $search-1, $search-2);
-    bottom: 10%;
+    bottom: 30%;
     left: 0%;
 
     .fa-times {
@@ -42,7 +42,7 @@
     position: absolute;
     bottom: -50%;
     transform: translateX(50%);
-    transition: bottom 0.5s ease;
+    transition: bottom 0.5s ease-in-out;
 
     .search__header {
       h4 {

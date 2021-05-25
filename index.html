@@ -74,7 +74,7 @@
     </div>
     <header>
       <!-- navbar -->
-      <nav class="navbar grid">
+      <nav class="navbar">
         <div class="navbar__left">
           <div class="navbar__logo">
             <svg
@@ -214,13 +214,13 @@
             <li class="list__item"><a href="">About</a></li>
           </ul>
 
-          <div class="navbar__subscribe">
-            <input
-              type="email"
+          <div class="navbar__search">
+            <!-- <input
+              type="text"
               class="navbar__input"
               placeholder="Your email"
-            />
-            <button type="submit" class="navbar__button">Subscribe</button>
+            /> -->
+            <button type="button" class="navbar__button">Search</button>
           </div>
 
           <div class="navbar__burger">
@@ -238,11 +238,11 @@
           <h1 class="hero__title hero__title--main">MOVIES</h1>
 
           <div class="hero__search">
-            <img
+            <!-- <img
               src="./images/search_icon.svg"
               alt="search icon"
               style="cursor: pointer"
-            />
+            /> -->
           </div>
         </div>
 
@@ -255,7 +255,7 @@
           <div class="search__container">
             <form class="search__bar">
               <i class="fas fa-search"></i>
-              <input class="input" type="text" />
+              <input class="input" type="text" required/>
 
               <a href="#movies"><i class="fas fa-play" aria-hidden="true"></i></a>
 

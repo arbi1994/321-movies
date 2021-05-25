@@ -16,7 +16,7 @@ header {
   padding-top: 20vh;
   position: relative;
   overflow: hidden;
-  transition: box-shadow 1s ease-in;
+  transition: box-shadow 0.5s ease-in;
 }
 .hero__container {
   display: none;
@@ -234,7 +234,7 @@ button {
 }
 @media (min-width: 1367px) {
   .navbar__button {
-    margin-right: 2rem;
+    margin-right: 0rem;
   }
 }
 
@@ -257,20 +257,15 @@ button {
 
 .navbar {
   position: fixed;
+  width: 100%;
+  padding: 1em;
   top: 0;
   z-index: 1;
   transition: opacity 0.3s ease;
-  display: grid;
-  grid-template-columns: 0.5em repeat(8, minmax(auto, 1fr)) 0em;
-  grid-template-rows: 1em auto 1em;
-}
-.navbar__left {
-  grid-column: 2/3;
-  grid-row: 2/3;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 .navbar__logo {
   width: 100%;
@@ -284,11 +279,9 @@ button {
   width: 5.8rem;
 }
 .navbar__right {
-  grid-column: 5/10;
-  grid-row: 2/3;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
 }
@@ -298,10 +291,12 @@ button {
 .navbar__menu {
   display: none;
 }
+.navbar__search {
+  margin-right: 2em;
+}
 .navbar__burger {
-  width: 5rem;
   height: 100%;
-  margin-right: 1rem;
+  margin-right: 0.5em;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -315,16 +310,13 @@ button {
 
 @media (min-width: 427px) {
   .navbar {
-    display: grid;
-    grid-template-columns: 0.5em repeat(10, minmax(auto, 1fr)) 0em;
-    grid-template-rows: 1em auto 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
   .navbar__logo svg {
     width: 8rem;
-    height: 5rem;
-  }
-  .navbar__right {
-    grid-column: 5/12;
   }
   .navbar__subscribe {
     margin-right: 2rem;
@@ -337,39 +329,32 @@ button {
     height: 2rem;
   }
 }
-@media (min-width: 769px) {
+@media (max-width: 1365px) and (min-width: 769px) {
   .navbar {
-    display: grid;
-    grid-template-columns: 0.5em repeat(12, minmax(auto, 1fr)) 0em;
-    grid-template-rows: 1em auto 1em;
-  }
-  .navbar__logo {
-    margin-left: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
   .navbar__logo svg {
     width: 10rem;
-    height: 10rem;
   }
   .navbar__right {
-    grid-column: 7/14;
     margin-right: 1rem;
+  }
+  .navbar__burger {
+    margin-right: 0;
   }
 }
 @media (max-width: 1920px) and (min-width: 1367px) {
   .navbar {
-    display: grid;
-    grid-template-columns: 0.5em repeat(10, minmax(auto, 1fr)) 0em;
-    grid-template-rows: 1em auto 1em;
-  }
-  .navbar__logo {
-    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
   .navbar__logo svg {
     width: 10rem;
-  }
-  .navbar__right {
-    grid-column: 7/12;
-    margin-right: 0rem;
   }
   .navbar__right .menu__list {
     width: 40rem;
@@ -396,8 +381,8 @@ button {
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
   }
-  .navbar__subscribe {
-    margin-right: 0;
+  .navbar__search {
+    margin-right: 3em;
   }
   .navbar__burger {
     display: none;
@@ -800,7 +785,7 @@ title {
 @media (min-width: 427px) {
   .movies .movies__nav .line {
     width: 80%;
-    transform: translateX(-50%);
+    transform: translateX(-50.55%);
     left: 50%;
   }
 }
@@ -901,7 +886,7 @@ title {
     height: 24em;
     border-radius: 10px;
     background: linear-gradient(180deg, #aab2ff, #eca0ff);
-    bottom: 10%;
+    bottom: 30%;
     left: 0%;
   }
   .search__popup.show .fa-times {
@@ -929,7 +914,7 @@ title {
     position: absolute;
     bottom: -50%;
     transform: translateX(50%);
-    transition: bottom 0.5s ease;
+    transition: bottom 0.5s ease-in-out;
   }
   .search__popup .search__header h4 {
     color: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);

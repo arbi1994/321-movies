@@ -49,17 +49,16 @@
 
 /* Show search popup */
 (function(){
-  const searchIcon = document.querySelector(".hero__search")//search icon
+  //const searchIcon = document.querySelector(".hero__search")//search icon
   const popup = document.querySelector(".search__popup")
 
-  searchIcon.addEventListener("click", () => {
+  document.querySelector(".navbar__button").addEventListener("click", () => {
     //open up search popup
     popup.classList.add("show")
     document.querySelector("#home").style.boxShadow = "inset 0px 0px 500px 200px rgb(0, 0, 0, 0.5)"
   })
 
-  const closePopup = document.querySelector(".fa-times")//close icon
-  closePopup.addEventListener("click", () => {
+  document.querySelector(".fa-times").addEventListener("click", () => {
     //close down search popup
     popup.classList.remove("show")
     document.querySelector("#home").style.boxShadow = "none"
@@ -307,11 +306,7 @@ const getSearchedMovies = (page) => {
   displayMovies(url) //display movies
 }
 
-//Display results on click
-const playIcon = document.querySelector(".search__bar a") //select play icon
-playIcon.addEventListener("click", (e) => {
-  e.preventDefault()
-
+const search = () => {
   cardsContainer.innerHTML = "" //empty container before loading new data
   // const input = getSearchInput
   // //if there is no text inserted then display message
@@ -322,10 +317,33 @@ playIcon.addEventListener("click", (e) => {
   document.querySelector(".search__popup").classList.remove("show") //close search popup
   
 
+  console.log(document.querySelector(".search__bar .input").innerText)
+
   getSearchedMovies()
 
+  window.location.href = "#movies"
 
-  //document.querySelector(".search__bar .input").value = "" //reset input container
+  document.querySelector(".search__bar .input").textContent = "" //reset input container
+  console.log(document.querySelector(".search__bar .input").innerText)
+}
+
+//Display results on click
+const playIcon = document.querySelector(".search__bar a") //select play icon
+playIcon.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  search()
+  
+})
+document.querySelector(".search__bar .input").addEventListener('keydown', (e) => {
+  if(e.keyCode === 13){
+    e.preventDefault()
+    e.stopImmediatePropagation()
+
+    search()
+
+    document.querySelector("#home").style.boxShadow = "none"
+  }
 })
 
 

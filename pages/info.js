@@ -107,3 +107,4 @@ function spaceAfterComma(array) {
 
     return array;
 }
+
