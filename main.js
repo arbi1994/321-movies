@@ -63,6 +63,29 @@
     popup.classList.remove("show")
     document.querySelector("#home").style.boxShadow = "none"
   })
+
+  //open up input box
+  document.querySelector(".navbar__input").onclick = (e) => {
+    document.querySelector(".navbar__input").classList.add("slide-left")
+    document.querySelector(".fa-play").style.opacity = "1"
+  }
+  //close input box by clicking anywhere in the body document
+  document.querySelector("body").onclick = (e) => {
+    if(!e.target.classList.contains("navbar__input")){
+      document.querySelector(".navbar__input").classList.remove("slide-left")
+      document.querySelector(".fa-play").style.opacity = "0"
+
+    }
+  }
+  //show underline when hover over
+  document.querySelector(".navbar__input").addEventListener("mouseover", () => {
+    document.querySelector(".underline").style.background = "#f4f0fa"
+  }) 
+  //on mouse out hide underline
+  document.querySelector(".navbar__input").addEventListener("mouseout", () => {
+    document.querySelector(".underline").style.background = "#f4f0fa00"
+  })
+  
 })()
 
 

@@ -293,10 +293,83 @@ button {
 }
 .navbar__search {
   margin-right: 2em;
+  position: relative;
+}
+.navbar__button {
+  display: none;
+}
+.navbar__input {
+  border: none;
+  height: 2em;
+  padding-top: 0.3em;
+  padding-left: 2em;
+  width: 8rem;
+  z-index: -1;
+  transition: all 0.5s linear;
+  background: transparent;
+  color: #f4f0fa;
+  position: relative;
+  outline: none;
+  z-index: 1;
+}
+.navbar .underline {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  margin-top: 17px;
+  height: 1px;
+  display: block;
+  transition: background 0.3s linear;
+}
+.navbar .fa-search {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.6rem;
+  color: #eca0ff;
+  animation: colorChange 5s linear infinite alternate;
+}
+.navbar .fa-play {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.6rem;
+  color: #eca0ff;
+  animation: colorChange 5s linear infinite alternate;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+  z-index: 1;
+  cursor: pointer;
+}
+.navbar__input.slide-left {
+  width: 15rem;
+}
+@keyframes colorChange {
+  0% {
+    color: #eca0ff;
+  }
+  20% {
+    color: #aab2ff;
+  }
+  40% {
+    color: #eca0ff;
+  }
+  60% {
+    color: #aab2ff;
+  }
+  80% {
+    color: #eca0ff;
+  }
+  100% {
+    color: #aab2ff;
+  }
 }
 .navbar__burger {
   height: 100%;
-  margin-right: 0.5em;
+  margin-right: 1em;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -318,11 +391,11 @@ button {
   .navbar__logo svg {
     width: 8rem;
   }
-  .navbar__subscribe {
-    margin-right: 2rem;
+  .navbar__input.slide-left {
+    width: 20rem;
   }
   .navbar__burger {
-    margin-right: 2rem;
+    margin-right: 1.5em;
   }
   .navbar__burger img {
     width: 3rem;
@@ -344,6 +417,15 @@ button {
   }
   .navbar__burger {
     margin-right: 0;
+  }
+  .navbar__search input {
+    display: none;
+  }
+  .navbar__search .fa-search {
+    display: none;
+  }
+  .navbar__button {
+    display: block;
   }
 }
 @media (max-width: 1920px) and (min-width: 1367px) {
@@ -383,6 +465,15 @@ button {
   }
   .navbar__search {
     margin-right: 3em;
+  }
+  .navbar__search input {
+    display: none;
+  }
+  .navbar__search .fa-search {
+    display: none;
+  }
+  .navbar__button {
+    display: block;
   }
   .navbar__burger {
     display: none;
