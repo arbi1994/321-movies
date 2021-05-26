@@ -72,9 +72,9 @@
   //close input box by clicking anywhere in the body document
   document.querySelector("body").onclick = (e) => {
     if(!e.target.classList.contains("navbar__input")){
+      console.log("what")
       document.querySelector(".navbar__input").classList.remove("slide-left")
       document.querySelector(".fa-play").style.opacity = "0"
-
     }
   }
   //show underline when hover over
@@ -313,7 +313,7 @@ const linkMovieDetails = (id) => {
  * @returns {String}
  */
 const getSearchInput = () => {
-  return document.querySelector(".search__bar .input").value
+  return document.querySelector(".search__bar .input").value || document.querySelector(".navbar__input").value
 }
 
 const getSearchedMovies = (page) => {
@@ -331,43 +331,48 @@ const getSearchedMovies = (page) => {
 
 const search = () => {
   cardsContainer.innerHTML = "" //empty container before loading new data
-  // const input = getSearchInput
-  // //if there is no text inserted then display message
-  // if(input.length == 0){
-  //   alert("Please type something...")
-  // }
 
   document.querySelector(".search__popup").classList.remove("show") //close search popup
-  
-
-  console.log(document.querySelector(".search__bar .input").innerText)
 
   getSearchedMovies()
 
   window.location.href = "#movies"
-
-  document.querySelector(".search__bar .input").textContent = "" //reset input container
-  console.log(document.querySelector(".search__bar .input").innerText)
 }
 
 //Display results on click
-const playIcon = document.querySelector(".search__bar a") //select play icon
-playIcon.addEventListener("click", (e) => {
-  e.preventDefault()
 
+//Results from navbar input
+document.querySelector(".fa-play").onclick = () => {
   search()
-  
-})
-document.querySelector(".search__bar .input").addEventListener('keydown', (e) => {
+  document.querySelector(".navbar__input").value = ""
+}
+
+//Results from search popup input
+document.querySelector(".search").onclick = () => {
+  search()
+}
+
+//Display results when enter is pressed
+
+//At navbar input
+document.querySelector(".search__bar .input").onkeydown = (e) => {
   if(e.keyCode === 13){
     e.preventDefault()
     e.stopImmediatePropagation()
 
     search()
-
-    document.querySelector("#home").style.boxShadow = "none"
   }
-})
+}
+
+//At search popup input
+document.querySelector(".navbar__input").onkeydown = (e) => {
+  if(e.keyCode === 13){
+    e.preventDefault()
+    e.stopImmediatePropagation()
+    
+    search()
+  }
+}
 
 
 
