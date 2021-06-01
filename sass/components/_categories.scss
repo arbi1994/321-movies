@@ -103,15 +103,14 @@
   //   background: linear-gradient(90deg, $search-2 30%, $search-1);
   // }
 
-  @include media("<tablet") {
-    ::-webkit-scrollbar {
-      display: none;
-    }
+  ::-webkit-scrollbar {
+    display: none;
   }
+  
 }
 
 .movies__slider{
-  overflow-x: hidden;
+  overflow-x: scroll;
   @include flex(row, flex-start, center);
   width: 70%;
   box-shadow: inset -31px 0px 20px -25px #ffffff10;

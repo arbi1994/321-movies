@@ -9,6 +9,8 @@ header {
 *
 **/
 .hero {
+  min-height: 40vh;
+  padding-top: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,14 +20,89 @@ header {
   overflow: hidden;
   transition: box-shadow 0.5s ease-in;
 }
+@media (min-width: 427px) {
+  .hero {
+    min-height: 80vh;
+  }
+}
+@media (min-width: 769px) {
+  .hero {
+    min-height: 100vh;
+  }
+}
+.hero__carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+.hero__carousel picture {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+.hero__carousel picture img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+}
+.hero__carousel picture .active {
+  opacity: 1;
+}
+.hero__carousel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.hero .fadeout {
+  animation: fadeOut 0.5s ease-in-out;
+}
+.hero .fadein {
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
 .hero__container {
   display: none;
 }
 
 @media (min-width: 769px) {
   .hero {
-    min-height: 100vh;
     padding-top: 20vh;
+  }
+  .hero__carousel picture img {
+    width: 100%;
+  }
+  .hero__carousel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0px -120px 25px 0px rgba(10, 5, 20, 0.8), inset 0px -140px 25px 0px rgba(10, 5, 20, 0.6), inset 0px -160px 25px 0px rgba(10, 5, 20, 0.4), inset 0px -180px 25px 0px rgba(10, 5, 20, 0.2), inset 0px -200px 25px 0px rgba(10, 5, 20, 0.1);
   }
   .hero__container {
     display: flex;
@@ -59,6 +136,20 @@ header {
     margin-top: 2rem;
   }
 }
+.movies {
+  position: relative;
+}
+.movies::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0px 50px 25px 0px #0a0514, inset 0px 70px 25px 0px rgba(10, 5, 20, 0.6), inset 0px 90px 25px 0px rgba(10, 5, 20, 0.4), inset 0px 100px 25px 0px rgba(10, 5, 20, 0.2), inset 0px 110px 25px 0px rgba(10, 5, 20, 0.1);
+  z-index: -1;
+}
+
 body {
   background: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
   overflow-x: hidden;
@@ -926,14 +1017,12 @@ title {
     align-items: center;
   }
 }
-@media (max-width: 767px) {
-  .movies ::-webkit-scrollbar {
-    display: none;
-  }
+.movies ::-webkit-scrollbar {
+  display: none;
 }
 
 .movies__slider {
-  overflow-x: hidden;
+  overflow-x: scroll;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

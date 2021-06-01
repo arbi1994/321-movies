@@ -72,7 +72,6 @@
   //close input box by clicking anywhere in the body document
   document.querySelector("body").onclick = (e) => {
     if(!e.target.classList.contains("navbar__input")){
-      console.log("what")
       document.querySelector(".navbar__input").classList.remove("slide-left")
       document.querySelector(".fa-play").style.opacity = "0"
     }
@@ -293,10 +292,6 @@ const infiniteScroll = () => {
 window.onscroll = () => {
   infiniteScroll()
 }
-//Load movies on page load
-window.onload = () => {
-  getMovies()
-}
 
 /**
  * Link current page with Movie details page
@@ -316,11 +311,15 @@ const getSearchInput = () => {
   return document.querySelector(".search__bar .input").value || document.querySelector(".navbar__input").value
 }
 
+/**
+ * Get searched Movies data and Display it
+ * @param {Integer} page 
+ */
 const getSearchedMovies = (page) => {
   if (page === 1) { movies = [] } //make sure it does not load same movies twice
 
   const input = getSearchInput() //new reference
-  
+
   endPoint = "/search/multi" //path
 
   let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&query=${input}&page=${page}` //search url
@@ -329,7 +328,10 @@ const getSearchedMovies = (page) => {
   displayMovies(url) //display movies
 }
 
-const search = () => {
+/**
+ * Actions performed on click 
+ */
+const searchedMovies = () => {
   cardsContainer.innerHTML = "" //empty container before loading new data
 
   document.querySelector(".search__popup").classList.remove("show") //close search popup
@@ -339,50 +341,50 @@ const search = () => {
   window.location.href = "#movies"
 }
 
-//Display results on click
+//Bind search to the on click event
 
-//Results from navbar input
+//At navbar input
 document.querySelector(".fa-play").onclick = () => {
-  search()
+  searchedMovies()
   document.querySelector(".navbar__input").value = ""
 }
 
-//Results from search popup input
+//At search popup input
 document.querySelector(".search").onclick = () => {
-  search()
+  searchedMovies()
 }
 
-//Display results when enter is pressed
-
-//At navbar input
+//At navbar input when enter key is pressed
 document.querySelector(".search__bar .input").onkeydown = (e) => {
   if(e.keyCode === 13){
     e.preventDefault()
     e.stopImmediatePropagation()
 
-    search()
+    searchedMovies()
   }
 }
 
-//At search popup input
+//At search popup input when enter key is pressed
 document.querySelector(".navbar__input").onkeydown = (e) => {
   if(e.keyCode === 13){
     e.preventDefault()
     e.stopImmediatePropagation()
     
-    search()
+    searchedMovies()
   }
 }
 
 
-//Genres slider
+/**
+ * Genres Slider
+ */
+const genresSlider = () => {
+
 const sliderContent = document.querySelector(".movies__slider") //outer
 const slider = document.querySelector(".movies__genres") //inner
-const btns = document.querySelectorAll(".genres__btn")
+const btns = document.querySelectorAll(".genres__btn") //select all genre buttons
 const lastBtn = btns[btns.length - 1]
-console.log(lastBtn)
 
-let count = 0
 let offsetX = 0
 
 //Get distance between right border of the last button and window left border
@@ -421,36 +423,98 @@ const moveLeft = () => {
     //move slider to the left 
     slider.style.left = `${-offsetX}px`
 
-    console.log("offset" + offsetX)
-    console.log(lastBtnOffsetX)
-    console.log(containerOffsetX)
+    // console.log("offset" + offsetX)
+    // console.log(lastBtnOffsetX)
+    // console.log(containerOffsetX)
 }
 
 //Move slider to the right
 const moveRight = () => {
-    //show right arrow
-    rightArrow.style.opacity = "1"
-    //show box shadow 
-    sliderContent.style.boxShadow = "inset -31px 0px 20px -25px #ffffff10"
-    
-    //if offsetX = 0 then set the offsetX to 0 otherwise increase its value
-    offsetX === 0 ? offsetX = 0 : offsetX += -sliderContent.clientWidth / 4
+  //show right arrow
+  rightArrow.style.opacity = "1"
+  //show box shadow 
+  sliderContent.style.boxShadow = "inset -31px 0px 20px -25px #ffffff10"
+  
+  //if offsetX = 0 then set the offsetX to 0 otherwise increase its value
+  offsetX === 0 ? offsetX = 0 : offsetX += -sliderContent.clientWidth / 4
 
-    //hide left arrow if offset is 0 otherwise show
-    offsetX <= 0 ? leftArrow.style.opacity = '0' : leftArrow.style.opacity = '1'
+  //hide left arrow if offset is 0 otherwise show
+  offsetX <= 0 ? leftArrow.style.opacity = '0' : leftArrow.style.opacity = '1'
 
-    //move slidet to the right
-    slider.style.left = `${-offsetX}px`
-
-    console.log(offsetX)
+  //move slidet to the right
+  slider.style.left = `${-offsetX}px`
 }
 
-//Bind arrows to their event listener
-const rightArrow = document.querySelector(".fa-chevron-right")
-rightArrow.addEventListener(("click"), moveLeft)
+  //Bind arrows to their event listener
+  const rightArrow = document.querySelector(".fa-chevron-right")
+  rightArrow.addEventListener(("click"), moveLeft)
 
-const leftArrow = document.querySelector(".fa-chevron-left")
-leftArrow.addEventListener(("click"), moveRight)
+  const leftArrow = document.querySelector(".fa-chevron-left")
+  leftArrow.addEventListener(("click"), moveRight)
+}
+
+//slideshow
+const imgsArr = [] //carousel images
+console.log(imgsArr)
+
+const pictureEl = document.querySelector(".hero__carousel picture")
+
+let index = 0
+
+//get latest 3 movies on cinema
+const getCarouselData = async () => {
+  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${APIKEY}` //url
+  const resp = await fetch(url) //fetch url
+  const json = await resp.json() //result
+  const dataArr = Object.values(json)[1]
+  //console.log(dataArr)
+
+  //root path to the image files
+  const imgURL = "https://image.tmdb.org/t/p/original"
+
+  //loop through and get the first 3 data
+  dataArr.forEach((data, index) => {
+    if(index < 3){
+      //console.log(data)
+      const img = `${imgURL}${data.backdrop_path}`
+      const title = `${data.original_title}`
+
+      imgsArr.push({img, title})
+
+      createImgElements(img, title)
+    }
+  })
+}
+getCarouselData()
+
+function createImgElements(img, title){
+
+  const imgEl = document.createElement("img")
+  pictureEl.appendChild(imgEl)
+
+  imgEl.setAttribute("src", `${img}`)
+  imgEl.setAttribute("alt", `${title}`)
+}
+
+function changeImgElements(){
+  const imgs = document.querySelectorAll(`.hero__carousel img`)
+  
+  pictureEl.appendChild(imgs[index])
+  
+  index++
+
+  if(index <= imgsArr.length){
+    index = 0
+  }
+
+}
+
+//Page logic
+window.onload = () => {
+  getMovies()
+  genresSlider()
+  setInterval(changeImgElements, 5000)
+}
 
 
 
