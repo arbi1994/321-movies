@@ -9,23 +9,27 @@ header {
 *
 **/
 .hero {
-  min-height: 40vh;
+  height: 40vh;
   padding-top: 20vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 20vh;
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.5s ease-in;
 }
 @media (min-width: 427px) {
   .hero {
-    min-height: 80vh;
+    min-height: 40vh;
   }
 }
 @media (min-width: 769px) {
+  .hero {
+    min-height: 60vh;
+  }
+}
+@media (min-width: 1367px) {
   .hero {
     min-height: 100vh;
   }
@@ -35,57 +39,67 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: -1;
+  z-index: 0;
 }
 .hero__carousel picture {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  height: 100%;
+  position: relative;
+  width: 100%;
 }
 .hero__carousel picture img {
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  min-height: 100%;
   object-fit: cover;
+  opacity: 0;
   transition: opacity 0.5s ease;
+  z-index: -1;
 }
-.hero__carousel picture .active {
+.hero__carousel picture img.fadeIn {
   opacity: 1;
 }
 .hero__carousel::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-}
-.hero .fadeout {
-  animation: fadeOut 0.5s ease-in-out;
-}
-.hero .fadein {
-  animation: fadeIn 0.5s ease-in-out;
-}
-@keyframes fadeOut {
-  from {
-    opacity: 0.3;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.3;
-  }
+  min-height: 100%;
+  background: rgba(0, 0, 0, 0.7);
 }
 .hero__container {
-  display: none;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.hero__container h2 {
+  padding: 1rem 0;
+}
+.hero__container h1 {
+  padding: 0 0 2rem 0;
+}
+.hero .hero__title {
+  letter-spacing: 1.5px;
+  font-weight: 500;
+}
+.hero .hero__title--main {
+  font-weight: 700;
+}
+.hero .hero__title--main {
+  background: linear-gradient(180deg, #aab2ff, #eca0ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }
 
 @media (min-width: 769px) {
@@ -110,6 +124,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1;
   }
   .hero__container h2 {
     padding: 1rem 0;
@@ -135,9 +150,6 @@ header {
   .hero .hero__search {
     margin-top: 2rem;
   }
-}
-.movies {
-  position: relative;
 }
 .movies::after {
   content: "";
@@ -334,16 +346,18 @@ button {
   height: 4rem;
   width: 15rem;
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(234, 234, 234, 0.05) 49.79%, rgba(255, 255, 255, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) -50%, rgba(234, 234, 234, 0.05) 50%, rgba(255, 255, 255, 0.3) 150%);
   color: #f4f0fa;
-  font-weight: 400;
+  font-weight: 500;
   text-align: center;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(50px);
 }
 .genre_btn:hover, .genre_btn:focus {
-  box-shadow: inset 0 0 5px 1px #aab2ff;
+  transform: scale3d(1.3, 1.3, 1);
+  color: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
 }
 
 .navbar {
@@ -351,7 +365,7 @@ button {
   width: 100%;
   padding: 1em;
   top: 0;
-  z-index: 1;
+  z-index: 3;
   transition: opacity 0.3s ease;
   display: flex;
   flex-direction: row;
@@ -396,7 +410,7 @@ button {
   padding-left: 2em;
   width: 8rem;
   z-index: -1;
-  transition: all 0.5s linear;
+  transition: all 0.3s ease;
   background: transparent;
   color: #f4f0fa;
   position: relative;
@@ -721,7 +735,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(3rem, 5vw, 5.6rem);
+  font-size: clamp(2.4rem, 5vw, 5.6rem);
 }
 
 h3 {
@@ -937,16 +951,17 @@ title {
 
 .movies .movies__nav {
   position: relative;
-  height: 10rem;
+  height: 10em;
   width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
+  z-index: 1;
 }
 .movies .movies__nav .fas {
-  font-size: 3rem;
+  font-size: 2rem;
   position: absolute;
   color: white;
   top: 50%;
@@ -965,6 +980,12 @@ title {
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+  display: none;
+}
+@media (min-width: 427px) {
+  .movies .movies__nav .fas {
+    display: flex;
+  }
 }
 .movies .movies__nav .fa-chevron-right {
   right: 10%;
@@ -972,6 +993,7 @@ title {
 .movies .movies__nav .fa-chevron-left {
   left: 10%;
   opacity: 0;
+  cursor: default;
 }
 .movies .movies__nav .line {
   position: absolute;
@@ -1027,9 +1049,14 @@ title {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 70%;
+  width: 100%;
   box-shadow: inset -31px 0px 20px -25px #ffffff10;
   transition: box-shadow 0.5s ease;
+}
+@media (min-width: 427px) {
+  .movies__slider {
+    width: 70%;
+  }
 }
 
 .navbar__subscribe {
@@ -1074,27 +1101,28 @@ title {
   }
 }
 
-.search__popup {
-  visibility: hidden;
-  height: 0;
-}
-
 @media (min-width: 769px) {
   .search__popup.show {
-    display: block;
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     visibility: visible;
-    width: 50%;
-    height: 24em;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
-    background: linear-gradient(180deg, #aab2ff, #eca0ff);
-    bottom: 30%;
-    left: 0%;
+    backdrop-filter: blur(20px);
+    transition: height 0.5s ease;
   }
   .search__popup.show .fa-times {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 2rem;
+    color: #f4f0fa;
     cursor: pointer;
   }
   .search__popup.show .fa-play {
@@ -1112,13 +1140,15 @@ title {
   }
 
   .search__popup {
-    position: absolute;
+    position: fixed;
     bottom: -50%;
-    transform: translateX(50%);
+    height: 0;
     transition: bottom 0.5s ease-in-out;
+    visibility: hidden;
+    z-index: 5;
   }
   .search__popup .search__header h4 {
-    color: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+    color: #f4f0fa;
     font-weight: 500;
   }
 }

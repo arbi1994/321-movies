@@ -1,18 +1,21 @@
 @use "../abstracts/" as *;
 
 .hero {
-  min-height: 40vh;
+  height: 40vh;
   padding-top: 20vh;
   @include flex(column, center, center);
-  padding-top: 20vh;
   position: relative;
   overflow: hidden;
 
   @include media(">phoneL") {
-    min-height: 80vh;
+    min-height: 40vh;
   }
 
   @include media(">tablet") {
+    min-height: 60vh;
+  }
+
+  @include media(">desktop") {
     min-height: 100vh;
   }
 
@@ -21,63 +24,72 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
 
     picture {
-      @include flex(row, flex-start, center);
-      height: 100%;
+      @include flex(row, center, center);
+      position: relative;
+      width: 100%;
+      //height: 100vh;
 
       img {
-        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
+        min-height: 100%;
         object-fit: cover;
-        //opacity: 0;
+        opacity: 0;
         transition: opacity .5s ease;
+        z-index: -1;
       }
-      .active{
+      img.fadeIn{
         opacity: 1;
       }
     }
 
     &::before {
       content: "";
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-    }
-  }
-
-  .fadeout {
-    animation: fadeOut 0.5s ease-in-out;
-  }
-
-  .fadein {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-
-  @keyframes fadeOut {
-    from {
-      opacity: 0.3;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 0.3;
+      min-height: 100%;
+      background: rgba(0, 0, 0, 0.7);
     }
   }
 
   &__container {
-    display: none;
+    display: flex;
+    @include flex(column, center, center);
+    z-index: 1;
+
+    h2 {
+      padding: 1rem 0;
+    }
+    h1 {
+      padding: 0 0 2rem 0;
+    }
   }
+  .hero__title {
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    &--main {
+      font-weight: 700;
+    }
+  }
+  .hero__title--main {
+    background: linear-gradient($deg1, $search-1, $search-2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+  }
+
+  // &__container {
+  //   display: none;
+  // }
 
   transition: box-shadow 0.5s ease-in;
 }
@@ -111,6 +123,7 @@
     &__container {
       display: flex;
       @include flex(column, center, center);
+      z-index: 1;
 
       h2 {
         padding: 1rem 0;

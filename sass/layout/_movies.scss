@@ -1,7 +1,6 @@
 @use "../abstracts/" as *;
 
 .movies{
-    position: relative;
     &::after {
         content: "";
         position: absolute;

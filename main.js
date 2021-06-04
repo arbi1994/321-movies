@@ -34,7 +34,7 @@
     if(prevScrollPos > currScrollPos){
       navBar.style.visibility = "visible"
       navBar.style.opacity = "1"
-      navBar.style.backdropFilter = "blur(20px)";
+      navBar.style.backdropFilter = "blur(10px)";
 
       currScrollPos == 0 ? navBar.style.backdropFilter = "blur(0px)" : null
     }else{
@@ -45,7 +45,6 @@
     prevScrollPos = currScrollPos
   }
 }
-
 
 /* Show search popup */
 (function(){
@@ -73,7 +72,7 @@
   document.querySelector("body").onclick = (e) => {
     if(!e.target.classList.contains("navbar__input")){
       document.querySelector(".navbar__input").classList.remove("slide-left")
-      document.querySelector(".fa-play").style.opacity = "0"
+      document.querySelector(".fa-play").style.opacity = "1"
     }
   }
   //show underline when hover over
@@ -263,7 +262,7 @@ let isScrolled = false //set scrolling to false
 const infiniteScroll = () => {
   const {scrollHeight, scrollTop, clientHeight} = document.documentElement
   
-  if((scrollTop + clientHeight + 100) >= scrollHeight & !isScrolled){
+  if((scrollTop + clientHeight + 500) >= scrollHeight & !isScrolled){
 
       isScrolled = true //set isScrolled to true to continue scrolling after bottom reached 
       console.log("bottom")
@@ -277,6 +276,7 @@ const infiniteScroll = () => {
       
       if(endPoint == "/discover/movie"){
         getMovies(pageNum)
+        console.log("bottom page")
       }
       if(endPoint == "/search/multi"){
         getSearchedMovies(pageNum)
@@ -286,11 +286,6 @@ const infiniteScroll = () => {
           isScrolled = false;
       }, 1000);
   }
-}
-
-//Bind the infiniteScroll function to the onscroll event
-window.onscroll = () => {
-  infiniteScroll()
 }
 
 /**
@@ -308,7 +303,11 @@ const linkMovieDetails = (id) => {
  * @returns {String}
  */
 const getSearchInput = () => {
-  return document.querySelector(".search__bar .input").value || document.querySelector(".navbar__input").value
+  const searchInput = document.querySelector(".search__bar .input").value
+  const navInput = document.querySelector(".navbar__input").value
+
+  return searchInput ? sessionStorage.setItem("input", searchInput) : sessionStorage.setItem("input", navInput)
+
 }
 
 /**
@@ -318,7 +317,9 @@ const getSearchInput = () => {
 const getSearchedMovies = (page) => {
   if (page === 1) { movies = [] } //make sure it does not load same movies twice
 
-  const input = getSearchInput() //new reference
+  //const input = getSearchInput() //new input value reference
+
+  const input = sessionStorage.getItem("input");
 
   endPoint = "/search/multi" //path
 
@@ -351,7 +352,9 @@ document.querySelector(".fa-play").onclick = () => {
 
 //At search popup input
 document.querySelector(".search").onclick = () => {
+  getSearchInput()
   searchedMovies()
+  document.querySelector(".search__bar .input").value = ""
 }
 
 //At navbar input when enter key is pressed
@@ -405,27 +408,27 @@ const getContainerOffsetValues = () => {
 
 //Move slider to the left
 const moveLeft = () => {
-    const lastBtnOffsetX = getLastBtnOffsetValues()
-    const containerOffsetX = getContainerOffsetValues()
+  const lastBtnOffsetX = getLastBtnOffsetValues()
+  const containerOffsetX = getContainerOffsetValues()
 
-    //if offsetX is bigger than the rightInnerX then set offsetX to 0 otherwise increase offsetX value
-    lastBtnOffsetX <= containerOffsetX ? slider.style.left = `none`: offsetX += sliderContent.clientWidth / 4
+  //if offsetX is bigger than the rightInnerX then set offsetX to 0 otherwise increase offsetX value
+  lastBtnOffsetX <= containerOffsetX ? slider.style.left = `none`: offsetX += sliderContent.clientWidth / 4
 
-    //hide right arrow
-    if((lastBtnOffsetX - 50) < containerOffsetX){
-        rightArrow.style.opacity = "0" 
-        sliderContent.style.boxShadow = "none"
-    }
+  //hide right arrow
+  if((lastBtnOffsetX - 50) < containerOffsetX){
+      rightArrow.style.opacity = "0" 
+      sliderContent.style.boxShadow = "none"
+  }
 
-    //if offsetX is bigger than 0 then show the left arrow otherwise hide
-    offsetX > 0 ? leftArrow.style.opacity = '1' : leftArrow.style.opacity = '0'
+  //if offsetX is bigger than 0 then show the left arrow otherwise hide
+  offsetX > 0 ? leftArrow.style.opacity = '1' : leftArrow.style.opacity = '0'; leftArrow.style.cursor = "pointer"
 
-    //move slider to the left 
-    slider.style.left = `${-offsetX}px`
+  //move slider to the left 
+  slider.style.left = `${-offsetX}px`
 
-    // console.log("offset" + offsetX)
-    // console.log(lastBtnOffsetX)
-    // console.log(containerOffsetX)
+  // console.log("offset" + offsetX)
+  // console.log(lastBtnOffsetX)
+  // console.log(containerOffsetX)
 }
 
 //Move slider to the right
@@ -439,7 +442,12 @@ const moveRight = () => {
   offsetX === 0 ? offsetX = 0 : offsetX += -sliderContent.clientWidth / 4
 
   //hide left arrow if offset is 0 otherwise show
-  offsetX <= 0 ? leftArrow.style.opacity = '0' : leftArrow.style.opacity = '1'
+  if(offsetX <= 0){
+    leftArrow.style.opacity = '0'
+    leftArrow.style.cursor = "default"
+  }else{
+    leftArrow.style.opacity = '1' 
+  }
 
   //move slidet to the right
   slider.style.left = `${-offsetX}px`
@@ -453,13 +461,12 @@ const moveRight = () => {
   leftArrow.addEventListener(("click"), moveRight)
 }
 
-//slideshow
-const imgsArr = [] //carousel images
-console.log(imgsArr)
+/** 
+ * Slideshow
+*/
 
+let imgsArr = [] //carousel images
 const pictureEl = document.querySelector(".hero__carousel picture")
-
-let index = 0
 
 //get latest 3 movies on cinema
 const getCarouselData = async () => {
@@ -479,44 +486,62 @@ const getCarouselData = async () => {
       const img = `${imgURL}${data.backdrop_path}`
       const title = `${data.original_title}`
 
-      imgsArr.push({img, title})
+      const imgEl = document.createElement("img")
+      createImgElements(imgEl, img, title)
 
-      createImgElements(img, title)
+      imgsArr.push(imgEl)
     }
   })
 }
 getCarouselData()
 
-function createImgElements(img, title){
+let imgs = pictureEl.children
+console.log(imgs)
+let index = 0
+let timer = 5000
 
-  const imgEl = document.createElement("img")
-  pictureEl.appendChild(imgEl)
+function createImgElements(el, img, title){
+  
+  pictureEl.appendChild(el)
+  el.src = img
+  el.alt = title
+}
+// createImgElements()
 
-  imgEl.setAttribute("src", `${img}`)
-  imgEl.setAttribute("alt", `${title}`)
+function fadeIn(el){
+  el.className = "fadeIn"
 }
 
-function changeImgElements(){
-  const imgs = document.querySelectorAll(`.hero__carousel img`)
-  
-  pictureEl.appendChild(imgs[index])
-  
+function fadeOut(el){
+  el.className = ""
+}
+
+function changeImg(){
+
+  fadeIn(imgs[index])
+
   index++
 
-  if(index <= imgsArr.length){
+  if(index === imgs.length){
     index = 0
+    index++
   }
+  fadeOut(imgs[index])
 
+  setTimeout("changeImg()", timer)
 }
 
 //Page logic
 window.onload = () => {
   getMovies()
   genresSlider()
-  setInterval(changeImgElements, 5000)
+  changeImg()
 }
 
-
+//Bind the infiniteScroll function to the onscroll event
+window.onscroll = () => {
+  infiniteScroll()
+}
 
 
 

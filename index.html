@@ -17,6 +17,26 @@
     <title>Movie web app</title>
   </head>
   <body>
+    <!-- Search popup -->
+    <div class="search__popup">
+      <span class="fas fa-times"></span>
+      <div class="search__header">
+        <h4>Search your favourite movie</h4>
+      </div>
+
+      <div class="search__container">
+        <form id="search-form" class="search__bar">
+          <i class="fas fa-search"></i>
+          <input class="input" type="text" required/>
+
+          <a href="#movies" class="search"><i class="fas fa-play" aria-hidden="true"></i></a>
+
+          <span class="search__underline"></span>
+        </form>
+      </div>
+
+    </div>
+    
     <!-- Burger menu -->
     <div class="nav__menu--mobile">
       <span class="menu--mobile__close">
@@ -236,24 +256,8 @@
 
         </div>
 
-        <div class="search__popup">
-          <span class="fas fa-times"></span>
-          <div class="search__header">
-            <h4>Search your favourite movie</h4>
-          </div>
+        
 
-          <div class="search__container">
-            <form id="search-form" class="search__bar">
-              <i class="fas fa-search"></i>
-              <input class="input" type="text" required/>
-
-              <a href="#movies" class="search"><i class="fas fa-play" aria-hidden="true"></i></a>
-
-              <span class="search__underline"></span>
-            </form>
-          </div>
-
-          </div>
         </div>
       </section>
     </header>

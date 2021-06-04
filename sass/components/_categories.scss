@@ -4,13 +4,14 @@
 .movies {
   .movies__nav {
     position: relative;
-    height: 10rem;
+    height: 10em;
     width: 100vw;
     @include flex(row, center, center);
     margin-top: 2rem;
-    
+    z-index: 1;
+
     .fas {
-      font-size: 3rem;
+      font-size: 2rem;
       position: absolute;
       color: white;
       top: 50%;
@@ -29,15 +30,21 @@
       -webkit-text-fill-color: transparent;
       -moz-background-clip: text;
       -moz-text-fill-color: transparent;
+      display: none;
+
+      @include media(">phoneL") {
+        display: flex;
+      }
     }
 
-    .fa-chevron-right{
+    .fa-chevron-right {
       right: 10%;
     }
 
     .fa-chevron-left {
       left: 10%;
       opacity: 0;
+      cursor: default;
     }
 
     .line {
@@ -106,13 +113,16 @@
   ::-webkit-scrollbar {
     display: none;
   }
-  
 }
 
-.movies__slider{
+.movies__slider {
   overflow-x: scroll;
   @include flex(row, flex-start, center);
-  width: 70%;
+  width: 100%;
   box-shadow: inset -31px 0px 20px -25px #ffffff10;
-  transition: box-shadow .5s ease;
+  transition: box-shadow 0.5s ease;
+
+  @include media(">phoneL") {
+    width: 70%;
+  }
 }

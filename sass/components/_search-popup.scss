@@ -1,27 +1,28 @@
 @use "../abstracts/" as *;
 @use "../base/font-face" as *;
 
-.search__popup {
-  visibility: hidden;
-  height: 0;
-}
-
 @include media(">tablet") {
   .search__popup.show {
-    display: block;
+    display: flex;
+    @include flex(column, center, center);
     visibility: visible;
-    width: 50%;
-    height: 24em;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
-    background: linear-gradient(180deg, $search-1, $search-2);
-    bottom: 30%;
-    left: 0%;
+    backdrop-filter: blur(20px);
+    transition: height .5s ease;
+    //background: linear-gradient(180deg, $search-1, $search-2);
+    // bottom: 30%;
+    // left: 0%;
 
     .fa-times {
       position: absolute;
       top: 10px;
       right: 10px;
       font-size: 2rem;
+      color: $text;
       cursor: pointer;
     }
     .fa-play{
@@ -39,14 +40,17 @@
     }
   }
   .search__popup {
-    position: absolute;
+    position: fixed;
     bottom: -50%;
-    transform: translateX(50%);
+    height: 0;
+    //transform: translateX(50%);
     transition: bottom 0.5s ease-in-out;
+    visibility: hidden;
+    z-index: 5;
 
     .search__header {
       h4 {
-        color: $background;
+        color: $text;
         font-weight: 500;
       }
     }
