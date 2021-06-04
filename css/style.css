@@ -1101,7 +1101,25 @@ title {
   }
 }
 
+@media (max-width: 1365px) {
+  .search__popup {
+    display: none;
+  }
+}
 @media (min-width: 769px) {
+  .search__popup {
+    position: fixed;
+    bottom: -50%;
+    height: 0;
+    transition: bottom 0.5s ease-in-out;
+    visibility: hidden;
+    z-index: 5;
+  }
+  .search__popup .search__header h4 {
+    color: #f4f0fa;
+    font-weight: 500;
+  }
+
   .search__popup.show {
     display: flex;
     display: flex;
@@ -1137,19 +1155,6 @@ title {
     z-index: 0;
     border: none;
     visibility: hidden;
-  }
-
-  .search__popup {
-    position: fixed;
-    bottom: -50%;
-    height: 0;
-    transition: bottom 0.5s ease-in-out;
-    visibility: hidden;
-    z-index: 5;
-  }
-  .search__popup .search__header h4 {
-    color: #f4f0fa;
-    font-weight: 500;
   }
 }
 .error {

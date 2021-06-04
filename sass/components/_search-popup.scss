@@ -1,7 +1,28 @@
 @use "../abstracts/" as *;
 @use "../base/font-face" as *;
 
+@include media("<desktop"){
+  .search__popup {
+    display: none;
+  }
+}
 @include media(">tablet") {
+  .search__popup {
+    position: fixed;
+    bottom: -50%;
+    height: 0;
+    //transform: translateX(50%);
+    transition: bottom 0.5s ease-in-out;
+    visibility: hidden;
+    z-index: 5;
+
+    .search__header {
+      h4 {
+        color: $text;
+        font-weight: 500;
+      }
+    }
+  }
   .search__popup.show {
     display: flex;
     @include flex(column, center, center);
@@ -36,22 +57,6 @@
         z-index: 0;
         border: none;
         visibility: hidden;
-      }
-    }
-  }
-  .search__popup {
-    position: fixed;
-    bottom: -50%;
-    height: 0;
-    //transform: translateX(50%);
-    transition: bottom 0.5s ease-in-out;
-    visibility: hidden;
-    z-index: 5;
-
-    .search__header {
-      h4 {
-        color: $text;
-        font-weight: 500;
       }
     }
   }
