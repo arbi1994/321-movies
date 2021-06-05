@@ -1,5 +1,6 @@
 @use "../abstracts/" as *;
 @use "../base/" as *;
+@use "./loader" as *;
 
 .cards {
   z-index: -1;

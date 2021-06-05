@@ -1,0 +1,22 @@
+@use "./colors" as *;
+
+@keyframes colorChange {
+    0% {
+      color: $search-2;
+    }
+    20% {
+      color: $search-1;
+    }
+    40% {
+      color: $search-2;
+    }
+    60% {
+      color: $search-1;
+    }
+    80% {
+      color: $search-2;
+    }
+    100% {
+      color: $search-1;
+    }
+  }

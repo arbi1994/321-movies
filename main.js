@@ -203,12 +203,15 @@ const displayMovies = async (url) => {
       card.id = movie.id
       //append it to the parent
       cardsContainer.appendChild(card)
+
+      const placeholder = document.createElement("div")
+      card.appendChild(placeholder)
   
       //get ratings
       const rating = getRatings(movie)
   
       card.innerHTML += `
-                        <img src="${imgURL}${posterPath}" alt="">
+                        <img src="${placeholder}" data-src="${imgURL}${posterPath}" alt="">
   
                         <div class="cards__title">
                           <h6>${movieTitle}</h6>
@@ -233,6 +236,35 @@ const displayMovies = async (url) => {
                           </div>
                         </div>
                       `
+
+      //do not display movies with no image and title
+      if(posterPath === undefined || posterPath === null || movieTitle === null){
+        card.style.display = "none"
+      }
+
+      //select all images
+      const images = document.querySelectorAll(".cards__card img")
+      let imageOptions = {}
+
+      //create observer
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          //if we do not have any content on screen then just return out of the callback
+          if(!entry.isIntersecting) return
+          
+          const image = entry.target 
+
+          const newURL = image.getAttribute("data-src") //get the data-src attribute
+
+          image.src = newURL //replace the actual image src with the data-src
+         
+          observer.unobserve(image) //remove observer after images have been properly loaded
+        })
+      }, imageOptions)
+
+      images.forEach(image => {
+        observer.observe(image) //assign the observer to each image so that it can track each image
+      })
       
       card.setAttribute("onClick", `linkMovieDetails(${card.id})`)
     })
