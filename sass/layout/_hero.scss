@@ -26,26 +26,28 @@
     width: 100%;
     z-index: 0;
 
-    picture {
-      @include flex(row, center, center);
-      position: relative;
-      width: 100%;
-      //height: 100vh;
+    // picture {
+    //   @include flex(row, center, center);
+    //   position: relative;
+    //   width: 100%;
+    //   //height: 100vh;
 
-      img {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        min-height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition: opacity .5s ease;
-        z-index: -1;
-      }
-      img.fadeIn{
-        opacity: 1;
-      }
+    // }
+
+    
+    img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity .5s ease;
+      z-index: -1;
+    }
+    img.fadeIn{
+      opacity: 1;
     }
 
     &::before {

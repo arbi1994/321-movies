@@ -32,6 +32,7 @@
     "sass": "^1.32.12"
   },
   "dependencies": {
+    "body-scroll-lock": "^3.1.5",
     "postcss": "^8.3.0"
   }
 }

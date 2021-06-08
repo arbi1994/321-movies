@@ -1,3 +1,28 @@
+// const bodyScrollLock = require("body-scroll-lock")
+// const disableBodyScroll = bodyScrollLock.disableBodyScroll
+// const enableBodyScroll = bodyScrollLock.enableBodyScroll
+
+const disableScroll = (el) => {
+  el.classList.add("show") || el.classList.add("open")
+  const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
+  const body = document.body;
+  body.style.position = 'fixed';
+  body.style.top = `-${scrollY}`;
+};
+
+const enableScroll = (el) => {
+  const body = document.body;
+  const scrollY = body.style.top;
+  body.style.position = '';
+  body.style.top = '';
+  window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  el.classList.remove("show") || el.classList.remove("open")
+}
+window.addEventListener('scroll', () => {
+  document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+});
+
+
 /* BURGER MENU */
 (function(){
   const burgerIcon = document.querySelector(".navbar__burger img") //open icon
@@ -5,17 +30,23 @@
   const menu = document.querySelector(".nav__menu--mobile") //menu
   const navLinks = document.querySelectorAll(".menu__list a")
 
+  // const targetElement = document.querySelector(".nav__menu--mobile")
+
   burgerIcon.addEventListener("click", () => {
       menu.classList.add("open")
+      disableScroll(menu)
   })
   closeIcon.addEventListener("click", () => {
       menu.classList.remove("open")
+      enableScroll(menu)
   })
   navLinks.forEach(link => {
     link.addEventListener("click", () => {
       menu.classList.remove("open")
     })
   })
+
+  
 })()
 
 /* Show/Hide navbar when scrolling */
@@ -53,13 +84,15 @@
 
   document.querySelector(".navbar__button").addEventListener("click", () => {
     //open up search popup
-    popup.classList.add("show")
+    //popup.classList.add("show")
+    disableScroll(popup)
     document.querySelector("#home").style.boxShadow = "inset 0px 0px 500px 200px rgb(0, 0, 0, 0.5)"
   })
 
   document.querySelector(".fa-times").addEventListener("click", () => {
     //close down search popup
-    popup.classList.remove("show")
+    //popup.classList.remove("show")
+    enableScroll(popup)
     document.querySelector("#home").style.boxShadow = "none"
   })
 
@@ -94,6 +127,7 @@ let movies = [] //empty movies array where we are going to store our movies data
 let pageNum = 1; //set page number to 1
 let genre = "" 
 let endPoint = ""
+totalPages = 0
 
 /**
  * Get all movies genres
@@ -167,12 +201,13 @@ const getMovies = (page, url) => {
   // when the user changes genres or year, we need to clear
   // the movies array out instead of just filtering
   // so it doesn’t add the same movie twice
-  if (page === 1) { movies = [] }
+  //if (page === 1) { movies = [] }
 
   //path
   endPoint = "/discover/movie"
   // url
-  url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_genres=${genre}`;  console.log(url)
+  url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_genres=${genre}`;
+  console.log(url)
 
   displayMovies(url)
 }
@@ -180,21 +215,30 @@ const getMovies = (page, url) => {
 const displayMovies = async (url) => {
   try{
     //root path to the image files
-    const imgURL = "https://image.tmdb.org/t/p/w500"
+    const imageKitURL = "https://ik.imagekit.io/iowcmbydcj3"
+    const imgURL = "/t/p/w500"
+    const imageKitTransformation = "?tr=bl-30"
     //response
     const resp = await fetch(url)
     //convert response to json format
     const json = await resp.json()
+
+    totalPages = json.total_pages //total number of pages
+
     //convert json object into array of objects
     movies = Object.values(json)[1]
+  
 
     movies.forEach((movie, index) => {
+      
       movies.push(movie)
-
+      //console.log(movies)
+      
       //get movies titles
       const movieTitle = movie.original_title
       //get image path
       const posterPath = movie.poster_path
+      const imageURL = `${imageKitURL}${imgURL}`
       //create card
       const card = document.createElement("div")
       //assign a class to it
@@ -211,7 +255,7 @@ const displayMovies = async (url) => {
       const rating = getRatings(movie)
   
       card.innerHTML += `
-                        <img src="${placeholder}" data-src="${imgURL}${posterPath}" alt="">
+                        <img src="${imageURL}${posterPath}${imageKitTransformation}" data-lazy="${imageURL}${posterPath}" alt="">
   
                         <div class="cards__title">
                           <h6>${movieTitle}</h6>
@@ -244,7 +288,10 @@ const displayMovies = async (url) => {
 
       //select all images
       const images = document.querySelectorAll(".cards__card img")
-      let imageOptions = {}
+      let imageOptions = {
+        threshold: 1,
+        rootMargin: "0px 0px -10px 0px"
+      }
 
       //create observer
       const observer = new IntersectionObserver((entries, observer) => {
@@ -253,12 +300,13 @@ const displayMovies = async (url) => {
           if(!entry.isIntersecting) return
           
           const image = entry.target 
-
-          const newURL = image.getAttribute("data-src") //get the data-src attribute
+          const newURL = image.getAttribute("data-lazy") //get the data-src attribute
 
           image.src = newURL //replace the actual image src with the data-src
          
           observer.unobserve(image) //remove observer after images have been properly loaded
+
+          
         })
       }, imageOptions)
 
@@ -292,25 +340,21 @@ const getRatings = (movie) => {
  */
 let isScrolled = false //set scrolling to false
 const infiniteScroll = () => {
+  
   const {scrollHeight, scrollTop, clientHeight} = document.documentElement
   
-  if((scrollTop + clientHeight + 500) >= scrollHeight & !isScrolled){
+  if((scrollTop + clientHeight + 100) >= scrollHeight & !isScrolled){
 
       isScrolled = true //set isScrolled to true to continue scrolling after bottom reached 
-      console.log("bottom")
-
-      pageNum++;
-
-      //if no data don't increase page number
-      if(movies.length == 0){
-        return 
-      }
+ 
       
-      if(endPoint == "/discover/movie"){
+      if(endPoint === "/discover/movie"){
+        pageNum++;
         getMovies(pageNum)
-        console.log("bottom page")
       }
-      if(endPoint == "/search/multi"){
+
+      if(endPoint === "/search/multi"){
+        pageNum++; 
         getSearchedMovies(pageNum)
       }
 
@@ -339,24 +383,26 @@ const getSearchInput = () => {
   const navInput = document.querySelector(".navbar__input").value
 
   return searchInput ? sessionStorage.setItem("input", searchInput) : sessionStorage.setItem("input", navInput)
-
 }
 
 /**
  * Get searched Movies data and Display it
- * @param {Integer} page 
  */
 const getSearchedMovies = (page) => {
-  if (page === 1) { movies = [] } //make sure it does not load same movies twice
-
-  //const input = getSearchInput() //new input value reference
-
   const input = sessionStorage.getItem("input");
 
   endPoint = "/search/multi" //path
 
+  if(page === undefined){
+    page = 1
+  }
+
+  if(page === totalPages){
+    console.log("oooook")
+    return
+  }
+
   let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&query=${input}&page=${page}` //search url
-  console.log(url)
 
   displayMovies(url) //display movies
 }
@@ -364,8 +410,15 @@ const getSearchedMovies = (page) => {
 /**
  * Actions performed on click 
  */
-const searchedMovies = () => {
+const searchedMovies = (e) => {
   cardsContainer.innerHTML = "" //empty container before loading new data
+  const targetElement = document.querySelector(".search__popup")
+
+  if(e.keyCode === 13){
+    document.querySelector(".search__bar .input").value = "" //remove search bar input value after press enter
+    document.querySelector(".navbar__input").value = "" //remove navbar input value after press enter
+    enableScroll(targetElement)
+  }
 
   document.querySelector(".search__popup").classList.remove("show") //close search popup
 
@@ -377,16 +430,21 @@ const searchedMovies = () => {
 //Bind search to the on click event
 
 //At navbar input
-document.querySelector(".fa-play").onclick = () => {
-  searchedMovies()
-  document.querySelector(".navbar__input").value = ""
+document.querySelector(".fa-play").onclick = (e) => {
+  getSearchInput()
+  searchedMovies(e)
+
+  document.querySelector(".search__bar .input").value = "" //remove search bar input value after click
+  enableScroll(document.querySelector(".search__popup"))
 }
 
 //At search popup input
-document.querySelector(".search").onclick = () => {
+document.querySelector(".search").onclick = (e) => {
   getSearchInput()
-  searchedMovies()
-  document.querySelector(".search__bar .input").value = ""
+  searchedMovies(e)
+
+  document.querySelector(".navbar__input").value = "" //remove navbar input value after click
+  enableScroll(document.querySelector(".search__popup"))
 }
 
 //At navbar input when enter key is pressed
@@ -395,7 +453,10 @@ document.querySelector(".search__bar .input").onkeydown = (e) => {
     e.preventDefault()
     e.stopImmediatePropagation()
 
-    searchedMovies()
+    pageNum = 1
+
+    getSearchInput()
+    searchedMovies(e)
   }
 }
 
@@ -405,10 +466,12 @@ document.querySelector(".navbar__input").onkeydown = (e) => {
     e.preventDefault()
     e.stopImmediatePropagation()
     
-    searchedMovies()
+    pageNum = 1
+
+    getSearchInput()
+    searchedMovies(e)
   }
 }
-
 
 /**
  * Genres Slider
@@ -498,7 +561,8 @@ const moveRight = () => {
 */
 
 let imgsArr = [] //carousel images
-const pictureEl = document.querySelector(".hero__carousel picture")
+const pictureEl = document.querySelector(".hero__carousel")
+let index = 0 
 
 //get latest 3 movies on cinema
 const getCarouselData = async () => {
@@ -521,15 +585,16 @@ const getCarouselData = async () => {
       const imgEl = document.createElement("img")
       createImgElements(imgEl, img, title)
 
-      imgsArr.push(imgEl)
+      imgsArr.push(img)
     }
   })
 }
 getCarouselData()
 
+console.log(imgsArr)
+
 let imgs = pictureEl.children
 console.log(imgs)
-let index = 0
 let timer = 5000
 
 function createImgElements(el, img, title){
@@ -538,7 +603,6 @@ function createImgElements(el, img, title){
   el.src = img
   el.alt = title
 }
-// createImgElements()
 
 function fadeIn(el){
   el.className = "fadeIn"
@@ -550,18 +614,32 @@ function fadeOut(el){
 
 function changeImg(){
 
-  fadeIn(imgs[index])
+  fadeOut(imgs[index])
 
   index++
 
   if(index === imgs.length){
     index = 0
-    index++
   }
-  fadeOut(imgs[index])
+
+  fadeIn(imgs[index])
 
   setTimeout("changeImg()", timer)
 }
+
+/**
+ * Scroll back to top when the page has been refreshed
+ */
+const scrollBacktoTop = () => {
+  if(history.scrollRestoration){
+    history.scrollRestoration = 'manual';
+  }else{
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    }
+  }
+}
+scrollBacktoTop()
 
 //Page logic
 window.onload = () => {
@@ -571,10 +649,8 @@ window.onload = () => {
 }
 
 //Bind the infiniteScroll function to the onscroll event
-window.onscroll = () => {
+window.addEventListener("scroll", () => {
   infiniteScroll()
-}
-
-
+}) 
 
 

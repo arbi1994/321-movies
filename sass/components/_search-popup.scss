@@ -34,6 +34,7 @@
     border-radius: 10px;
     backdrop-filter: blur(20px);
     transition: height .5s ease;
+    overflow: hidden;
     //background: linear-gradient(180deg, $search-1, $search-2);
     // bottom: 30%;
     // left: 0%;
