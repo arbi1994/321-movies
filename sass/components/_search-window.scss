@@ -2,12 +2,12 @@
 @use "../base/font-face" as *;
 
 @include media("<desktop"){
-  .search__popup {
+  .search__window {
     display: none;
   }
 }
 @include media(">tablet") {
-  .search__popup {
+  .search__window {
     position: fixed;
     bottom: -50%;
     height: 0;
@@ -23,7 +23,7 @@
       }
     }
   }
-  .search__popup.show {
+  .search__window.show {
     display: flex;
     @include flex(column, center, center);
     visibility: visible;
