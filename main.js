@@ -41,6 +41,7 @@ const displayMovies = async (url) => {
 
     //convert json object into array of objects
     movies = Object.values(json)[1]
+    //console.log(movies)
   
 
     movies.forEach((movie, index) => {
@@ -49,7 +50,7 @@ const displayMovies = async (url) => {
       //console.log(movies)
       
       //get movies titles
-      const movieTitle = movie.original_title
+      const movieTitle = movie.original_title || movie.name
       //get image path
       const posterPath = movie.poster_path
       const imageURL = `${imageKitURL}${imgURL}`
@@ -68,13 +69,15 @@ const displayMovies = async (url) => {
       //get ratings
       const rating = getRatings(movie)
   
-      card.innerHTML += `
+      card.innerHTML = `
                         <img src="${imageURL}${posterPath}${imageKitTransformation}" data-lazy="${imageURL}${posterPath}" alt="">
   
                         <div class="cards__title">
                           <h6>${movieTitle}</h6>
                         </div>
+
                         <div class="cards__rating">
+
                           <h6>Rating</h6>
   
                           <div class="rating__stars">
@@ -96,7 +99,7 @@ const displayMovies = async (url) => {
                       `
 
       //do not display movies with no image and title
-      if(posterPath === undefined || posterPath === null || movieTitle === null){
+      if(posterPath === undefined || posterPath === null || movieTitle === null || movie.media_type === "tv"){
         card.style.display = "none"
       }
 
@@ -133,6 +136,8 @@ const displayMovies = async (url) => {
   }catch(err){
     console.log(err.message)
   }
+
+  return movies
 }
 
 /**
