@@ -180,11 +180,11 @@ body {
 }
 .movie-container .movie {
   min-height: 82.6vh;
+  padding: 2em 4em;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  padding: 2em 4em;
 }
 @media (max-width: 1365px) and (min-width: 769px) {
   .movie-container .movie {
@@ -203,6 +203,16 @@ body {
 .movie-container .movie__image {
   flex: 1.5;
   position: relative;
+  overflow: hidden;
+}
+.movie-container .movie__image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0px -50px 150px 5px rgba(0, 0, 0, 0.9);
 }
 @media (max-width: 1365px) and (min-width: 769px) {
   .movie-container .movie__image {
@@ -1196,11 +1206,17 @@ title {
   z-index: 1;
 }
 .movie__trailer .fa-play-circle {
-  font-size: 4rem;
+  font-size: 10rem;
   cursor: pointer;
-  opacity: 0.2;
-  color: #aa4bcf;
+  opacity: 0.3;
+  color: #aab2ff;
   transition: 0.35s ease-in-out;
+}
+@media (max-width: 767px) {
+  .movie__trailer .fa-play-circle {
+    font-size: 6rem;
+    opacity: 0.5;
+  }
 }
 .movie__trailer .circle,
 .movie__trailer .circle_2 {
@@ -1209,8 +1225,8 @@ title {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 4rem;
-  width: 4rem;
+  height: 10rem;
+  width: 10rem;
   border-radius: 50%;
   z-index: -1;
   transition: 0.5s ease;
@@ -1226,18 +1242,55 @@ title {
   animation: createCircles 2s linear infinite 0s;
 }
 .movie__trailer:hover .circle_2 {
-  animation: createCircles 2s linear infinite 1s;
+  animation: createCircles 2s linear infinite 0.3s;
+}
+
+iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fa-times-circle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 3rem;
+  cursor: pointer;
+  opacity: 0.2;
+  color: #aab2ff;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity 0.35s ease-in-out;
+}
+.fa-times-circle:hover {
+  opacity: 1;
+}
+
+.trailer {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 0.35s ease-in-out;
+  z-index: 1;
+}
+.trailer h3 {
+  color: #aab2ff;
+  font-weight: 600;
 }
 
 @keyframes createCircles {
   0% {
-    height: 4rem;
-    width: 4rem;
+    height: 10rem;
+    width: 10rem;
     opacity: 1;
   }
   100% {
-    height: 10rem;
-    width: 10rem;
+    height: 20rem;
+    width: 20rem;
     opacity: 0;
   }
 }

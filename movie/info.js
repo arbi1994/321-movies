@@ -108,3 +108,103 @@ function spaceAfterComma(array) {
     return array;
 }
 
+//----- Movie trailer ------//
+
+/**
+ * Get movies trailer data
+ * @returns {string} The trailer key of the youtube video
+ */
+const getMovieTrailer = async () => {
+  //movie id
+  const movieID = sessionStorage.getItem("movie id");
+  //url
+  const url = `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=${APIKEY}&language=en-US`
+  
+  const resp = await fetch(url)
+  
+  const data = await resp.json()
+
+  const videosArr = data.results
+
+  let trailer = videosArr[0]
+  
+  let trailerKey = trailer.key
+
+  return trailerKey
+}
+
+/**
+ * Play movie trailer by creating an iframe element and
+ * append it to the movie__image element
+ */
+const playMovieTrailer = async () => {
+  let trailerKey = await getMovieTrailer()
+  console.log(trailerKey)
+
+  let iframe = document.createElement("iframe")
+
+  document.querySelector(".movie__image").appendChild(iframe)
+
+  iframe.src = `https://www.youtube.com/embed/${trailerKey}?autoplay=1&color=white&autohide=2&modestbranding=1&border=0&wmode=opaque&enablejsapi=1&showinfo=0&rel=0">`
+
+  iframe.setAttribute("frameborder", "0");
+
+  iframe.setAttribute("class", "youtube-iframe"); 
+  
+  iframe.style.zIndex = "1"
+}
+
+const playBtnChildren = document.querySelector(".movie__trailer") //target all movie__traile children
+const playBtn = document.querySelector(".fa-play-circle") //target play button
+const closeBtn = document.querySelector(".fa-times-circle") //target close button
+closeBtn.style.display = "none" //set close button display to none as default
+
+/**
+ * Hide play button and show close button
+ * by changing their display attribute
+ */
+const hidePlayBtn = () => {
+  playBtnChildren.style.display = "none" //remove play button
+  
+  closeBtn.style.display = "block" //show close button
+}
+
+/**
+ * Show play button and hide close button
+ * by changing their display attribute
+ */
+const showPlayBtn = () => {
+  playBtnChildren.style.display = "block" //show play button
+
+  closeBtn.style.display = "none" //remove close button
+}
+
+/**
+ * Bind all trailer functions to the play button click event
+ */
+playBtn.addEventListener("click", () => {
+  getMovieTrailer()
+  playMovieTrailer()
+  hidePlayBtn()
+}, {passive: true})
+
+/**
+ * Bind showPlayBtn function to the close button click event
+ * and remove iframe element
+ */
+closeBtn.addEventListener("click", () => {
+  let iframe = document.querySelector(".movie__image iframe") //select iframe element
+  document.querySelector(".movie__image").removeChild(iframe) //remove iframe element
+  showPlayBtn()
+}, {passive: true})
+
+// playBtn.addEventListener("mouseover", () => {
+//   let trailerTxt = document.querySelector(".trailer")
+//   trailerTxt.style.bottom = "10px"
+// })
+
+// playBtn.addEventListener("mouseout", () => {
+//   let trailerTxt = document.querySelector(".trailer")
+//   trailerTxt.style.bottom = "-100px"
+// })
+
