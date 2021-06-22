@@ -19,7 +19,6 @@
 
     @include media("<desktop", ">tablet") {
       min-height: 78vh;
-      @include flex(row, center, center);
       padding: 0 3em;
     }
 
@@ -72,6 +71,7 @@
 
       @include media("<=tablet") {
         margin-top: 1em;
+        padding: 0 2rem;
       }
 
       @include media("<tablet") {

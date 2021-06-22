@@ -1,0 +1,63 @@
+@use "../abstracts/" as *;
+@use "../base/font-face" as *;
+
+.movie__trailer {
+  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+
+  .fa-play-circle {
+    font-size: 4rem;
+    cursor: pointer;
+    opacity: 0.2;
+    color: rgb(170, 75, 207);
+    transition: 0.35s ease-in-out;
+  }
+
+  .circle,
+  .circle_2 {
+    border: 1px solid $search-2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    z-index: -1;
+    transition: 0.5s ease;
+    opacity: 0;
+  }
+
+  .circle_2{
+    border: 1px solid $search-1;
+  }
+
+  &:hover {
+    .fa-play-circle {
+      opacity: 1;
+    }
+    .circle {
+      animation: createCircles 2s linear infinite 0s;
+    }
+    .circle_2 {
+      animation: createCircles 2s linear infinite 1s;
+    }
+  }
+}
+
+@keyframes createCircles {
+  0% {
+    height: 4rem;
+    width: 4rem;
+    opacity: 1;
+  }
+  100% {
+    height: 10rem;
+    width: 10rem;
+    opacity: 0;
+  }
+}
