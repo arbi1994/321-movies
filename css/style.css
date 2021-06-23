@@ -211,8 +211,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  box-shadow: inset 0px -50px 150px 5px rgba(0, 0, 0, 0.9);
+  min-height: 100%;
+  background: rgba(0, 0, 0, 0.5);
 }
 @media (max-width: 1365px) and (min-width: 769px) {
   .movie-container .movie__image {
@@ -303,6 +303,15 @@ body {
 .movie-container .movie__main-cast {
   width: 100%;
   margin: 1em 0;
+}
+.movie-container .movie__main-cast #more,
+.movie-container .movie__main-cast #less {
+  font-size: 1rem;
+  border: none;
+  padding: 0.2rem 0.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  background: linear-gradient(180deg, #aab2ff, #eca0ff);
 }
 .movie-container .movie__description {
   margin-top: 1em;

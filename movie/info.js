@@ -65,47 +65,78 @@ async function getMovieDetails() {
 getMovieDetails();
 
 async function getMovieCastDirectors() {
-    const movieID = sessionStorage.getItem("movie id");
-    const url = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${APIKEY}&language=en-US`;
+  const movieID = sessionStorage.getItem("movie id");
+  const url = `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${APIKEY}&language=en-US`;
 
-    try {
-        //response
-        const resp = await fetch(url);
-        //convert response to json format
-        const json = await resp.json();
-        console.log(json);
+  try {
+      //response
+      const resp = await fetch(url);
+      //convert response to json format
+      const json = await resp.json();
+      console.log(json);
 
-        //set director/s
-        let crew = json.crew.map(crew => {
-            if(crew.job == "Director"){
-               return crew.name
-            }
-        });
-        //remove all commas
-        crew = crew.toString();
-        crew = crew.replace(/,/g, " ");
-        //display
-        document.querySelector(
-        ".movie__director p"
-        ).innerHTML = crew;
-    
-        //set cast
-        let cast = json.cast.map(cast => cast.name)
-        cast = spaceAfterComma(cast)
-        document.querySelector(".movie__main-cast p").innerHTML = cast
-        
+      //set director/s
+      let crew = json.crew.map(crew => {
+          if(crew.job == "Director"){
+              return crew.name
+          }
+      });
+
+      //remove all commas
+      crew = crew.toString();
+      crew = crew.replace(/,/g, " ");
+
+      //display
+      document.querySelector(
+      ".movie__director p"
+      ).innerHTML = crew;
+  
+      //set cast
+      let cast = json.cast.map(cast => cast.name)
+      cast = spaceAfterComma(cast)
+
+      //get only the first five actors
+      let castArr = cast.split(", ")
+      let moreCast = castArr.splice(5, cast.length)
+  
+      //display first five actors
+      let castText = document.querySelector(".movie__main-cast p")
+      castText.innerText = spaceAfterComma(castArr)
+
+      let moreBtn = document.querySelector("#more") //target more button
+
+      //bind more button to click event
+      moreBtn.addEventListener("click", (e) => {
+
+        //add the rest of the cast
+        castText.innerText += ", " + spaceAfterComma(moreCast)
+
+        //if the button id is "less", replace actual id with "more",
+        //change its text, and display only the first five actors
+        if(e.target.id === "less"){
+
+          moreBtn.id = "more"
+          moreBtn.innerText = "More" 
+          castText.innerText = spaceAfterComma(castArr)
+
+        }else{
+
+          moreBtn.id = "less"
+          moreBtn.innerText = "Less" 
+        }
+      })        
     } catch (err) {
-        console.log(err.message);
+      console.log(err.message);
     }
 }
 getMovieCastDirectors();
 
 //put some space after comma for each word
 function spaceAfterComma(array) {
-    array = array.toString();
-    array = array.replace(/,/g, ", ");
+  array = array.toString();
+  array = array.replace(/,/gm, ", ");
 
-    return array;
+  return array;
 }
 
 //----- Movie trailer ------//
@@ -198,13 +229,4 @@ closeBtn.addEventListener("click", () => {
   showPlayBtn()
 }, {passive: true})
 
-// playBtn.addEventListener("mouseover", () => {
-//   let trailerTxt = document.querySelector(".trailer")
-//   trailerTxt.style.bottom = "10px"
-// })
-
-// playBtn.addEventListener("mouseout", () => {
-//   let trailerTxt = document.querySelector(".trailer")
-//   trailerTxt.style.bottom = "-100px"
-// })
 
