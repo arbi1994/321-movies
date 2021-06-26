@@ -5,6 +5,7 @@ let movies = [] //empty movies array where we are going to store our movies data
 let genre = "" 
 let endPoint = ""
 totalPages = 0
+totalResults = 0
 
 movieTitleArr = []
 
@@ -28,7 +29,8 @@ const getMovies = (page) => {
  * @param {String} url 
  */
 const displayMovies = async (url) => {
-  
+  if(movieTitleArr !== null) movieTitleArr = []
+
   try{
     //root path to the image files
     const imageKitURL = "https://ik.imagekit.io/iowcmbydcj3"
@@ -40,6 +42,14 @@ const displayMovies = async (url) => {
     const json = await resp.json()
 
     totalPages = json.total_pages //total number of pages
+    
+    totalResults = json.total_results //total number of movies per response
+
+    //check if we get any data back or if session storage is empty. 
+    //If it's so, display error message
+    if(totalResults === 0 || sessionStorage.getItem("Movie title") === ""){
+      errorMessage() //display error message
+    }
 
     //convert json object into array of objects
     movies = Object.values(json)[1]
@@ -54,8 +64,6 @@ const displayMovies = async (url) => {
       const movieTitle = movie.original_title || movie.name
 
       movieTitleArr.push(movieTitle)
-
-      console.log(movieTitleArr)
       
       //get image path
       const posterPath = movie.poster_path
@@ -103,7 +111,6 @@ const displayMovies = async (url) => {
                           </div>
                         </div>
                       `
-
       //do not display movies with no image and title
       if(posterPath === undefined || posterPath === null || movieTitle === null || movie.media_type === "tv"){
         card.style.display = "none"
@@ -142,8 +149,6 @@ const displayMovies = async (url) => {
   }catch(err){
     console.log(err.message)
   }
-
-  return movieTitle
 
   //return movies
 }

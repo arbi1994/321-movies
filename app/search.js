@@ -53,18 +53,13 @@ pageNum = 1
   const navInput = document.querySelector(".navbar__input").value
 
   searchInput ? sessionStorage.setItem("Movie title", searchInput) : sessionStorage.setItem("Movie title", navInput)
-
-  //if input value is empty, display error message
-  if(sessionStorage.getItem("Movie title") == ""){
-    errorMessage()
-  }
 }
   
 /**
  * Get searched Movies data and Display it
  */
 const getSearchedMovies = async (page) => {
-  console.log(pageNum)
+  if(movieTitleArr !== null) movieTitleArr = []
 
   const input = sessionStorage.getItem("Movie title");
 
@@ -73,13 +68,9 @@ const getSearchedMovies = async (page) => {
   if(page === undefined){
     page = 1
   }
-
-  if(page === totalPages){
-    return
-  }
   
   let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&query=${input}&page=${page}` //search url
-
+      
   displayMovies(url) //display movies
 }
 
@@ -90,10 +81,13 @@ const getSearchedMovies = async (page) => {
  * @param {Array} arr 
  */
 function errorMessage(){
+  cardsContainer.innerHTML = "" //empty anything in the container (prevent any duplicate)
 
   const error = document.createElement("div")
 
   error.classList.add("input_error")
+
+  cardsContainer.appendChild(error)  
 
   const svg = `<svg viewBox="0 0 350 350" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="error">
@@ -135,9 +129,7 @@ function errorMessage(){
 
   error.innerHTML = `<h4>😓 Oops, movie not found</h4>
                     <p>Please try to search for another movie</p>
-                    ${svg}`;
-
-  cardsContainer.appendChild(error)                  
+                    ${svg}`;              
 }
 
 
@@ -159,6 +151,8 @@ document.querySelector("#navbarSearch-form").onsubmit = (e) => {
   enableScroll(document.querySelector(".search__window"))
 
   document.querySelector(".navbar__input").value = "" //remove navbar input value after click
+
+  window.location.href = "#movies"
 }
 
 //At search popup input when enter key is pressed
@@ -176,7 +170,12 @@ document.querySelector("#search-form").onsubmit = (e) => {
   enableScroll(document.querySelector(".search__window"))
 
   document.querySelector(".search__bar .input").value = "" //remove search bar input value after click
+
+  window.location.href = "#movies"
 }
+
+window.onload(sessionStorage.clear()) //clear session storage on page reload
+
 
 
 
