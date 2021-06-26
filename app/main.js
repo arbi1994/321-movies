@@ -2,10 +2,11 @@ const cardsContainer = document.querySelector(".cards__container") //get cards c
 const genreBtns = document.querySelectorAll(".genre_btn") //select all buttons
 const APIKEY = "f569c35640a9131fdf30825f47683372" //api key
 let movies = [] //empty movies array where we are going to store our movies data
-//let pageNum = 1; //set page number to 1
 let genre = "" 
 let endPoint = ""
 totalPages = 0
+
+movieTitleArr = []
 
 /**
  * Get movies data
@@ -27,6 +28,7 @@ const getMovies = (page) => {
  * @param {String} url 
  */
 const displayMovies = async (url) => {
+  
   try{
     //root path to the image files
     const imageKitURL = "https://ik.imagekit.io/iowcmbydcj3"
@@ -43,7 +45,6 @@ const displayMovies = async (url) => {
     movies = Object.values(json)[1]
     //console.log(movies)
   
-
     movies.forEach((movie, index) => {
       
       movies.push(movie)
@@ -51,6 +52,11 @@ const displayMovies = async (url) => {
       
       //get movies titles
       const movieTitle = movie.original_title || movie.name
+
+      movieTitleArr.push(movieTitle)
+
+      console.log(movieTitleArr)
+      
       //get image path
       const posterPath = movie.poster_path
       const imageURL = `${imageKitURL}${imgURL}`
@@ -123,7 +129,6 @@ const displayMovies = async (url) => {
          
           observer.unobserve(image) //remove observer after images have been properly loaded
 
-          
         })
       }, imageOptions)
 
@@ -131,13 +136,16 @@ const displayMovies = async (url) => {
         observer.observe(image) //assign the observer to each image so that it can track each image
       })
       
-      card.setAttribute("onClick", `linkMovieDetails(${card.id})`)
+      card.setAttribute("onClick", `linkMovieDetails(${card.id})`) //link card to the movie details page
+
     })
   }catch(err){
     console.log(err.message)
   }
 
-  return movies
+  return movieTitle
+
+  //return movies
 }
 
 /**

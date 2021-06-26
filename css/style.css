@@ -800,6 +800,7 @@ title {
   flex-wrap: wrap;
 }
 .cards__card {
+  background: black;
   width: 22em;
   height: 30em;
   border-radius: 5px;
@@ -1204,6 +1205,7 @@ title {
 .input_error svg {
   width: 100%;
   height: 100%;
+  transform: translateX(10%);
 }
 
 .movie__trailer {

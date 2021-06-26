@@ -18,7 +18,6 @@
       }
 
       if(endPoint === "/search/multi"){
-        
         pageNum++; 
         getSearchedMovies(pageNum)
       }
