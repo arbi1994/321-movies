@@ -42,6 +42,8 @@
     })
 })()
 
+pageNum = 1
+
 /**
  * Get input value
  * @returns {String}
@@ -57,7 +59,8 @@
  * Get searched Movies data and Display it
  */
 const getSearchedMovies = (page) => {
-    
+  console.log(pageNum)
+
   const input = sessionStorage.getItem("Movie title");
 
   endPoint = "/search/multi" //path
@@ -141,7 +144,10 @@ const getSearchedMovies = (page) => {
 
 document.querySelector("#navbarSearch-form").onsubmit = (e) => {
   e.preventDefault()
+
   cardsContainer.innerHTML = "" //empty container before loading new data
+
+  pageNum = 1 //reset pageNum to 1
   
   getSearchInput()
 
@@ -155,7 +161,10 @@ document.querySelector("#navbarSearch-form").onsubmit = (e) => {
 //At search popup input when enter key is pressed
 document.querySelector("#search-form").onsubmit = (e) => {
   e.preventDefault()
+
   cardsContainer.innerHTML = "" //empty container before loading new data
+
+  pageNum = 1 //reset pageNum to 1
 
   getSearchInput()
 

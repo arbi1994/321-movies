@@ -2,7 +2,7 @@ const cardsContainer = document.querySelector(".cards__container") //get cards c
 const genreBtns = document.querySelectorAll(".genre_btn") //select all buttons
 const APIKEY = "f569c35640a9131fdf30825f47683372" //api key
 let movies = [] //empty movies array where we are going to store our movies data
-let pageNum = 1; //set page number to 1
+//let pageNum = 1; //set page number to 1
 let genre = "" 
 let endPoint = ""
 totalPages = 0
@@ -12,11 +12,11 @@ totalPages = 0
  * @param {Number} page 
  * @param {String} url 
  */
-const getMovies = (page, url) => {
+const getMovies = (page) => {
   //path
   endPoint = "/discover/movie"
   // url
-  url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNum}&with_genres=${genre}`;
+  let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genre}`;
   console.log(url)
 
   displayMovies(url)

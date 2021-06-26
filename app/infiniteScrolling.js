@@ -2,6 +2,7 @@
  * Apply Infinite scrolling
  */
  let isScrolled = false //set scrolling to false
+ let pageNum = 1
 
  const infiniteScroll = () => {
    
@@ -9,21 +10,22 @@
    
    if((scrollTop + clientHeight + 100) >= scrollHeight & !isScrolled){
  
-       isScrolled = true //set isScrolled to true to continue scrolling after bottom reached 
-       
-       if(endPoint === "/discover/movie"){
-         pageNum++;
-         getMovies(pageNum)
-       }
- 
-       if(endPoint === "/search/multi"){
-         pageNum++; 
-         getSearchedMovies(pageNum)
-       }
- 
-       setTimeout(() => {
-           isScrolled = false;
-       }, 1000);
+      isScrolled = true //set isScrolled to true to continue scrolling after bottom reached 
+      
+      if(endPoint === "/discover/movie"){
+        pageNum++;
+        getMovies(pageNum)
+      }
+
+      if(endPoint === "/search/multi"){
+        
+        pageNum++; 
+        getSearchedMovies(pageNum)
+      }
+
+      setTimeout(() => {
+          isScrolled = false;
+      }, 1000);
    }
 }
 
