@@ -15,6 +15,7 @@ movieTitleArr = []
  * @param {String} url 
  */
 const getMovies = (page) => {
+  if (page == undefined) page = 1 
   //path
   endPoint = "/discover/movie"
   // url
@@ -196,6 +197,7 @@ scrollBacktoTop()
 
 //Page logic
 window.onload = () => {
+  cardsContainer.innerHTML = "" //reset cardsContainer
   getMovies()
   genresSlider()
   changeImg()
