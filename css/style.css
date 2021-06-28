@@ -171,6 +171,7 @@ body {
 @media (max-width: 768px) {
   .movie-container {
     margin-top: 8em;
+    min-height: 100vh;
   }
 }
 @media (max-width: 767px) {
@@ -203,7 +204,25 @@ body {
 .movie-container .movie__image {
   flex: 1.5;
   position: relative;
+  left: 0;
+  transform: translateX(0);
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  z-index: 1;
+  transition: 0.5s ease;
+}
+.movie-container .movie__image iframe {
+  z-index: -1;
+}
+.movie-container .movie__image.active {
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.movie-container .movie__image.active iframe {
+  z-index: 2;
 }
 .movie-container .movie__image::after {
   content: "";
@@ -223,6 +242,11 @@ body {
   .movie-container .movie__image {
     height: 40em;
     width: 100vw;
+  }
+  .movie-container .movie__image.active {
+    top: -50%;
+    left: 0;
+    transform: translate(0, 50%);
   }
   .movie-container .movie__image::after {
     content: "";
@@ -247,6 +271,7 @@ body {
 .movie-container .movie__details {
   flex: 1;
   margin: 0 2em;
+  transition: 0.5s ease;
 }
 @media (max-width: 1365px) {
   .movie-container .movie__details {
@@ -308,6 +333,7 @@ body {
 .movie-container .movie__main-cast #less {
   font-size: 1rem;
   border: none;
+  border-radius: 5px;
   padding: 0.2rem 0.5rem;
   margin-top: 1rem;
   cursor: pointer;
@@ -1209,7 +1235,6 @@ title {
 }
 
 .movie__trailer {
-  position: relative;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1217,9 +1242,9 @@ title {
   z-index: 1;
 }
 .movie__trailer .fa-play-circle {
-  font-size: 10rem;
+  font-size: 6rem;
   cursor: pointer;
-  opacity: 0.3;
+  opacity: 0.5;
   color: #aab2ff;
   transition: 0.35s ease-in-out;
 }
@@ -1229,9 +1254,12 @@ title {
     opacity: 0.5;
   }
 }
+.movie__trailer .fa-play-circle:hover {
+  opacity: 1;
+}
 .movie__trailer .circle,
 .movie__trailer .circle_2 {
-  border: 1px solid #eca0ff;
+  border: 1px solid #aab2ff;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1244,16 +1272,13 @@ title {
   opacity: 0;
 }
 .movie__trailer .circle_2 {
-  border: 1px solid #aab2ff;
+  border: 1px solid #eca0ff;
 }
-.movie__trailer:hover .fa-play-circle {
-  opacity: 1;
+.movie__trailer .circle {
+  animation: createCircles 1.5s linear infinite 1s;
 }
-.movie__trailer:hover .circle {
-  animation: createCircles 2s linear infinite 0s;
-}
-.movie__trailer:hover .circle_2 {
-  animation: createCircles 2s linear infinite 0.3s;
+.movie__trailer .circle_2 {
+  animation: createCircles 1.5s linear infinite 1.3s;
 }
 
 iframe {
@@ -1295,13 +1320,13 @@ iframe {
 
 @keyframes createCircles {
   0% {
-    height: 10rem;
-    width: 10rem;
+    height: 6rem;
+    width: 6rem;
     opacity: 1;
   }
   100% {
-    height: 20rem;
-    width: 20rem;
+    height: 10rem;
+    width: 10rem;
     opacity: 0;
   }
 }

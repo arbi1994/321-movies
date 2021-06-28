@@ -2,7 +2,6 @@
 @use "../base/font-face" as *;
 
 .movie__trailer {
-  position: relative;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -10,9 +9,9 @@
   z-index: 1;
 
   .fa-play-circle {
-    font-size: 10rem;
+    font-size: 6rem;
     cursor: pointer;
-    opacity: 0.3;
+    opacity: 0.5;
     color: $search-1;
     transition: 0.35s ease-in-out;
 
@@ -20,11 +19,15 @@
       font-size: 6rem;
       opacity: 0.5;
     }
+
+    &:hover{
+      opacity: 1;
+    }
   }
 
   .circle,
   .circle_2 {
-    border: 1px solid $search-2;
+    border: 1px solid $search-1;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -38,19 +41,14 @@
   }
 
   .circle_2 {
-    border: 1px solid $search-1;
+    border: 1px solid $search-2;
   }
 
-  &:hover {
-    .fa-play-circle {
-      opacity: 1;
-    }
-    .circle {
-      animation: createCircles 2s linear infinite 0s;
-    }
-    .circle_2 {
-      animation: createCircles 2s linear infinite 0.3s;
-    }
+  .circle {
+    animation: createCircles 1.5s linear infinite 1s;
+  }
+  .circle_2 {
+    animation: createCircles 1.5s linear infinite 1.3s;
   }
 }
 
@@ -95,13 +93,13 @@ iframe {
 
 @keyframes createCircles {
   0% {
-    height: 10rem;
-    width: 10rem;
+    height: 6rem;
+    width: 6rem;
     opacity: 1;
   }
   100% {
-    height: 20rem;
-    width: 20rem;
+    height: 10rem;
+    width: 10rem;
     opacity: 0;
   }
 }

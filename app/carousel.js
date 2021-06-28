@@ -81,3 +81,5 @@ function changeImg(){
 
   setTimeout("changeImg()", timer)
 }
+
+window.onload = () => changeImg()

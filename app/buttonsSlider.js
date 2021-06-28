@@ -80,3 +80,5 @@
     const leftArrow = document.querySelector(".fa-chevron-left")
     leftArrow.addEventListener(("click"), moveRight)
 }
+
+genresSlider()

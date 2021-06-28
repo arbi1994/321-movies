@@ -119,9 +119,10 @@ const displayMovies = async (url) => {
 
       //select all images
       const images = document.querySelectorAll(".cards__card img")
+
       let imageOptions = {
-        threshold: 1,
-        rootMargin: "0px 0px -10px 0px"
+        threshold: .8,
+        rootMargin: "0px 0px 10px 0px"
       }
 
       //create observer
@@ -199,8 +200,8 @@ scrollBacktoTop()
 window.onload = () => {
   cardsContainer.innerHTML = "" //reset cardsContainer
   getMovies()
-  genresSlider()
-  changeImg()
+  //genresSlider()
+  //changeImg()
 }
 
 

@@ -6,6 +6,7 @@
 
   @include media("<=tablet") {
     margin-top: 8em;
+    min-height: 100vh;
   }
 
   @include media("<tablet") {
@@ -29,7 +30,28 @@
     &__image {
       flex: 1.5;
       position: relative;
+      left: 0;
+      transform: translateX(0);
+      width: 100%;
+      height: 100%;
       overflow: hidden;
+      z-index: 1;
+      transition: 0.5s ease;
+
+      iframe {
+        z-index: -1;
+      }
+
+      &.active {
+        width: 100%;
+        height: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        iframe {
+          z-index: 2;
+        }
+      }
 
       &::after {
         content: "";
@@ -48,6 +70,12 @@
       @include media("<=tablet") {
         height: 40em;
         width: 100vw;
+
+        &.active {
+          top: -50%;
+          left: 0;
+          transform: translate(0, 50%);
+        }
 
         &::after {
           content: "";
@@ -74,6 +102,7 @@
     &__details {
       flex: 1;
       margin: 0 2em;
+      transition: 0.5s ease;
       //@include flex(column, space-around, flex-start);
 
       @include media("<desktop") {
@@ -133,6 +162,7 @@
       #less {
         font-size: 1rem;
         border: none;
+        border-radius: 5px;
         padding: 0.2rem 0.5rem;
         margin-top: 1rem;
         cursor: pointer;

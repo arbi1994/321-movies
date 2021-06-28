@@ -43,7 +43,13 @@ async function getMovieDetails() {
 
         //set movie backdrop img
         const movieImg = document.querySelector(".movie__image img");
-        movieImg.setAttribute("src", `${imgURL}${json.backdrop_path}`);
+
+        //if the main backdrop path is not available, show the second one available
+        if(json.backdrop_path == null){
+          movieImg.setAttribute("src", `${imgURL}${json.belongs_to_collection.backdrop_path}`);
+        }else{
+          movieImg.setAttribute("src", `${imgURL}${json.backdrop_path}`);
+        }
 
         //set movie title
         document.querySelector(".movie__title").innerHTML = `${json.title}`;
@@ -155,6 +161,10 @@ const getMovieTrailer = async () => {
   
   const data = await resp.json()
 
+  if(data.results.length === 0){
+    console.log("No data available")
+  }
+
   const videosArr = data.results
 
   let trailer = videosArr[0]
@@ -172,17 +182,7 @@ const playMovieTrailer = async () => {
   let trailerKey = await getMovieTrailer()
   console.log(trailerKey)
 
-  let iframe = document.createElement("iframe")
-
-  document.querySelector(".movie__image").appendChild(iframe)
-
-  iframe.src = `https://www.youtube.com/embed/${trailerKey}?autoplay=1&color=white&autohide=2&modestbranding=1&border=0&wmode=opaque&enablejsapi=1&showinfo=0&rel=0">`
-
-  iframe.setAttribute("frameborder", "0");
-
-  iframe.setAttribute("class", "youtube-iframe"); 
-  
-  iframe.style.zIndex = "1"
+  document.querySelector(".movie__image iframe").src = `https://www.youtube.com/embed/${trailerKey}?modestbranding=0&autoplay=1&mute=0&controls=1&loop=1&rel=0&showinfo=0>`
 }
 
 const playBtnChildren = document.querySelector(".movie__trailer") //target all movie__traile children
@@ -210,10 +210,31 @@ const showPlayBtn = () => {
   closeBtn.style.display = "none" //remove close button
 }
 
+const cinemaEffectOn = () => {
+  //set opacity of movie__details to 0
+  document.querySelector(".movie__details").style.opacity = "0"
+  //translate movie details to the center
+  document.querySelector(".movie__image").classList.add("active")
+  //set box shadow inset to the body to make background darker
+  document.body.style.transition = "1s ease"
+  document.body.style.boxShadow = "inset 0px 0px 500px 100px rgb(0, 0, 0, 1)"
+}
+
+
+const cinemaEffectOff = () => {
+  //set opacity of movie__details to 1
+  document.querySelector(".movie__details").style.opacity = "1"
+  //translate movie details back to its original position
+  document.querySelector(".movie__image").classList.remove("active")
+  //remove box shadow
+  document.body.style.boxShadow = "none"
+}
+
 /**
  * Bind all trailer functions to the play button click event
  */
-playBtn.addEventListener("click", () => {
+playBtn.addEventListener("click", (e) => {
+  cinemaEffectOn()
   getMovieTrailer()
   playMovieTrailer()
   hidePlayBtn()
@@ -225,8 +246,10 @@ playBtn.addEventListener("click", () => {
  */
 closeBtn.addEventListener("click", () => {
   let iframe = document.querySelector(".movie__image iframe") //select iframe element
-  document.querySelector(".movie__image").removeChild(iframe) //remove iframe element
+  //document.querySelector(".movie__image").removeChild(iframe) //remove iframe element
+  iframe.src = ""
   showPlayBtn()
+  cinemaEffectOff()
 }, {passive: true})
 
 
