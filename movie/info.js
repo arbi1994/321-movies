@@ -43,30 +43,56 @@ async function getMovieDetails() {
     console.log(json);
     //console.log(json.belongs_to_collection.backdrop_path)
 
-    //set background img
-
+    /**
+     * Display background img
+     */
     function backgroundImg () {
       let backgroundImg = document.querySelector(".movie-background img")
 
-      json.belongs_to_collection == null || undefined ?
-      backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}` :
-      backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
+      //if no belongs_to_collection or belongs_to_collection.backdrop_path available, display backdrop_path
+      json.belongs_to_collection == null || json.belongs_to_collection.backdrop_path == null
+      ? backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}` 
+      : backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
     }
     backgroundImg()
 
+    /**
+     * Display video img
+     */
     function videoImg () {
       let videoImg = document.querySelector(".movie__image img");
       videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
+
+      //if no backdrop_path available, display backdrop_path contained in belongs_to_collection
+      if(json.backdrop_path == null) videoImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
     }
     videoImg()
-    
 
-    //json.backdrop_path == null ? backgroundImg.src = `${imgURL}${json.belongs_to_collection.backdrop_path}` : backgroundImg.src = `${imgURL}${json.backdrop_path}`
+    //Display movie title and set year relased
+    function setTitleAndYear(){
+      const releaseDate = json.release_date.split("")
+      releaseDate.splice(4, releaseDate.length)
+      const year = releaseDate.join("")
+  
+      //set movie title
+      document.querySelector(".title").innerHTML = `${json.title} (${year})`;
+      
+      if(json.release_date === ""){
+        document.querySelector(".title").innerHTML = `${json.title}`;
+      }
+    }
+    setTitleAndYear()
 
+    //Display rating
+    function setRating(){
+      console.log(json.vote_average)
+      document.querySelector(".rating").innerHTML += `${json.vote_average}<h5>/10</h5>`
 
-
-    //set movie title
-    document.querySelector(".movie__title").innerHTML = `${json.title}`;
+      if(json.vote_average === 0){
+        document.querySelector(".rating").innerHTML = ""
+      }
+    }
+    setRating()
 
     //get movie genres
     let genres = json.genres.map((genre) => genre.name);
@@ -78,6 +104,7 @@ async function getMovieDetails() {
     document.querySelector(
     ".movie__description p"
     ).innerHTML = `${json.overview}`;
+
   } catch (err) {
     console.log(err.message);
   }
@@ -96,9 +123,9 @@ async function getMovieCastDirectors() {
 
       //set director/s
       let crew = json.crew.map(crew => {
-          if(crew.job == "Director"){
-              return crew.name
-          }
+        if(crew.job == "Director"){
+            return crew.name
+        }
       });
 
       //remove all commas
@@ -179,6 +206,10 @@ const getMovieTrailer = async () => {
   }
 
   const videosArr = data.results
+
+  if(videosArr.length === 0){
+    return
+  }
 
   let trailer = videosArr[0]
   

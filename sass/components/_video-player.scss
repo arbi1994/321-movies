@@ -15,9 +15,14 @@
     color: $search-1;
     transition: 0.35s ease-in-out;
 
-    @include media("<tablet") {
+    @include media("<=tablet") {
       font-size: 6rem;
-      opacity: 0.5;
+      opacity: 1;
+    }
+
+    @include media("<=phoneL") {
+      font-size: 4rem;
+      opacity: 1;
     }
 
     &:hover{
@@ -70,7 +75,7 @@ iframe {
   opacity: 0.2;
   color: $search-1;
   cursor: pointer;
-  z-index: 2;
+  z-index: 100;
   transition: all 0.35s ease-in-out;
 
   &:hover {
@@ -78,7 +83,8 @@ iframe {
   }
 
   @include media("<=tablet") {
-    top: 10px;
+    top: -100px;
+    opacity: 1;
   }
 }
 

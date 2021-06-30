@@ -5,8 +5,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 60%;
+  min-height: none;
   z-index: -100;
+  overflow: hidden;
 
   &::after {
     content: "";
@@ -15,52 +16,55 @@
     left: 0;
     width: 100%;
     height: 100%;
-    box-shadow: inset 0px -100px 100px 80px #0a001b;
+    box-shadow: inset 0px -400px 200px 80px #0a001b;
+
+    @include media("<=tablet") {
+      //box-shadow: inset 0px -250px 200px 80px #0a001b;
+    }
   }
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    //box-shadow: inset 0px 50px 150px 5px rgb(0, 0, 0, 0.9);
+  }
+
+  @include media("<=tablet") {
+    display: none;
   }
 }
 
 .movie-container {
   margin-top: 40vh;
+  min-height: 50vh;
   @include flex(row, center, center);
-
-  @include media("<=tablet") {
-    margin-top: 20vh;
-    min-height: 100vh;
-  }
-
-  @include media("<tablet") {
-    margin-top: 25vh;
-  }
 
   .movie {
     padding: 2em 4em;
     @include flex(row, center, flex-start);
 
     @include media("<desktop", ">tablet") {
-      min-height: 78vh;
       padding: 0 3em;
     }
 
     @include media("<=tablet") {
+      padding: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
       @include flex(column, flex-start, flex-start);
+    }
+
+    @include media("<=phoneL") {
+      padding: 0;
     }
 
     &__image {
       flex: 1.5;
-      position: relative;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      margin-right: 2em;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       transform: translateX(0);
-      border-radius: 10px;
       overflow: hidden;
       z-index: 1;
       transition: 0.5s ease;
@@ -74,7 +78,7 @@
         width: 100%;
         height: 100%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(35%);
         width: 100vw;
 
         iframe {
@@ -89,7 +93,7 @@
         left: 0;
         width: 100%;
         min-height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.3);
       }
 
       &:hover {
@@ -103,12 +107,19 @@
       }
 
       @include media("<=tablet") {
-        height: 40em;
-        width: 100vw;
+        border-radius: 0;
+        margin-right: 0;
 
         &.active {
+          overflow: visible;
           left: 0;
-          transform: translate(0, 0);
+          transform: translate(0, 70%);
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+
+          .fa-times-circle {
+            top: -100px;
+          }
         }
 
         &::after {
@@ -118,12 +129,14 @@
           left: 0;
           width: 100%;
           height: 100%;
-          box-shadow: inset 0px 50px 150px 5px rgb(0, 0, 0, 0.9);
+          box-shadow: inset -0px -50px 40px 10px #0a001b;
         }
       }
 
-      @include media("<tablet") {
-        height: 30em;
+      @include media("<=phoneL") {
+        &.active {
+          transform: translate(0, 100%);
+        }
       }
 
       img {
@@ -135,11 +148,9 @@
 
     &__details {
       flex: 1;
-      margin: 0 2em;
       transition: 0.5s ease;
-      //@include flex(column, space-around, flex-start);
       position: relative;
-      padding: 1rem;
+      padding: 1em;
 
       &::after {
         content: "";
@@ -150,26 +161,24 @@
         height: 100%;
         background: linear-gradient(
           131.99deg,
-          rgba(7, 0, 20, 0.2),
-          rgba(16, 0, 43, 0.5),
-          rgba(7, 0, 20, 0.2)
+          rgba(7, 0, 20, 0.8) 20%,
+          rgba(16, 0, 43, 0.2)
         );
         z-index: -100;
         border-radius: 10px;
         backdrop-filter: blur(5px);
       }
 
-      @include media("<desktop") {
-        height: 42em;
-      }
-
       @include media("<=tablet") {
-        margin-top: 1em;
-        padding: 0 2rem;
-      }
+        padding: 1em 2em;
+        width: 100vw;
+        box-shadow: inset -0px 50px 80px 10px #0a001b;
 
-      @include media("<tablet") {
-        margin: 0 1em;
+        &::after {
+          border-radius: 0;
+          backdrop-filter: none;
+          background: $background;
+        }
       }
 
       p {
@@ -178,6 +187,13 @@
       }
       h4 {
         font-weight: 700;
+      }
+      hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, $search-1, rgba(183, 112, 201, 0.2));
+        color: white;
+        margin-bottom: 2em;
       }
       h5 {
         background: linear-gradient($deg1, $search-1, $search-2);
@@ -195,16 +211,50 @@
     }
 
     &__title {
-      background: linear-gradient($deg1, $search-1, $search-2);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -moz-background-clip: text;
-      -moz-text-fill-color: transparent;
-      letter-spacing: 1px;
-      margin-bottom: 1em;
-      @include media("<tablet") {
-        margin: 0.5em 0;
+      width: 100%;
+      height: 100%;
+      padding: 1em 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .title {
+        background: linear-gradient($deg1, $search-1, $search-2);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        background: linear-gradient($deg1, $search-1, $search-2);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -moz-background-clip: text;
+        -moz-text-fill-color: transparent;
+
+        .fa-star {
+          margin-right: 0.5em;
+          font-size: 1.6rem;
+          background: linear-gradient($deg1, $search-1, $search-2);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          -moz-background-clip: text;
+          -moz-text-fill-color: transparent;
+        }
+
+        h5 {
+          opacity: 0.5;
+          margin-bottom: 0;
+        }
       }
     }
 
