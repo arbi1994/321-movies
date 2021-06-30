@@ -1,20 +1,45 @@
 @use "../abstracts" as *;
 
+.movie-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  z-index: -100;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0px -100px 100px 80px #0a001b;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    //box-shadow: inset 0px 50px 150px 5px rgb(0, 0, 0, 0.9);
+  }
+}
+
 .movie-container {
-  margin-top: 13em;
+  margin-top: 40vh;
   @include flex(row, center, center);
 
   @include media("<=tablet") {
-    margin-top: 8em;
+    margin-top: 20vh;
     min-height: 100vh;
   }
 
   @include media("<tablet") {
-    margin-top: 6em;
+    margin-top: 25vh;
   }
 
   .movie {
-    min-height: 82.6vh;
     padding: 2em 4em;
     @include flex(row, center, flex-start);
 
@@ -30,10 +55,12 @@
     &__image {
       flex: 1.5;
       position: relative;
+      top: 0;
       left: 0;
-      transform: translateX(0);
       width: 100%;
       height: 100%;
+      transform: translateX(0);
+      border-radius: 10px;
       overflow: hidden;
       z-index: 1;
       transition: 0.5s ease;
@@ -43,10 +70,12 @@
       }
 
       &.active {
+        flex: 1.5;
         width: 100%;
         height: 100%;
         left: 50%;
         transform: translateX(-50%);
+        width: 100vw;
 
         iframe {
           z-index: 2;
@@ -63,6 +92,12 @@
         background: rgba(0, 0, 0, 0.5);
       }
 
+      &:hover {
+        .fa-times-circle {
+          top: 10px;
+        }
+      }
+
       @include media("<desktop", ">tablet") {
         height: 42em;
       }
@@ -72,9 +107,8 @@
         width: 100vw;
 
         &.active {
-          top: -50%;
           left: 0;
-          transform: translate(0, 50%);
+          transform: translate(0, 0);
         }
 
         &::after {
@@ -104,6 +138,26 @@
       margin: 0 2em;
       transition: 0.5s ease;
       //@include flex(column, space-around, flex-start);
+      position: relative;
+      padding: 1rem;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          131.99deg,
+          rgba(7, 0, 20, 0.2),
+          rgba(16, 0, 43, 0.5),
+          rgba(7, 0, 20, 0.2)
+        );
+        z-index: -100;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+      }
 
       @include media("<desktop") {
         height: 42em;

@@ -29,44 +29,58 @@
 const APIKEY = "f569c35640a9131fdf30825f47683372"; //api key
 
 async function getMovieDetails() {
-    const movieID = sessionStorage.getItem("movie id");
-    const url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${APIKEY}&language=en-US`;
+  const movieID = sessionStorage.getItem("movie id");
+  const url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${APIKEY}&language=en-US`;
 
-    try {
-        //root path to the image files
-        const imgURL = "https://image.tmdb.org/t/p/original";
-        //response
-        const resp = await fetch(url);
-        //convert response to json format
-        const json = await resp.json();
-        console.log(json);
+  try {
+    //root path to the image files
+    const backgroundImgURL = "https://image.tmdb.org/t/p/original";
+    //const imgURL = "https://image.tmdb.org/t/p/original";
+    //response
+    const resp = await fetch(url);
+    //convert response to json format
+    const json = await resp.json();
+    console.log(json);
+    //console.log(json.belongs_to_collection.backdrop_path)
 
-        //set movie backdrop img
-        const movieImg = document.querySelector(".movie__image img");
+    //set background img
 
-        //if the main backdrop path is not available, show the second one available
-        if(json.backdrop_path == null){
-          movieImg.setAttribute("src", `${imgURL}${json.belongs_to_collection.backdrop_path}`);
-        }else{
-          movieImg.setAttribute("src", `${imgURL}${json.backdrop_path}`);
-        }
+    function backgroundImg () {
+      let backgroundImg = document.querySelector(".movie-background img")
 
-        //set movie title
-        document.querySelector(".movie__title").innerHTML = `${json.title}`;
-
-        //get movie genres
-        let genres = json.genres.map((genre) => genre.name);
-        genres = spaceAfterComma(genres);
-        //set movie genres
-        document.querySelector(".movie__genres p").innerHTML = `${genres}`;
-
-        //set movie description
-        document.querySelector(
-        ".movie__description p"
-        ).innerHTML = `${json.overview}`;
-    } catch (err) {
-        console.log(err.message);
+      json.belongs_to_collection == null || undefined ?
+      backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}` :
+      backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
     }
+    backgroundImg()
+
+    function videoImg () {
+      let videoImg = document.querySelector(".movie__image img");
+      videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
+    }
+    videoImg()
+    
+
+    //json.backdrop_path == null ? backgroundImg.src = `${imgURL}${json.belongs_to_collection.backdrop_path}` : backgroundImg.src = `${imgURL}${json.backdrop_path}`
+
+
+
+    //set movie title
+    document.querySelector(".movie__title").innerHTML = `${json.title}`;
+
+    //get movie genres
+    let genres = json.genres.map((genre) => genre.name);
+    genres = spaceAfterComma(genres);
+    //set movie genres
+    document.querySelector(".movie__genres p").innerHTML = `${genres}`;
+
+    //set movie description
+    document.querySelector(
+    ".movie__description p"
+    ).innerHTML = `${json.overview}`;
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 getMovieDetails();
 
@@ -79,7 +93,6 @@ async function getMovieCastDirectors() {
       const resp = await fetch(url);
       //convert response to json format
       const json = await resp.json();
-      console.log(json);
 
       //set director/s
       let crew = json.crew.map(crew => {
@@ -217,9 +230,8 @@ const cinemaEffectOn = () => {
   document.querySelector(".movie__image").classList.add("active")
   //set box shadow inset to the body to make background darker
   document.body.style.transition = "1s ease"
-  document.body.style.boxShadow = "inset 0px 0px 500px 100px rgb(0, 0, 0, 1)"
+  document.body.style.boxShadow = "inset 0px 0px 300px 100px rgb(0, 0, 0, 1)"
 }
-
 
 const cinemaEffectOff = () => {
   //set opacity of movie__details to 1
