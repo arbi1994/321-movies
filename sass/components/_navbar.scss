@@ -6,7 +6,7 @@
   width: 100%;
   padding: 1em;
   top: 0;
-  z-index: 3;
+  z-index: 200;
   transition: opacity 0.3s ease;
   // @include grid(12);
   @include flex(row, space-between, center);

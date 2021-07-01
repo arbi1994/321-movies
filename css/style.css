@@ -9,7 +9,7 @@ header {
 *
 **/
 .hero {
-  height: 40vh;
+  height: 100vh;
   padding-top: 20vh;
   display: flex;
   flex-direction: column;
@@ -19,19 +19,9 @@ header {
   overflow: hidden;
   transition: box-shadow 0.5s ease-in;
 }
-@media (min-width: 427px) {
+@media (max-width: 768px) {
   .hero {
-    min-height: 40vh;
-  }
-}
-@media (min-width: 769px) {
-  .hero {
-    min-height: 60vh;
-  }
-}
-@media (min-width: 1367px) {
-  .hero {
-    min-height: 100vh;
+    height: 50vh;
   }
 }
 .hero__carousel {
@@ -155,29 +145,48 @@ header {
 }
 
 body {
-  background: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+  background: #070014;
   overflow-x: hidden;
   scroll-behavior: smooth;
   position: relative;
 }
 
-.movie-background {
+.main-content {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.movie-background {
   width: 100%;
-  min-height: none;
+  height: 60%;
   z-index: -100;
   overflow: hidden;
 }
-.movie-background::after {
+.movie-background::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: inset 0px -400px 200px 80px #0a001b;
+  box-shadow: inset 0px -400px 200px 80px #070014;
+  transition: box-shadow 1s ease;
+}
+@media (max-width: 1366px) {
+  .movie-background::before {
+    box-shadow: inset 0px -200px 200px 80px #0a001b;
+  }
+}
+.movie-background.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0px 0px 200px 200px #070014;
+  transition: box-shadow 1s ease;
 }
 .movie-background img {
   width: 100%;
@@ -191,15 +200,20 @@ body {
 }
 
 .movie-container {
-  margin-top: 40vh;
-  min-height: 50vh;
+  margin-top: 50vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 768px) {
+  .movie-container {
+    margin-top: 0;
+  }
+}
 .movie-container .movie {
   padding: 2em 4em;
+  z-index: 100;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -230,23 +244,20 @@ body {
 .movie-container .movie__image {
   flex: 1.5;
   margin-right: 2em;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
+  position: relative;
+  left: 0;
   transform: translateX(0);
   overflow: hidden;
-  z-index: 1;
   transition: 0.5s ease;
+  z-index: 200;
 }
 .movie-container .movie__image iframe {
   z-index: -1;
 }
 .movie-container .movie__image.active {
-  flex: 1.5;
-  width: 100%;
-  height: 100%;
   left: 50%;
-  transform: translateX(35%);
-  width: 100vw;
+  transform: translateX(-50%);
 }
 .movie-container .movie__image.active iframe {
   z-index: 2;
@@ -308,6 +319,7 @@ body {
   transition: 0.5s ease;
   position: relative;
   padding: 1em;
+  z-index: 100;
 }
 .movie-container .movie__details::after {
   content: "";
@@ -316,7 +328,6 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(131.99deg, rgba(7, 0, 20, 0.8) 20%, rgba(16, 0, 43, 0.2));
   z-index: -100;
   border-radius: 10px;
   backdrop-filter: blur(5px);
@@ -330,7 +341,7 @@ body {
   .movie-container .movie__details::after {
     border-radius: 0;
     backdrop-filter: none;
-    background: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+    background: #070014;
   }
 }
 .movie-container .movie__details p {
@@ -431,7 +442,7 @@ button {
   width: 10rem;
   height: 3.5rem;
   border-radius: 10px;
-  color: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+  color: #070014;
   background: linear-gradient(180deg, #aab2ff, #eca0ff);
   letter-spacing: 0.5px;
   font-weight: 500;
@@ -470,7 +481,7 @@ button {
 }
 .genre_btn:hover, .genre_btn:focus {
   transform: scale3d(1.3, 1.3, 1);
-  color: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+  color: #070014;
 }
 
 .navbar {
@@ -478,7 +489,7 @@ button {
   width: 100%;
   padding: 1em;
   top: 0;
-  z-index: 3;
+  z-index: 200;
   transition: opacity 0.3s ease;
   display: flex;
   flex-direction: row;
@@ -1010,7 +1021,7 @@ title {
   left: 100%;
   width: 100%;
   min-height: 102vh;
-  background: linear-gradient(131.99deg, #070014 4.74%, #10002b 50.68%, #070014 100%);
+  background: #070014;
   z-index: 100;
   transform: translateX(0);
   transition: all 0.5s ease;
@@ -1422,13 +1433,6 @@ iframe {
     opacity: 0;
   }
 }
-.ytp-youtube-button,
-.ytp-title,
-.ytp-watch-later-button,
-.ytp-title-channel {
-  display: none;
-}
-
 :root {
   font-size: 62.5%;
   scroll-behavior: smooth;

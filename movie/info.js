@@ -259,9 +259,8 @@ const cinemaEffectOn = () => {
   document.querySelector(".movie__details").style.opacity = "0"
   //translate movie details to the center
   document.querySelector(".movie__image").classList.add("active")
-  //set box shadow inset to the body to make background darker
-  document.body.style.transition = "1s ease"
-  document.body.style.boxShadow = "inset 0px 0px 300px 100px rgb(0, 0, 0, 1)"
+  //set box shadow inset to the background backdrop img to make background darker
+  document.querySelector(".movie-background").classList.add("active")
 }
 
 const cinemaEffectOff = () => {
@@ -270,29 +269,32 @@ const cinemaEffectOff = () => {
   //translate movie details back to its original position
   document.querySelector(".movie__image").classList.remove("active")
   //remove box shadow
-  document.body.style.boxShadow = "none"
+  document.querySelector(".movie-background").classList.remove("active")
 }
 
 /**
  * Bind all trailer functions to the play button click event
  */
-playBtn.addEventListener("click", (e) => {
+playBtn.addEventListener("click", () => {
+
   cinemaEffectOn()
   getMovieTrailer()
   playMovieTrailer()
   hidePlayBtn()
-}, {passive: true})
+  console.log("clicked")
+})
 
 /**
  * Bind showPlayBtn function to the close button click event
  * and remove iframe element
  */
 closeBtn.addEventListener("click", () => {
+
   let iframe = document.querySelector(".movie__image iframe") //select iframe element
   //document.querySelector(".movie__image").removeChild(iframe) //remove iframe element
   iframe.src = ""
   showPlayBtn()
   cinemaEffectOff()
-}, {passive: true})
+})
 
 
