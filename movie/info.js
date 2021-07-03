@@ -121,6 +121,11 @@ async function getMovieCastDirectors() {
       //convert response to json format
       const json = await resp.json();
 
+      //if cast elements are 1 or less than 1, remove more button
+      if(json.cast.length <= 1){
+        document.querySelector("#more").style.display = "none"
+      }
+
       //set director/s
       let crew = json.crew.map(crew => {
         if(crew.job == "Director"){
@@ -186,36 +191,51 @@ function spaceAfterComma(array) {
 }
 
 //----- Movie trailer ------//
+let index = 0
 
 /**
  * Get movies trailer data
  * @returns {string} The trailer key of the youtube video
  */
 const getMovieTrailer = async () => {
+
   //movie id
   const movieID = sessionStorage.getItem("movie id");
+
   //url
   const url = `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=${APIKEY}&language=en-US`
   
-  const resp = await fetch(url)
+  try {
+    const resp = await fetch(url)
+    const data = await resp.json()
+    console.log(data)
   
-  const data = await resp.json()
-
-  if(data.results.length === 0){
-    console.log("No data available")
-  }
-
-  const videosArr = data.results
-
-  if(videosArr.length === 0){
-    return
-  }
-
-  let trailer = videosArr[0]
+    const videosArr = data.results
   
-  let trailerKey = trailer.key
+    //check if data fetched is empty or not
+    //display error message if it is empty
+    if(videosArr.length <= 0){
+      console.log("No data available")
+      document.querySelector(".coming-soon").classList.add("active")
+      return
+    }
+  
+    //check if video type is a Trailer
+    //if it's not, go and check the next video
+    if(videosArr[index].type === "Trailer"){
+      console.log(videosArr[index].type)
+      //return videosArr[index].key
+    }else{
+      index++  
+    }
 
-  return trailerKey
+    console.log(index)
+
+    return videosArr[index].key
+
+  } catch (error) {
+    console.log(error.message)
+  }
 }
 
 /**
@@ -224,9 +244,14 @@ const getMovieTrailer = async () => {
  */
 const playMovieTrailer = async () => {
   let trailerKey = await getMovieTrailer()
-  console.log(trailerKey)
 
-  document.querySelector(".movie__image iframe").src = `https://www.youtube.com/embed/${trailerKey}?modestbranding=0&autoplay=1&mute=0&controls=1&loop=1&rel=0&showinfo=0>`
+  if(trailerKey === undefined) return
+
+  setTimeout(() => {
+    document.querySelector(".movie__image iframe").src = `https://www.youtube.com/embed/${trailerKey}?modestbranding=0&autoplay=1&mute=0&controls=1&loop=1&rel=0&showinfo=0>`
+  }, 1000)
+
+  return trailerKey
 }
 
 const playBtnChildren = document.querySelector(".movie__trailer") //target all movie__traile children
@@ -275,13 +300,22 @@ const cinemaEffectOff = () => {
 /**
  * Bind all trailer functions to the play button click event
  */
-playBtn.addEventListener("click", () => {
+playBtn.addEventListener("click", async() => {
+  if(await playMovieTrailer() === undefined) return
 
-  cinemaEffectOn()
+  //scroll back to top if pageYOffset value is greater than 0
+  if(window.pageYOffset > 0){
+    window.scroll({
+      top: 0, 
+      left: 0, 
+      behavior: 'smooth'
+    });
+  }
+
   getMovieTrailer()
   playMovieTrailer()
   hidePlayBtn()
-  console.log("clicked")
+  cinemaEffectOn()
 })
 
 /**
