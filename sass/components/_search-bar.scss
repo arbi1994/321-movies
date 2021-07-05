@@ -26,22 +26,21 @@
 }
 
 .search__container {
-  //border: 1px solid white;
   width: 100%;
   @include flex(column, flex-start, center);
 
   .search__bar {
-    //border: 1px solid white;
     height: 3.9rem;
     @include flex(row, center, center);
     position: relative;
 
     &:hover {
       .search__underline {
-        visibility: visible;
+        opacity: 1;
       }
-      .fa-play {
-        visibility: visible;
+
+      .search {
+        opacity: 1;
       }
     }
 
@@ -49,6 +48,7 @@
       font-size: 1.4rem;
       color: $text;
     }
+
     input {
       border: none;
       width: 20rem;
@@ -59,9 +59,10 @@
       outline-style: none;
       font-weight: 400;
     }
-    .fa-play {
-      visibility: hidden;
-      cursor: pointer;
+
+    .search {
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .search__underline {
@@ -72,7 +73,8 @@
       margin-top: 17px;
       background: $text;
       border-bottom: 1px solid $text;
-      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
   }
 }
@@ -122,8 +124,8 @@
   }
 }
 
-@include media(">tablet"){
-  .menu__search{
+@include media(">tablet") {
+  .menu__search {
     transform: none;
   }
 }

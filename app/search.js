@@ -1,46 +1,59 @@
+const navbarInput = document.querySelector("#navbarSearch-form")
+const navBarPlayBtn = document.querySelector(".navbar__search .fa-play")
+
+const searchWindowInput = document.querySelector("#search-form")
+const searchWindowPlayBtn = document.querySelector(".search")
+
 /**
- * Show and hide search window and navbar search input
+ * General style for search__bar element
  */
-(function(){
-    //const searchIcon = document.querySelector(".hero__search")//search icon
-    const searchWindow = document.querySelector(".search__window")
-  
-    //open up search window
-    document.querySelector(".navbar__button").addEventListener("click", () => {
-      disableScroll(searchWindow)
-      document.querySelector("#home").style.boxShadow = "inset 0px 0px 500px 200px rgb(0, 0, 0, 0.5)"
-    })
-  
-      //close down search window
-    document.querySelector(".fa-times").addEventListener("click", () => {
-      enableScroll(searchWindow)
-      document.querySelector("#home").style.boxShadow = "none"
-    })
-  
-    //open up input box
-    document.querySelector(".navbar__input").onclick = (e) => {
-      document.querySelector(".navbar__input").classList.add("slide-left")
-      document.querySelector(".fa-play").style.opacity = "1"
+function showSearchWindow(){
+  const searchWindow = document.querySelector(".search__window")
+
+  //open up search window
+  document.querySelector(".navbar__button").addEventListener("click", () => {
+    disableScroll(searchWindow)
+  })
+
+  //close down search window
+  document.querySelector(".fa-times").addEventListener("click", () => {
+    enableScroll(searchWindow)
+  })
+
+  //show underline when hover over
+  document.querySelector(".navbar__input").addEventListener("mouseover", () => {
+    document.querySelector(".underline").style.background = "#f4f0fa"
+  }) 
+
+  //on mouse out hide underline
+  document.querySelector(".navbar__input").addEventListener("mouseout", () => {
+    document.querySelector(".underline").style.background = "#f4f0fa00"
+  })
+}
+showSearchWindow()
+
+/**
+ * General style for navbar__input element
+ */
+function showNavbarSearch(){
+
+  //open up input box
+  document.querySelector(".navbar__input").onclick = (e) => {
+    document.querySelector(".navbar__input").classList.add("slide-left")
+    document.querySelector(".navbar .fa-play").style.opacity = "1"
+    document.querySelector(".navbar .fa-play").style.display = "block"
+  }
+
+  //close input box by clicking anywhere in the body document
+  document.querySelector("body").onclick = (e) => {
+    if(!e.target.classList.contains("navbar__input")){
+      document.querySelector(".navbar__input").classList.remove("slide-left")
+      document.querySelector(".navbar .fa-play").style.opacity = "0"
+      document.querySelector(".navbar .fa-play").style.display = "none"
     }
-
-    //close input box by clicking anywhere in the body document
-    document.querySelector("body").onclick = (e) => {
-      if(!e.target.classList.contains("navbar__input")){
-        document.querySelector(".navbar__input").classList.remove("slide-left")
-        document.querySelector(".fa-play").style.opacity = "1"
-      }
-    }
-
-    //show underline when hover over
-    document.querySelector(".navbar__input").addEventListener("mouseover", () => {
-      document.querySelector(".underline").style.background = "#f4f0fa"
-    }) 
-
-    //on mouse out hide underline
-    document.querySelector(".navbar__input").addEventListener("mouseout", () => {
-      document.querySelector(".underline").style.background = "#f4f0fa00"
-    })
-})()
+  }
+}
+showNavbarSearch()
 
 pageNum = 1
 
@@ -80,7 +93,7 @@ const getSearchedMovies = async (page) => {
  * @param {DOM element} input 
  * @param {Array} arr 
  */
-function errorMessage(){
+const errorMessage = () => {
   cardsContainer.innerHTML = "" //empty anything in the container (prevent any duplicate)
 
   const error = document.createElement("div")
@@ -132,12 +145,11 @@ function errorMessage(){
                     ${svg}`;              
 }
 
-
-//Bind search to the on click event
-
-//At navbar input when enter key is pressed
-
-document.querySelector("#navbarSearch-form").onsubmit = (e) => {
+/**
+ * Initialise results
+ * @param {event} e 
+ */
+const initResults = (e) => {
   e.preventDefault()
 
   cardsContainer.innerHTML = "" //empty container before loading new data
@@ -150,33 +162,44 @@ document.querySelector("#navbarSearch-form").onsubmit = (e) => {
 
   enableScroll(document.querySelector(".search__window"))
 
-  document.querySelector(".navbar__input").value = "" //remove navbar input value after click
-
   window.location.href = "#movies"
 }
 
-//At search popup input when enter key is pressed
-document.querySelector("#search-form").onsubmit = (e) => {
-  e.preventDefault()
+/**
+ * Determine the selector that we are going to trigger the event
+ * @param {DOM element} el 
+ */
+const determineSelector = (el) => {
+  if(el === navbarInput || el === searchWindowInput){
 
-  cardsContainer.innerHTML = "" //empty container before loading new data
+    el.onsubmit = (e) => {
 
-  pageNum = 1 //reset pageNum to 1
+      initResults(e)
 
-  getSearchInput()
+      if(navbarInput) document.querySelector(".navbar__input").value = ""
 
-  getSearchedMovies()
+      if(searchWindowInput) document.querySelector(".search__bar .input").value = ""
+    }
+  }
 
-  enableScroll(document.querySelector(".search__window"))
+  if(el === navBarPlayBtn || el === searchWindowPlayBtn){
+    el.onclick = (e) => {
 
-  document.querySelector(".search__bar .input").value = "" //remove search bar input value after click
+      initResults(e)
 
-  window.location.href = "#movies"
+      if(navbarInput) document.querySelector(".navbar__input").value = ""
+
+      if(searchWindowInput) document.querySelector(".search__bar .input").value = ""
+    }
+  }
 }
+
+//Attach each element to its event listener
+determineSelector(navbarInput)
+determineSelector(searchWindowInput)
+determineSelector(navBarPlayBtn)
+determineSelector(searchWindowPlayBtn)
+
 
 window.onload(sessionStorage.clear()) //clear session storage on page reload
-
-
-
-
 

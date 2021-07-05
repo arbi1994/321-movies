@@ -4,7 +4,7 @@
 .movies {
   .movies__nav {
     position: relative;
-    height: 10em;
+    height: 8em;
     width: 100vw;
     @include flex(row, center, center);
     margin-top: 2rem;
@@ -14,10 +14,8 @@
       font-size: 2rem;
       position: absolute;
       color: white;
-      top: 50%;
-      transform: translateY(-50%);
       cursor: pointer;
-      transition: all 0.5s ease;
+      transition: all 0.35s ease;
       height: 100%;
       width: 50px;
       display: flex;
@@ -39,10 +37,31 @@
 
     .fa-chevron-right {
       right: 10%;
+
+      @include media("<=tablet") {
+        right: 3%;
+      }
+
+      @include hover-supported() {
+        &:hover {
+          transform: scale3d(1.5, 1.5, 1);
+        }
+      }
     }
 
     .fa-chevron-left {
       left: 10%;
+
+      @include media("<=tablet") {
+        left: 3%;
+      }
+
+      @include hover-supported() {
+        &:hover {
+          transform: scale3d(1.5, 1.5, 1);
+        }
+      }
+
       opacity: 0;
       cursor: default;
     }
@@ -73,42 +92,20 @@
   }
 
   &__genres {
-    min-height: 5rem;
     width: 100%;
-    padding: 1rem 0;
-    @include flex(row, flex-start, center);
+    @include flex(row, space-between, center);
     position: relative;
     left: 0;
     transition: left 0.3s linear;
 
     .genres__btn {
-      margin: 0 2.5rem;
+      margin: 0 1rem;
     }
 
     @include media(">tablet") {
       @include flex(row, flex-start, center);
     }
   }
-
-  // ::-webkit-scrollbar {
-  //   height: 10px;
-  // }
-  // /* Track */
-  // ::-webkit-scrollbar-track {
-  //   box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
-  //   border-radius: 10px;
-  // }
-
-  // /* Handle */
-  // ::-webkit-scrollbar-thumb {
-  //   background: linear-gradient(180deg, $search-1, $search-2);
-  //   border-radius: 10px;
-  // }
-
-  // /* Handle on hover */
-  // ::-webkit-scrollbar-thumb:hover {
-  //   background: linear-gradient(90deg, $search-2 30%, $search-1);
-  // }
 
   ::-webkit-scrollbar {
     display: none;
@@ -119,7 +116,6 @@
   overflow-x: scroll;
   @include flex(row, flex-start, center);
   width: 100%;
-  box-shadow: inset -31px 0px 20px -25px #ffffff10;
   transition: box-shadow 0.5s ease;
 
   @include media(">phoneL") {

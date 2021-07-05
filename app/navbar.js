@@ -18,7 +18,7 @@
         navBar.style.opacity = "1"
         navBar.style.backdropFilter = "blur(10px)";
   
-        currScrollPos == 0 ? navBar.style.backdropFilter = "blur(0px)" : null
+        currScrollPos === 0 ? navBar.style.backdropFilter = "blur(0px)" : null
       }else{
         navBar.style.opacity = "0"
         navBar.style.visibility = "hidden"

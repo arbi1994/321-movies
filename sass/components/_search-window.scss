@@ -1,12 +1,12 @@
 @use "../abstracts/" as *;
 @use "../base/font-face" as *;
 
-@include media("<desktop"){
+@include media("<desktop") {
   .search__window {
     display: none;
   }
 }
-@include media(">tablet") {
+@include media(">=tablet") {
   .search__window {
     position: fixed;
     bottom: -50%;
@@ -23,6 +23,7 @@
       }
     }
   }
+
   .search__window.show {
     display: flex;
     @include flex(column, center, center);
@@ -33,7 +34,7 @@
     height: 100%;
     border-radius: 10px;
     backdrop-filter: blur(20px);
-    transition: height .5s ease;
+    transition: height 0.5s ease;
     overflow: hidden;
     z-index: 500;
 
@@ -45,9 +46,13 @@
       color: $text;
       cursor: pointer;
     }
-    .fa-play{
+    .search{
+      opacity: 0;
+    }
+    .fa-play {
       position: relative;
-      button{
+      // opacity: 1;
+      button {
         position: absolute;
         top: 0;
         left: 0;
