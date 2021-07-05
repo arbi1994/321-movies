@@ -265,7 +265,6 @@ closeBtn.style.display = "none" //set close button display to none as default
  */
 const hidePlayBtn = () => {
   playBtnChildren.style.display = "none" //remove play button
-  
   closeBtn.style.display = "block" //show close button
 }
 
@@ -275,10 +274,13 @@ const hidePlayBtn = () => {
  */
 const showPlayBtn = () => {
   playBtnChildren.style.display = "block" //show play button
-
   closeBtn.style.display = "none" //remove close button
 }
 
+/**
+ * Added some box shadow inset to make background all around a bit darker
+ * so that it gives that feel of cinema mode
+ */
 const cinemaEffectOn = () => {
   //set opacity of movie__details to 0
   document.querySelector(".movie__details").style.opacity = "0"
@@ -288,6 +290,9 @@ const cinemaEffectOn = () => {
   document.querySelector(".movie-background").classList.add("active")
 }
 
+/**
+ * Remove the box shadow inset previously created 
+ */
 const cinemaEffectOff = () => {
   //set opacity of movie__details to 1
   document.querySelector(".movie__details").style.opacity = "1"
@@ -298,10 +303,38 @@ const cinemaEffectOff = () => {
 }
 
 /**
+ * Remove iframe element
+ * @param {DOM element} iframe 
+ */
+function removeIframe(iframe){
+  const iframeContainer = document.querySelector(".movie__image")
+  iframeContainer.removeChild(iframe)
+}
+
+/**
+ * Create iframe element
+ */
+function createIframe(){
+  const iframeContainer = document.querySelector(".movie__image")
+
+  const iframe = document.createElement("iframe")
+
+  //set all the attributes needed
+  iframe.setAttribute("frameborder", "0")
+  iframe.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture")
+  iframe.setAttribute("allowfullscreen", "")
+
+  iframeContainer.appendChild(iframe)
+}
+
+/**
  * Bind all trailer functions to the play button click event
  */
-playBtn.addEventListener("click", async() => {
-  if(await playMovieTrailer() === undefined) return
+playBtn.addEventListener("click", async(e) => {
+
+  let iframe = document.querySelector(".movie__image iframe") //iframe selector
+
+  if(await playMovieTrailer() === undefined) return //if trailer key is undefined just return
 
   //scroll back to top if pageYOffset value is greater than 0
   if(window.pageYOffset > 0){
@@ -312,23 +345,33 @@ playBtn.addEventListener("click", async() => {
     });
   }
 
-  getMovieTrailer()
   playMovieTrailer()
+
   hidePlayBtn()
+
   cinemaEffectOn()
+
+  //if the iframe has been removed, recreate a new one
+  if(iframe == undefined){
+    createIframe()
+  }
 })
 
 /**
  * Bind showPlayBtn function to the close button click event
  * and remove iframe element
  */
-closeBtn.addEventListener("click", () => {
+closeBtn.addEventListener("click", (e) => {
 
   let iframe = document.querySelector(".movie__image iframe") //select iframe element
-  //document.querySelector(".movie__image").removeChild(iframe) //remove iframe element
+
   iframe.src = ""
+
   showPlayBtn()
+
   cinemaEffectOff()
+
+  removeIframe(iframe) //remove iframe when closing video
 })
 
 
