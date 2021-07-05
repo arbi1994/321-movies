@@ -1,6 +1,6 @@
 let imgsArr = [] //carousel images
 const carousel = document.querySelector(".hero__carousel") //carousel selector
-let imgs = carousel.children
+let imgs = carousel.childNodes
 let index = 0 
 let timer = 5000
 let apikey = "f569c35640a9131fdf30825f47683372" //api key
@@ -31,11 +31,10 @@ const getCarouselData = async () => {
 
       imgsArr.push(img)
     }
+
+    changeImg()
   })
 }
-getCarouselData()
-
-console.log(imgsArr)
 
 /**
  * Append img elementes to the parent and populate each one of them
@@ -50,25 +49,25 @@ function createImgElements(el, img, title){
 }
 
 /**
- * Fadein effect
- * @param {DOM element} el 
- */
-function fadeIn(el){
-  el.className = "fadeIn"
-}
-
-/**
- * Replace fadein class with and empty class
- * @param {DOM element} el 
- */
-function fadeOut(el){
-  el.className = ""
-}
-
-/**
  * Carousel logic
  */
 function changeImg(){
+
+  /**
+   * Fadein effect
+   * @param {DOM element} el 
+   */
+  function fadeIn(el){
+    el.className = "fadeIn"
+  }
+
+  /**
+   * Replace fadein class with and empty class
+   * @param {DOM element} el 
+   */
+  function fadeOut(el){
+    el.className = ""
+  }
 
   fadeOut(imgs[index])
 
@@ -83,4 +82,5 @@ function changeImg(){
   setTimeout("changeImg()", timer)
 }
 
-window.onload = () => changeImg()
+window.onload = () => {getCarouselData()}
+
