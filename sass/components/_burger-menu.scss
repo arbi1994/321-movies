@@ -11,7 +11,7 @@ $minHeight: 102vh;
   width: 100%;
   min-height: $minHeight;
   background: $background;
-  z-index: 100;
+  z-index: 1000;
   //overflow: auto;
   //-webkit-overscroll-behavior-y: contain;
 
@@ -35,10 +35,10 @@ $minHeight: 102vh;
     min-height: 30.3rem;
     margin-top: 3rem;
     @include flex(column, space-around, center);
-    @include media(">phoneL"){
+    @include media(">phoneL") {
       transform: translateY(50%);
     }
-    @include media(">tablet"){
+    @include media(">tablet") {
       transform: translateY(-0%);
     }
     .list__item {

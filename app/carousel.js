@@ -1,15 +1,16 @@
-
 let imgsArr = [] //carousel images
 const carousel = document.querySelector(".hero__carousel") //carousel selector
 let imgs = carousel.children
 let index = 0 
 let timer = 5000
+let apikey = "f569c35640a9131fdf30825f47683372" //api key
 
 /**
  * Get latest 3 movies on cinema
  */
 const getCarouselData = async () => {
-  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${APIKEY}` //url
+  
+  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${apikey}` //url
   const resp = await fetch(url) //fetch url
   const json = await resp.json() //result
   const dataArr = Object.values(json)[1]

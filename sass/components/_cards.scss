@@ -24,7 +24,7 @@
     position: relative;
     cursor: pointer;
 
-    &:hover {
+    @include hover-supported(){
       img {
         opacity: 0.8;
       }
@@ -35,6 +35,10 @@
         bottom: 0;
       }
     }
+
+    // &:hover {
+      
+    // }
 
     img {
       width: 100%;

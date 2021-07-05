@@ -525,8 +525,10 @@ button {
   transition: transform 0.3s ease;
   backdrop-filter: blur(50px);
 }
-.genre_btn:hover, .genre_btn:focus {
-  transform: scale3d(1.3, 1.3, 1);
+@media not all and (pointer: coarse) {
+  .genre_btn:hover:hover, .genre_btn:hover:focus {
+    transform: scale3d(1.3, 1.3, 1);
+  }
 }
 
 .navbar {
@@ -971,14 +973,16 @@ title {
   position: relative;
   cursor: pointer;
 }
-.cards__card:hover img {
-  opacity: 0.8;
-}
-.cards__card:hover .cards__title {
-  top: 0;
-}
-.cards__card:hover .cards__rating {
-  bottom: 0;
+@media not all and (pointer: coarse) {
+  .cards__card:hover img {
+    opacity: 0.8;
+  }
+  .cards__card:hover .cards__title {
+    top: 0;
+  }
+  .cards__card:hover .cards__rating {
+    bottom: 0;
+  }
 }
 .cards__card img {
   width: 100%;
@@ -1068,7 +1072,7 @@ title {
   width: 100%;
   min-height: 102vh;
   background: #070014;
-  z-index: 100;
+  z-index: 1000;
   transform: translateX(0);
   transition: all 0.5s ease;
 }

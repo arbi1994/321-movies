@@ -253,8 +253,6 @@ scrollBacktoTop()
 window.onload = () => {
   cardsContainer.innerHTML = "" //reset cardsContainer
   getMovies()
-  //genresSlider()
-  //changeImg()
 }
 
 

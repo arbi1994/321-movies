@@ -46,3 +46,11 @@
       clamp(#{$min-size-left}, #{$scaler-left}, #{$max-size-left});
   }
 }
+
+@mixin hover-supported {
+  @media not all and (pointer: coarse){
+    &:hover{
+      @content
+    }
+  }
+}
