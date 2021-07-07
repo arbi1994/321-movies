@@ -203,8 +203,6 @@ const displayMovies = async (url) => {
                                 or check your internet connection</h4>`
       cardsContainer.appendChild(errorMessage)
     }
-
-   
   }
 }
 
@@ -239,6 +237,7 @@ const linkMovieDetails = (id) => {
  */
 const scrollBacktoTop = () => {
   if(history.scrollRestoration){ 
+
     history.scrollRestoration = 'manual';
 
   }else{
@@ -253,6 +252,13 @@ scrollBacktoTop()
 window.onload = () => {
   cardsContainer.innerHTML = "" //reset cardsContainer
   getMovies()
+}
+
+//Refresh page when click on logo
+
+const logo = document.querySelector(".navbar__logo")
+logo.onclick = () => {
+  window.location.reload()
 }
 
 

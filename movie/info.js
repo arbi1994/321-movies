@@ -208,9 +208,9 @@ const getMovieTrailer = async () => {
   try {
     const resp = await fetch(url)
     const data = await resp.json()
-    console.log(data)
   
     const videosArr = data.results
+    console.log(videosArr)
   
     //check if data fetched is empty or not
     //display error message if it is empty
@@ -219,19 +219,33 @@ const getMovieTrailer = async () => {
       document.querySelector(".coming-soon").classList.add("active")
       return
     }
-  
-    //check if video type is a Trailer
-    //if it's not, go and check the next video
-    if(videosArr[index].type === "Trailer"){
-      console.log(videosArr[index].type)
-      //return videosArr[index].key
-    }else{
-      index++  
+
+    let trailerKey = ""
+
+    function checkName (str) {
+      const regex = /^.*(Final Trailer|Official Trailer|Trailer).*$/i;
+      const found = str.match(regex)
+
+      console.log(found)
+
+      if(found === null && videosArr[index].type !== "Trailer"){
+        index++
+      }else{
+        trailerKey = videosArr[index].key
+      }
     }
+  
+    //check if video type and video name is a Trailer
+    videosArr.forEach((video, index) => {
+      checkName(video.name)
+    })
 
-    console.log(index)
-
-    return videosArr[index].key
+    if(videosArr.length === 1){
+      trailerKey = videosArr[0].key
+    }
+    
+    console.log(trailerKey)
+    return trailerKey
 
   } catch (error) {
     console.log(error.message)
@@ -351,10 +365,7 @@ playBtn.addEventListener("click", async(e) => {
 
   cinemaEffectOn()
 
-  //if the iframe has been removed, recreate a new one
-  if(iframe == undefined){
-    createIframe()
-  }
+  if(iframe == undefined) createIframe() //if the iframe has been removed, recreate a new one
 })
 
 /**
