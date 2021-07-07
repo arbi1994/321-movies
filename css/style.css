@@ -9,7 +9,7 @@ header {
 *
 **/
 .hero {
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 20vh;
   display: flex;
   flex-direction: column;
@@ -17,11 +17,27 @@ header {
   align-items: center;
   position: relative;
   overflow: hidden;
+  /* iPad Pro */
   transition: box-shadow 0.5s ease-in;
+}
+@media screen and (min-width: 1024px) and (min-height: 1366px) {
+  .hero {
+    min-height: 50vh;
+  }
 }
 @media (max-width: 768px) {
   .hero {
-    height: 50vh;
+    min-height: 50vh;
+  }
+}
+@media (max-width: 426px) {
+  .hero {
+    min-height: 40vh;
+  }
+}
+@media (max-width: 320px) {
+  .hero {
+    min-height: 50vh;
   }
 }
 .hero__carousel {
@@ -36,11 +52,24 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   object-fit: cover;
   opacity: 0;
   transition: opacity 0.5s ease;
   z-index: -1;
+  /* iPad Pro */
+}
+@media screen and (min-width: 1024px) and (min-height: 1366px) {
+  .hero__carousel img {
+    position: absolute;
+    height: 50vh;
+  }
+}
+@media (max-width: 768px) {
+  .hero__carousel img {
+    position: absolute;
+    height: 50vh;
+  }
 }
 .hero__carousel img.fadeIn {
   opacity: 1;
@@ -51,8 +80,23 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  /* iPad Pro */
+}
+@media screen and (min-width: 1024px) and (min-height: 1366px) {
+  .hero__carousel::before {
+    position: absolute;
+    min-height: 52vh;
+    box-shadow: inset 0px -150px 80px 0px #070014;
+  }
+}
+@media (max-width: 768px) {
+  .hero__carousel::before {
+    position: absolute;
+    min-height: 52vh;
+    box-shadow: inset 0px -70px 60px 0px #070014;
+  }
 }
 .hero__container {
   display: flex;
@@ -143,7 +187,6 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: inset 0px 50px 25px 0px #0a0514, inset 0px 70px 25px 0px rgba(10, 5, 20, 0.6), inset 0px 90px 25px 0px rgba(10, 5, 20, 0.4), inset 0px 100px 25px 0px rgba(10, 5, 20, 0.2), inset 0px 110px 25px 0px rgba(10, 5, 20, 0.1);
   z-index: -1;
 }
 
@@ -554,6 +597,7 @@ button {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-left: 1em;
 }
 .navbar__logo svg {
   width: 5.8rem;
@@ -902,13 +946,18 @@ title {
   color: #f4f0fa;
 }
 
-h4, h3 {
+h4,
+h3 {
   font-family: "Montserrat", sans-serif;
   color: auto;
 }
 
+p {
+  line-height: 1.5em;
+}
+
 h1 {
-  font-size: clamp(4rem , 5vw, 7.2rem);
+  font-size: clamp(4rem, 5vw, 7.2rem);
 }
 
 h2 {
@@ -928,7 +977,7 @@ h5 {
 }
 
 h6 {
-  font-size: clamp(1.4rem, .5vw, 1.6rem);
+  font-size: clamp(1.4rem, 0.5vw, 1.6rem);
 }
 
 a {
@@ -936,7 +985,7 @@ a {
 }
 
 p {
-  font-size: clamp(1.2rem, .5vw, 1.4rem);
+  font-size: clamp(1.4rem, 0.5vw, 1.6rem);
 }
 
 title {
@@ -1204,24 +1253,25 @@ title {
 }
 .movies .movies__nav .line {
   position: absolute;
-  width: 100vw;
-  height: 0.5px;
-  background: #eca0ff;
+  height: 1px;
   border: none;
   left: 0;
+  top: 0;
+  width: 80%;
+  transform: translateX(-50.55%);
+  left: 50%;
+}
+@media (max-width: 426px) {
+  .movies .movies__nav .line {
+    width: 100%;
+  }
 }
 .movies .movies__nav .line__top {
-  top: 1rem;
+  background: linear-gradient(90deg, #aab2ff, rgba(183, 112, 201, 0.2));
 }
 .movies .movies__nav .line__bottom {
-  bottom: 1rem;
-}
-@media (min-width: 427px) {
-  .movies .movies__nav .line {
-    width: 80%;
-    transform: translateX(-50.55%);
-    left: 50%;
-  }
+  margin-top: 8em;
+  background: linear-gradient(90deg, rgba(183, 112, 201, 0.2), #eca0ff);
 }
 .movies__genres {
   width: 100%;
@@ -1256,6 +1306,19 @@ title {
   align-items: center;
   width: 100%;
   transition: box-shadow 0.5s ease;
+  backdrop-filter: blur(3px);
+  border-radius: 10px;
+  /* iPad Pro */
+}
+@media screen and (min-width: 1024px) and (min-height: 1366px) {
+  .movies__slider {
+    backdrop-filter: none;
+  }
+}
+@media (max-width: 768px) {
+  .movies__slider {
+    backdrop-filter: none;
+  }
 }
 @media (min-width: 427px) {
   .movies__slider {

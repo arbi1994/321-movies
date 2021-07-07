@@ -68,25 +68,24 @@
 
     .line {
       position: absolute;
-      width: 100vw;
-      height: 0.5px;
-      background: $search-2;
+      height: 1px;
       border: none;
       left: 0;
+      top: 0;
+      width: 80%;
+      transform: translateX(-50.55%);
+      left: 50%;
+
+      @include media("<=phoneL") {
+        width: 100%;
+      }
 
       &__top {
-        top: 1rem;
+        background: linear-gradient(90deg, $search-1, rgba(183, 112, 201, 0.2));
       }
       &__bottom {
-        bottom: 1rem;
-      }
-    }
-
-    @include media(">phoneL") {
-      .line {
-        width: 80%;
-        transform: translateX(-50.55%);
-        left: 50%;
+        margin-top: 8em;
+        background: linear-gradient(90deg, rgba(183, 112, 201, 0.2), $search-2);
       }
     }
   }
@@ -117,6 +116,17 @@
   @include flex(row, flex-start, center);
   width: 100%;
   transition: box-shadow 0.5s ease;
+  backdrop-filter: blur(3px);
+  border-radius: 10px;
+
+  /* iPad Pro */
+  @media screen and (min-width: 1024px) and (min-height: 1366px) {
+    backdrop-filter: none;
+  }
+
+  @include media("<=tablet") {
+    backdrop-filter: none;
+  }
 
   @include media(">phoneL") {
     width: 70%;
