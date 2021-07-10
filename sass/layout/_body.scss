@@ -1,6 +1,7 @@
 @use "../abstracts/" as *;
 
 body {
+  // background: $background;
   background: $background;
   overflow-x: hidden;
   scroll-behavior: smooth;
