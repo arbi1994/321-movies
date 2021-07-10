@@ -203,3 +203,7 @@ determineSelector(searchWindowPlayBtn)
 
 window.onload(sessionStorage.clear()) //clear session storage on page reload
 
+document.body.onscroll = () => {
+  const distanceFromTop = document.querySelector(".hero__container").getBoundingClientRect().top * -1
+  console.log(distanceFromTop)
+}

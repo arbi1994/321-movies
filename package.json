@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "a website where you can find all the info about worldwide movies",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "watch:sass": "sass --watch sass/main.scss:css/style.css",
     "devserver": "live-server",
@@ -32,6 +33,7 @@
     "sass": "^1.32.12"
   },
   "dependencies": {
+    "animejs": "^3.2.1",
     "body-scroll-lock": "^3.1.5",
     "postcss": "^8.3.0"
   }

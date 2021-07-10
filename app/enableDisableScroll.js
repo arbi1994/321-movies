@@ -16,7 +16,8 @@
  */
 const enableScroll = (el) => {
     const body = document.body;
-    const scrollY = body.style.top;
+    const scrollY = body.getBoundingClientRect().top;
+    console.log(scrollY)
     body.style.position = '';
     body.style.top = '';
     window.scrollTo(0, parseInt(scrollY || '0') * -1);

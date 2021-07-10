@@ -101,6 +101,7 @@
     display: flex;
     @include flex(column, center, center);
     z-index: 1;
+    position: relative;
 
     h2 {
       padding: 1rem 0;
@@ -126,4 +127,58 @@
   }
 
   transition: box-shadow 0.5s ease-in;
+}
+
+.from-left {
+  position: relative;
+  top: 0;
+  left: -1000px;
+
+  &.active {
+    position: relative;
+    left: 0;
+  }
+}
+.from-top {
+  position: relative;
+  top: -1000px;
+  //transition: top 0.5s ease 0.5s;
+
+  &.active {
+    position: relative;
+    top: 0;
+  }
+}
+.from-right {
+  position: relative;
+  top: 0;
+  right: -1000px;
+  //transition: right 0.5s ease 1s;
+
+  &.active {
+    position: relative;
+    right: 0;
+  }
+}
+.from-bottom {
+  position: relative;
+  bottom: -1000px;
+  //-webkit-text-fill-color: currentColor;
+  //transition: bottom 0.5s ease 1.5s;
+  background: linear-gradient($deg1, $search-1, $search-2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+
+  &.active {
+    bottom: 0;
+    background: linear-gradient($deg1, $search-1, $search-2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+  }
 }

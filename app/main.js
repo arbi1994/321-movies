@@ -153,8 +153,8 @@ const displayMovies = async (url) => {
         observer.observe(image) //assign the observer to each image so that it can track each image
       })
       
-      card.setAttribute("onClick", `linkMovieDetails(${card.id})`) //link card to the movie details page
-
+      //----- Link card to the movie details page -----//
+      card.setAttribute("onClick", `linkMovieDetails(${card.id})`) 
     })
   }catch(err){
     console.log(err.message)
@@ -238,7 +238,7 @@ const linkMovieDetails = (id) => {
 const scrollBacktoTop = () => {
   if(history.scrollRestoration){ 
 
-    history.scrollRestoration = 'manual';
+    history.scrollRestoration = 'manual'
 
   }else{
     window.onbeforeunload = function () {
@@ -248,10 +248,43 @@ const scrollBacktoTop = () => {
 }
 scrollBacktoTop()
 
+const fromLeftTitle = document.querySelector(".from-left")
+const fromTopTitle = document.querySelector(".from-top")
+const fromRightTitle = document.querySelector(".from-right")
+const fromBottomTitle = document.querySelector(".from-bottom")
+
+const animateHeroContainer = () => {
+  
+  let tl = anime.timeline({
+    easing: 'easeInOutCirc',
+    duration: 700
+  })
+
+  tl
+  .add({
+    targets: '.from-left',
+    left: 0
+  })
+  .add({
+    targets: '.from-top',
+    top: 0,
+    easing: "easeInOutQuint"
+  }, "-=700")
+  .add({
+    targets: '.from-right',
+    right: 0,
+  }, "-=700")
+  .add({
+    targets: '.from-bottom',
+    bottom: 0,
+  })
+}
+
 //Page logic
 window.onload = () => {
   cardsContainer.innerHTML = "" //reset cardsContainer
   getMovies()
+  animateHeroContainer()
 }
 
 //Refresh page when click on logo

@@ -139,7 +139,6 @@
 
     &__image {
       flex: 1;
-      margin-right: 2em;
       border-radius: 10px;
       position: relative;
       left: 0;
@@ -150,10 +149,6 @@
       z-index: 200;
 
       &.active {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
         iframe {
           z-index: 2;
         }
@@ -249,10 +244,10 @@
 
     &__details {
       flex: 1.5;
-      transition: 0.5s ease;
       position: relative;
       padding: 1em;
       z-index: 100;
+      transition: all 0.5s ease;
 
       &::after {
         content: "";
@@ -386,5 +381,56 @@
     &__description {
       margin-top: 1em;
     }
+  }
+}
+
+//Aside element with extra info
+aside {
+  flex: 1;
+  margin-right: 2em;
+  position: relative;
+  left: 0;
+  top: 0;
+  transform: translateX(0);
+  transition: 0.5s ease;
+
+  @include media("<=tablet") {
+    margin-right: 0;
+  }
+
+  .production {
+    margin-top: 1em;
+    padding: 1em;
+    width: 100%;
+    height: 10em;
+    background: white;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+
+    @include media("<=tablet") {
+      display: none;
+    }
+
+    &.active {
+      opacity: 0;
+    }
+  }
+
+  &.active {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.production--mobile {
+  display: none;
+  width: 100%;
+  height: 5em;
+  background: white;
+  margin-top: 1em;
+
+  @include media("<=tablet") {
+    display: block;
   }
 }

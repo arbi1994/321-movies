@@ -298,8 +298,12 @@ const showPlayBtn = () => {
 const cinemaEffectOn = () => {
   //set opacity of movie__details to 0
   document.querySelector(".movie__details").style.opacity = "0"
-  //translate movie details to the center
+  //translate aside to the center
+  document.querySelector("aside").classList.add("active")
+  //increase z-index of the iframe so that we can click the video player buttons
   document.querySelector(".movie__image").classList.add("active")
+  //hide production element
+  document.querySelector(".production ").classList.add("active")
   //set box shadow inset to the background backdrop img to make background darker
   document.querySelector(".movie-background").classList.add("active")
 }
@@ -308,10 +312,18 @@ const cinemaEffectOn = () => {
  * Remove the box shadow inset previously created 
  */
 const cinemaEffectOff = () => {
-  //set opacity of movie__details to 1
-  document.querySelector(".movie__details").style.opacity = "1"
-  //translate movie details back to its original position
+  //translate aside back to its original position
+  document.querySelector("aside").classList.remove("active")
+  //back to default style
   document.querySelector(".movie__image").classList.remove("active")
+
+  setTimeout(function(){
+    //set opacity of movie__details to 1
+    document.querySelector(".movie__details").style.opacity = "1"
+    //show production 
+    document.querySelector(".production ").classList.remove("active")
+  }, 500)
+
   //remove box shadow
   document.querySelector(".movie-background").classList.remove("active")
 }

@@ -99,6 +99,10 @@
 
     .genres__btn {
       margin: 0 1rem;
+
+      .genre_btn {
+        font-size: clamp(1.4rem, 1vw, 1.6rem);
+      }
     }
 
     @include media(">tablet") {
