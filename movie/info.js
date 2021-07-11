@@ -68,6 +68,47 @@ async function getMovieDetails() {
     }
     videoImg()
 
+    //Display productions imgs
+    function displayProductions(){
+      const logoImgUrl = "https://image.tmdb.org/t/p/original";
+      const aside = document.querySelector("aside")
+      console.log(json.production_companies)
+      const productionCompanies = json.production_companies
+
+      const productionContainer = document.createElement("div")
+      productionContainer.classList.add("production")
+      aside.appendChild(productionContainer)
+      
+      let imgDiv = null
+      let img = null
+
+      //create img elements
+      for(let i = 0; i < productionCompanies.length; i++){
+
+        imgDiv = document.createElement("div")
+        imgDiv.classList.add("production__img")
+        productionContainer.appendChild(imgDiv)
+
+        img = document.createElement("img") 
+        img.src = `${logoImgUrl}${productionCompanies[i].logo_path}`
+        imgDiv.appendChild(img)
+
+        //if there is no img available do not display at all
+        if(productionCompanies[i].logo_path == null){
+          imgDiv.style.display = "none"
+        }
+
+        //if there is an img but is null then do not display all the production container
+        if(productionCompanies.length === 1 && productionCompanies[i].logo_path == null){
+          productionContainer.style.display = "none"
+          return
+        }
+
+      }
+      
+    }
+    displayProductions()
+
     //Display movie title and set year relased
     function setTitleAndYear(){
       const releaseDate = json.release_date.split("")
@@ -298,12 +339,16 @@ const showPlayBtn = () => {
 const cinemaEffectOn = () => {
   //set opacity of movie__details to 0
   document.querySelector(".movie__details").style.opacity = "0"
+
   //translate aside to the center
   document.querySelector("aside").classList.add("active")
+
+  //hide production element
+  document.querySelector(".production").classList.add("active")
+ 
   //increase z-index of the iframe so that we can click the video player buttons
   document.querySelector(".movie__image").classList.add("active")
-  //hide production element
-  document.querySelector(".production ").classList.add("active")
+
   //set box shadow inset to the background backdrop img to make background darker
   document.querySelector(".movie-background").classList.add("active")
 }
@@ -320,8 +365,9 @@ const cinemaEffectOff = () => {
   setTimeout(function(){
     //set opacity of movie__details to 1
     document.querySelector(".movie__details").style.opacity = "1"
+
     //show production 
-    document.querySelector(".production ").classList.remove("active")
+    document.querySelector(".production").classList.remove("active")
   }, 500)
 
   //remove box shadow

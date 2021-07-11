@@ -138,21 +138,13 @@
     }
 
     &__image {
+      order: 1;
       flex: 1;
       border-radius: 10px;
       position: relative;
       left: 0;
       top: 0;
-      transform: translateX(0);
-      overflow: hidden;
-      transition: 0.5s ease;
       z-index: 200;
-
-      &.active {
-        iframe {
-          z-index: 2;
-        }
-      }
 
       &::after {
         content: "";
@@ -162,6 +154,13 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.5);
+      }
+
+      &.active {
+        top: -70px;
+        iframe {
+          z-index: 2;
+        }
       }
 
       &:hover {
@@ -179,6 +178,16 @@
         border-radius: 0;
         margin-right: 0;
 
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset -0px -50px 40px 10px $background;
+        }
+
         &.active {
           overflow: visible;
           left: 0;
@@ -189,16 +198,10 @@
           .fa-times-circle {
             top: -100px;
           }
-        }
 
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          box-shadow: inset -0px -50px 40px 10px $background;
+          &::after {
+            box-shadow: inset 0 0 0 0 $background;
+          }
         }
       }
 
@@ -206,6 +209,16 @@
         border-radius: 0;
         margin-right: 0;
 
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          box-shadow: inset 0px -50px 40px 10px $background;
+        }
+
         &.active {
           overflow: visible;
           left: 0;
@@ -216,16 +229,10 @@
           .fa-times-circle {
             top: -100px;
           }
-        }
 
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          box-shadow: inset -0px -50px 40px 10px $background;
+          &::after {
+            box-shadow: inset 0 0 0 0 $background;
+          }
         }
       }
 
@@ -247,7 +254,7 @@
       position: relative;
       padding: 1em;
       z-index: 100;
-      transition: all 0.5s ease;
+      transition: 0.5s ease;
 
       &::after {
         content: "";
@@ -266,6 +273,7 @@
         padding: 1em 2em;
         width: 100vw;
         box-shadow: inset -0px 50px 80px 10px $background;
+        transition: none;
 
         &::after {
           border-radius: 0;
@@ -278,6 +286,7 @@
         padding: 1em 2em;
         width: 100vw;
         box-shadow: inset -0px 50px 80px 10px $background;
+        transition: none;
 
         &::after {
           border-radius: 0;
@@ -387,50 +396,85 @@
 //Aside element with extra info
 aside {
   flex: 1;
+  height: 100%;
   margin-right: 2em;
   position: relative;
   left: 0;
   top: 0;
   transform: translateX(0);
+  overflow: hidden;
+  border-radius: 10px;
+  @include flex(column, center, center);
   transition: 0.5s ease;
-
-  @include media("<=tablet") {
-    margin-right: 0;
-  }
-
-  .production {
-    margin-top: 1em;
-    padding: 1em;
-    width: 100%;
-    height: 10em;
-    background: white;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-
-    @include media("<=tablet") {
-      display: none;
-    }
-
-    &.active {
-      opacity: 0;
-    }
-  }
 
   &.active {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background: none;
+    backdrop-filter: blur(0px);
+    z-index: 200;
   }
-}
-
-.production--mobile {
-  display: none;
-  width: 100%;
-  height: 5em;
-  background: white;
-  margin-top: 1em;
 
   @include media("<=tablet") {
-    display: block;
+    margin-right: 0;
+    // top: 0;
+    // left: 0;
+
+    &.active {
+      overflow: visible;
+      left: 0;
+      transform: translate(0, 50%);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+
+  .production {
+    //margin-bottom: 1em;
+    padding: 0.5em;
+    width: 100%;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    @include flex(row, space-around, center);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+
+    @include media("<=tablet") {
+      display: none;
+      border-radius: 0;
+      margin-bottom: 0;
+    }
+
+    &.active {
+      opacity: 0;
+    }
+
+    &__img {
+      width: 10em;
+      height: 6em;
+      //background: $text;
+      //border-radius: 50%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 }
+
+// .production--mobile {
+//   display: none;
+//   width: 100%;
+//   height: 5em;
+//   background: rgba(255, 255, 255, 0.2);
+//   margin-top: 1em;
+
+//   @include media("<=tablet") {
+//     display: block;
+//   }
+// }
