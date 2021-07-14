@@ -45,13 +45,16 @@
       font-size: 2rem;
       color: $text;
       cursor: pointer;
+      padding: 0.5em;
     }
-    .search{
+
+    .search {
       opacity: 0;
     }
+
     .fa-play {
       position: relative;
-      // opacity: 1;
+
       button {
         position: absolute;
         top: 0;

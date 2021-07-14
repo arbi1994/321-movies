@@ -124,9 +124,34 @@ async function getMovieDetails() {
     }
     setTitleAndYear()
 
+    //Display subheading info
+    function setSubheading(){
+      //create runtime element
+      const runtime = document.createElement("h6")
+      runtime.classList.add("duration")
+
+      //create divider element
+      const divider = document.createElement("span")
+      divider.classList.add("divider")
+
+      //create production country/ies
+      const prodCountries = document.createElement("h6")
+      prodCountries.classList.add("production-country")
+
+      //add childs elements to parent
+      const subHeading = document.querySelector(".movie__details--subheading")
+      subHeading.appendChild(runtime)
+      subHeading.appendChild(divider)
+      subHeading.appendChild(prodCountries)
+
+      runtime.innerHTML = json.runtime + " min"
+
+      prodCountries.innerText = json.production_countries[0].iso_3166_1
+    }
+    setSubheading()
+
     //Display rating
     function setRating(){
-      console.log(json.vote_average)
       document.querySelector(".rating").innerHTML += `${json.vote_average}<h5>/10</h5>`
 
       if(json.vote_average === 0){
@@ -256,8 +281,13 @@ const getMovieTrailer = async () => {
     //check if data fetched is empty or not
     //display error message if it is empty
     if(videosArr.length <= 0){
-      console.log("No data available")
       document.querySelector(".coming-soon").classList.add("active")
+
+      //close coming-soon div
+      document.querySelector(".coming-soon .fa-times").onclick = () => {
+        document.querySelector(".coming-soon").classList.remove("active")
+      }
+
       return
     }
 
@@ -444,3 +474,122 @@ closeBtn.addEventListener("click", (e) => {
 })
 
 
+//------- Streaming/Buy services -------------//
+
+/**
+ * Function to get the navigator language
+ * @returns {String}
+ */
+function getLang() {
+  if (navigator.languages != undefined) {
+    //console.log(navigator.language.slice(-2))
+    return navigator.languages[0].slice(-2);
+  }
+  return navigator.language;
+}
+getLang()
+
+/**
+ * Get streaming and buy services data and display them
+ */
+async function streamingServices(){
+  //get movide id
+  const movieID = sessionStorage.getItem("movie id")
+  //streaming providers url
+  const url = `https://api.themoviedb.org/3/movie/${movieID}/watch/providers?api_key=${APIKEY}`
+
+  //send request
+  const req = await fetch(url)
+  //get response
+  const resp = await req.json()
+
+  //results
+  const results = resp.results
+  console.log({results: results})
+
+  //convert results object into an array of objects
+  const resultsArr = Object.entries(results)
+
+  /**
+   * Display the data fetched
+   * @param {String} res 
+   * @param {String} link 
+   * @param {DOM element} platforms 
+   */
+  function displayStreamingProviders(res, link, platforms){
+
+    //create li and a link elements
+    const platform = document.createElement("li")
+    const platformLink = document.createElement("a")
+
+    //append children to parents
+    platform.appendChild(platformLink)
+    platforms.appendChild(platform)
+
+    //logo img path
+    const logoPath = res.logo_path
+
+    //root path to the image files
+    const logoRootPath = "https://image.tmdb.org/t/p/original";
+
+    //create img element
+    const img = document.createElement("img")
+    //set img src
+    img.src = `${logoRootPath}${logoPath}`
+    //set img alt
+    img.alt = `Now streaming on ${res.provider_name}`
+    //append to a parent
+    platformLink.appendChild(img)
+
+    //link platformLink
+    platformLink.href = `${link}`
+  }
+  
+  resultsArr.forEach((result, index) => {
+    const locale = result[0]
+
+    if(getLang() === locale){
+      console.log(result)
+
+      result.forEach((res, index) => {
+
+        //check if key value is an object
+        if(typeof(res) === "object"){
+
+          const linkToProvider = res.link
+
+          const strmPlatforms = document.querySelector(".platforms_rent") //rent div
+          const buyPlatforms = document.querySelector(".platforms_buy") //buy div
+
+          for(let i = 0; i <= result.length; i++){
+            const objKey = Object.keys(result[index])[i]
+
+            if(objKey == "flatrate" || objKey == "flatrate_and_buy" || objKey == "rent"){
+              res[objKey].forEach(res => {
+                displayStreamingProviders(res, linkToProvider, strmPlatforms)
+              })
+            }
+          
+            if(objKey == "buy"){
+              res[objKey].forEach(res => {
+                displayStreamingProviders(res, linkToProvider, buyPlatforms)
+              })
+            }
+          }
+
+          //if there is no data in the streaming ul element, display message
+          if(strmPlatforms.children.length === 0){
+            strmPlatforms.innerHTML = "<h3>Not available</h3>"
+          }
+
+          //if there is no data in the buy ul element, display message
+          if(buyPlatforms.children.length === 0){
+            buyPlatforms.innerHTML = "<h3>Not available</h3>"
+          }
+        }
+      })
+    }
+  })
+}
+
+streamingServices()
