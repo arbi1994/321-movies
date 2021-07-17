@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./dist/sass/main.css" />
     <title>321 Movies</title>
   </head>
   <body>
@@ -84,7 +84,7 @@
         <div class="navbar__left">
           <div class="navbar__logo">
             
-            <a href="#home">
+            <a href="#home" title="Logo">
               <svg
               viewBox="0 0 177 125"
               fill="none"
@@ -221,9 +221,9 @@
         <div class="navbar__right">
 
           <ul class="menu__list">
-            <li class="list__item"><a href="#home">Home</a></li>
-            <li class="list__item"><a href="#movies">Movies</a></li>
-            <li class="list__item"><a href="">About</a></li>
+            <li class="list__item"><a href="#home" title="Home">Home</a></li>
+            <li class="list__item"><a href="#movies" title="Movies">Movies</a></li>
+            <li class="list__item"><a href="" title="About">About</a></li>
           </ul>
           
           <form id="navbarSearch-form" class="navbar__search">
@@ -235,7 +235,7 @@
             <i class="fas fa-search" aria-hidden="true"></i>
             <i class="fas fa-play" aria-hidden="true"></i>
             <span class="underline"></span>
-            <button type="button" class="navbar__button">Search</button>
+            <button type="button" class="navbar__button" title="Search Movie">Search</button>
           </form>
 
           <div class="navbar__burger">
@@ -334,6 +334,7 @@
           <i class="fas fa-chevron-right"></i>
           <i class="fas fa-chevron-left"></i>
         </div>
+        
         <!-- Cards section -->
         <div class="cards">
           <div class="cards__container"></div>
@@ -341,16 +342,6 @@
       </section>
     </main>
 
-    <!-- <script src="./bundle.js"></script> -->
-    <script src="./node_modules/animejs/lib/anime.min.js"></script>
-    <script src="./app/main.js"></script>
-    <script src="./app/burgerMenu.js"></script>
-    <script src="./app/enableDisableScroll.js"></script>
-    <script src="./app/navbar.js"></script>
-    <script src="./app/search.js"></script>
-    <script src="./app/moviesByGenre.js"></script>
-    <script src="./app/infiniteScrolling.js"></script>
-    <script src="./app/buttonsSlider.js"></script>
-    <script src="./app/carousel.js"></script>
+    <script src="./dist/js/main/bundle.js"></script>
   </body>
 </html>

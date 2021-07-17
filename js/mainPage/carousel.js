@@ -1,29 +1,28 @@
 let imgsArr = [] //carousel images
 const carousel = document.querySelector(".hero__carousel") //carousel selector
 let imgs = carousel.childNodes
-let index = 0 
+index = 0
 let timer = 5000
-let apikey = "f569c35640a9131fdf30825f47683372" //api key
 
 /**
  * Get latest 3 movies on cinema
  */
 const getCarouselData = async () => {
   
-  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${apikey}` //url
+  const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${APIKEY}` //url
   const resp = await fetch(url) //fetch url
   const json = await resp.json() //result
   const dataArr = Object.values(json)[1]
   //console.log(dataArr)
 
   //root path to the image files
-  const imgURL = "https://image.tmdb.org/t/p/original"
+  const imgURL = "/t/p/original"
 
   //loop through and get the first 3 data
   dataArr.forEach((data, index) => {
     if(index < 3){
-      //console.log(data)
-      const img = `${imgURL}${data.backdrop_path}`
+      const imageKitURL = "https://ik.imagekit.io/iowcmbydcj3"
+      const img = `${imageKitURL}${imgURL}${data.backdrop_path}`
       const title = `${data.original_title}`
 
       const imgEl = document.createElement("img")

@@ -10,6 +10,18 @@
   transition: all 0.3s ease;
   @include flex(row, space-between, center);
 
+  @supports (backdrop-filter: blur(10px)) {
+    &.active{
+      backdrop-filter: blur(10px);
+    }
+  }
+
+  @supports not (backdrop-filter: blur(10px)) {
+    &.active{
+      background: rgba(7, 0, 20, 0.8);
+    }
+  }
+
   &__logo {
     width: 100%;
     height: 100%;

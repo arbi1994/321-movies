@@ -54,6 +54,9 @@
     left: 0;
     width: 100%;
     backdrop-filter: blur(10px);
+    @supports not (backdrop-filter: blur(10px)) {
+      background: hsla(261, 100%, 4%, .8);
+    }
     transition: top 0.5s ease;
     cursor: auto;
     h6 {
@@ -71,6 +74,9 @@
     left: 0;
     width: 100%;
     backdrop-filter: blur(10px);
+    @supports not (backdrop-filter: blur(10px)) {
+      background: hsla(261, 100%, 4%, .8);
+    }
     @include flex(row, space-between, center);
     transition: bottom 0.5s ease;
     cursor: auto;

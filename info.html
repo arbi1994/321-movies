@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Page that shows all the essential information about a movie, and the main trailer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./dist/sass/main.css" />
+    <title>Movie Details</title>
+  </head>
+  <body>
+    <!-- Burger menu -->
+    <!-- <div class="nav__menu--mobile">
+      <span class="menu--mobile__close">
+        <svg
+          width="35"
+          height="25"
+          viewBox="0 0 35 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M30.6668 5.615L28.3168 3.5L19.0002 11.885L9.6835 3.5L7.3335 5.615L16.6502 14L7.3335 22.385L9.6835 24.5L19.0002 16.115L28.3168 24.5L30.6668 22.385L21.3502 14L30.6668 5.615Z"
+            fill="url(#paint0_linear)"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear"
+              x1="19.0002"
+              y1="3.5"
+              x2="19.0002"
+              y2="24.5"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#AAB2FF" />
+              <stop offset="1" stop-color="#ECA0FF" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+
+      <ul class="menu__list">
+        <li class="list__item"><a href="#home">Home</a></li>
+        <li class="list__item"><a href="#movies">Movies</a></li>
+        <li class="list__item"><a href="">About</a></li>
+      </ul>
+
+      <div class="menu__search">
+        <div class="search__header">
+          <h5 class="search__title">
+            Search your favourite <br /><span>movie</span>
+          </h5>
+        </div>
+
+        <div class="search__container">
+          <form class="search__bar">
+            <i class="fas fa-search"></i>
+            <input type="text" />
+            <i class="fas fa-play"></i>
+
+            <span class="search__underline"></span>
+          </form>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- coming soon message -->
+    <div class="coming-soon">
+      <span class="fas fa-times"></span>
+      <h1></h1>
+    </div>
+
+    <header>
+
+      <section class="movie-background">
+        <img src="" data-src="" alt="" />
+      </section>
+
+    </header>
+
+    <main class="main-content">
+      <!-- movie info section -->
+      <section class="movie-container">
+        <div class="movie">
+          <aside>
+            <div class="movie__image">
+              <img src="" data-src="" alt="..." />
+
+              <div class="movie__trailer">
+                <i class="far fa-play-circle"></i>
+                <div class="circle"></div>
+                <div class="circle_2"></div>
+              </div>
+
+              <i class="far fa-times-circle"></i>
+            </div>
+          </aside>
+
+          <div class="movie__details">
+            <div class="movie__title">
+              <h4 class="title">Movie title</h4>
+              <h4 class="rating"><i class="fas fa-star"></i></h4>
+            </div>
+
+            <div class="movie__details--subheading"></div>
+
+            <hr />
+
+            <div class="movie__director">
+              <h5>Director</h5>
+              <p></p>
+            </div>
+
+            <div class="movie__main-cast">
+              <h5>Main cast</h5>
+              <p></p>
+              <button id="more">More</button>
+            </div>
+
+            <div class="movie__genres">
+              <h5>Genres</h5>
+              <p></p>
+            </div>
+
+            <div class="movie__description">
+              <h5>Description</h5>
+              <p></p>
+            </div>
+
+            <hr />
+
+            <div class="movie__streaming">
+              <h5>Rent</h5>
+              <ul class="platforms_rent"></ul>
+
+              <h5>Buy</h5>
+              <ul class="platforms_buy"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- <script src="./js/info.js"></script> -->
+    <script src="./dist/js/info/bundle.js"></script>
+  </body>
+</html>

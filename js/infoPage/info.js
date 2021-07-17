@@ -1,31 +1,3 @@
-/* Show/Hide navbar when scrolling */
-{
-    const navBar = document.querySelector(".navbar")
-    let prevScrollPos = window.pageYOffset
-  
-    window.addEventListener("scroll", () => {
-      showHideNavbar()
-    })
-  
-    const showHideNavbar = () => {
-      let currScrollPos = window.pageYOffset
-      //console.log(currScrollPos)
-  
-      if(prevScrollPos > currScrollPos){
-        navBar.style.visibility = "visible"
-        navBar.style.opacity = "1"
-        navBar.style.backdropFilter = "blur(20px)";
-  
-        currScrollPos == 0 ? navBar.style.backdropFilter = "blur(0px)" : null
-      }else{
-        navBar.style.opacity = "0"
-        navBar.style.visibility = "hidden"
-      }
-  
-      prevScrollPos = currScrollPos
-    }
-  }
-
 const APIKEY = "f569c35640a9131fdf30825f47683372"; //api key
 
 async function getMovieDetails() {
@@ -35,13 +7,11 @@ async function getMovieDetails() {
   try {
     //root path to the image files
     const backgroundImgURL = "https://image.tmdb.org/t/p/original";
-    //const imgURL = "https://image.tmdb.org/t/p/original";
     //response
     const resp = await fetch(url);
     //convert response to json format
     const json = await resp.json();
     console.log(json);
-    //console.log(json.belongs_to_collection.backdrop_path)
 
     /**
      * Display background img
@@ -257,7 +227,7 @@ function spaceAfterComma(array) {
 }
 
 //----- Movie trailer ------//
-let index = 0
+index = 0
 
 /**
  * Get movies trailer data
@@ -275,13 +245,14 @@ const getMovieTrailer = async () => {
     const resp = await fetch(url)
     const data = await resp.json()
   
-    const videosArr = data.results
+    const videosArr = data.results //trailer videos array
     console.log(videosArr)
   
     //check if data fetched is empty or not
     //display error message if it is empty
     if(videosArr.length <= 0){
       document.querySelector(".coming-soon").classList.add("active")
+      document.querySelector(".coming-soon h1").innerText = "COMING SOON"
 
       //close coming-soon div
       document.querySelector(".coming-soon .fa-times").onclick = () => {
@@ -293,12 +264,18 @@ const getMovieTrailer = async () => {
 
     let trailerKey = ""
 
+    /**
+     * Check each trailer video name 
+     * @param {String} str 
+     */
     function checkName (str) {
       const regex = /^.*(Final Trailer|Official Trailer|Trailer).*$/i;
       const found = str.match(regex)
 
       console.log(found)
 
+      //if regex does not match (returns null) and the trailer type is not "Trailer" go check next result
+      //otherwise just return trailer key
       if(found === null && videosArr[index].type !== "Trailer"){
         index++
       }else{

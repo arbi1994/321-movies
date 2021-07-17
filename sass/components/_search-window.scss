@@ -32,11 +32,24 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
-    backdrop-filter: blur(20px);
     transition: height 0.5s ease;
     overflow: hidden;
     z-index: 500;
+
+
+    @supports (
+      (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))
+    ) {
+      backdrop-filter: blur(20px);
+    }
+
+    @supports not (
+      (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))
+    ) {
+      background: $background;
+    }
+
+    
 
     .fa-times {
       position: absolute;
@@ -46,6 +59,7 @@
       color: $text;
       cursor: pointer;
       padding: 0.5em;
+      z-index: 500;
     }
 
     .search {

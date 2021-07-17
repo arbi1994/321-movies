@@ -171,7 +171,6 @@
     &__image {
       order: 1;
       flex: 1;
-      //border-radius: 10px;
       position: relative;
       left: 0;
       top: 0;
@@ -514,6 +513,7 @@ aside {
   .production {
     padding: 0.5em;
     width: 100%;
+    min-height: 7em;
     opacity: 1;
     transition: opacity 0.5s ease;
     @include flex(row, space-around, center);

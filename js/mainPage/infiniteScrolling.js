@@ -2,7 +2,7 @@
  * Apply Infinite scrolling
  */
  let isScrolled = false //set scrolling to false
- let pageNum = 1
+
 
  const infiniteScroll = () => {
   

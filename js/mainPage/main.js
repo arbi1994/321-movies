@@ -4,8 +4,10 @@ const APIKEY = "f569c35640a9131fdf30825f47683372" //api key
 let movies = [] //empty movies array where we are going to store our movies data
 let genre = "" 
 let endPoint = ""
-totalPages = 0
-totalResults = 0
+let totalPages = 0
+let totalResults = 0
+let index = 0
+let pageNum = 1
 
 movieTitleArr = []
 
@@ -227,7 +229,7 @@ const getRatings = (movie) => {
 const linkMovieDetails = (id) => {
   sessionStorage.setItem("movie id", id); //save id to session storage
 
-  window.open("movie/info.html", "_blank"); //when click on a movie, link to movies details
+  window.open("/info.html", "_blank"); //when click on a movie, link to movies details
 
   console.log("linked");
 }
@@ -282,17 +284,11 @@ const animateHeroContainer = () => {
 
 //Page logic
 window.onload = () => {
-  cardsContainer.innerHTML = "" //reset cardsContainer
+  //cardsContainer.innerHTML = "" //reset cardsContainer
   getMovies()
   animateHeroContainer()
 }
 
-//Refresh page when click on logo
-
-const logo = document.querySelector(".navbar__logo")
-logo.onclick = () => {
-  window.location.reload()
-}
 
 
 
