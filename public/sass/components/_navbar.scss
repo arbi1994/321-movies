@@ -11,24 +11,30 @@
   @include flex(row, space-between, center);
 
   @supports (backdrop-filter: blur(10px)) {
-    &.active{
+    &.active {
       backdrop-filter: blur(10px);
     }
   }
 
   @supports not (backdrop-filter: blur(10px)) {
-    &.active{
+    &.active {
       background: rgba(7, 0, 20, 0.8);
     }
   }
 
   &__logo {
-    width: 100%;
+    width: 15em;
     height: 100%;
     @include flex(row, center, center);
-    margin-left: 1em;
-    svg {
-      width: 5.8rem;
+    margin-left: 2em;
+
+    @include media("<=phoneL") {
+      width: 6em;
+      margin-left: 0.5em;
+    }
+
+    img {
+      width: 100%;
     }
   }
 
@@ -38,6 +44,23 @@
 
     .menu__list {
       display: none;
+
+      /* iPad Pro */
+      @media screen and (min-width: 1024px) and (min-height: 1366px) {
+        width: 40rem;
+        @include flex(row, space-around, center);
+
+        .list__item {
+          list-style: none;
+          a {
+            font-size: 1.6rem;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 
@@ -140,17 +163,21 @@
       width: 2.5rem;
       height: 1.5rem;
     }
+
+    /* iPad Pro */
+    @media screen and (min-width: 1024px) and (min-height: 1366px) {
+      display: none;
+    }
   }
 }
 
-@include media(">phoneL") {
+@include media(">phoneL", "<desktop") {
   .navbar {
     @include flex(row, space-between, center);
 
     &__logo {
-      svg {
-        width: 8rem;
-      }
+      width: 10em;
+      margin-left: 1em;
     }
 
     &__input.slide-left {
@@ -170,13 +197,6 @@
 @include media("<desktop", ">tablet") {
   .navbar {
     @include flex(row, space-between, center);
-
-    &__logo {
-      // margin-left: 1rem;
-      svg {
-        width: 10rem;
-      }
-    }
 
     &__right {
       margin-right: 1rem;
@@ -205,16 +225,9 @@
   .navbar {
     @include flex(row, space-between, center);
 
-    &__logo {
-      svg {
-        width: 10rem;
-      }
-    }
-
     &__right {
       .menu__list {
         width: 40rem;
-        //margin-right: 5em;
         @include flex(row, space-around, center);
 
         .list__item {
@@ -227,12 +240,7 @@
             cursor: pointer;
 
             &:hover {
-              background: linear-gradient($deg1, $search-1, $search-2);
-              background-clip: text;
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              -moz-background-clip: text;
-              -moz-text-fill-color: transparent;
+              @include gradientColor();
             }
           }
         }

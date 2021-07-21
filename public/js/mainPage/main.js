@@ -17,10 +17,11 @@ movieTitleArr = []
  * @param {String} url 
  */
 const getMovies = (page) => {
-  if (page == undefined) page = 1 
+  if (page == undefined) page = 1
   //path
   endPoint = "/discover/movie"
-  // url
+
+  
   let url = `https://api.themoviedb.org/3${endPoint}?api_key=${APIKEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genre}`;
   console.log(url)
 

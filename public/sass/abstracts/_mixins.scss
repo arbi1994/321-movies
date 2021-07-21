@@ -1,4 +1,6 @@
 @use "./breakpoints" as *;
+@use "./colors" as *;
+@use "./variables" as *;
 
 @mixin flex($direction, $content, $align) {
   display: flex;
@@ -9,7 +11,7 @@
 
 @mixin grid($num) {
   display: grid;
-  grid-template-columns: .5em repeat($num, minmax(auto, 1fr)) .5em;
+  grid-template-columns: 0.5em repeat($num, minmax(auto, 1fr)) 0.5em;
   grid-template-rows: 1em auto 1em;
 }
 
@@ -48,9 +50,18 @@
 }
 
 @mixin hover-supported {
-  @media not all and (pointer: coarse){
-    &:hover{
-      @content
+  @media not all and (pointer: coarse) {
+    &:hover {
+      @content;
     }
   }
+}
+
+@mixin gradientColor() {
+  background: linear-gradient($deg1, $search-1, $search-2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }

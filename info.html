@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="./dist/sass/main.css" />
     <title>Movie Details</title>
   </head>
@@ -94,9 +95,11 @@
       <!-- movie info section -->
       <section class="movie-container">
         <div class="movie">
+
           <aside>
+
             <div class="movie__image">
-              <img src="" data-src="" alt="..." />
+              <!-- <img src="" data-src="" alt="..." /> -->
 
               <div class="movie__trailer">
                 <i class="far fa-play-circle"></i>
@@ -106,11 +109,12 @@
 
               <i class="far fa-times-circle"></i>
             </div>
+
           </aside>
 
           <div class="movie__details">
             <div class="movie__title">
-              <h4 class="title">Movie title</h4>
+              <h4 class="title"></h4>
               <h4 class="rating"><i class="fas fa-star"></i></h4>
             </div>
 
@@ -141,13 +145,17 @@
 
             <hr />
 
-            <div class="movie__streaming">
-              <h5>Rent</h5>
-              <ul class="platforms_rent"></ul>
+          <div class="movie__streaming">
+            <div class="ott-titles">
+              <img src="./public/images/logos/justwatch_logo.svg">
+              <img src="./public/images/logos/tmdb_logo.svg">
+          </div>
+          <div class="movie__streaming">
+            <h5>Rent</h5>
+            <ul class="platforms_rent"></ul>
 
-              <h5>Buy</h5>
-              <ul class="platforms_buy"></ul>
-            </div>
+            <h5>Buy</h5>
+            <ul class="platforms_buy"></ul>
           </div>
         </div>
       </section>

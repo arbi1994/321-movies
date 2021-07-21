@@ -12,15 +12,15 @@ const browsersync = require('browser-sync').create()
 
 const mainJsFiles = [
 './node_modules/animejs/lib/anime.min.js',
-'./js/mainPage/main.js',
-'./js/mainPage/navbar.js',
-'./js/mainPage/burgerMenu.js',
-'./js/mainPage/infiniteScrolling.js',
-'./js/mainPage/enableDisableScroll.js',
-'./js/mainPage/buttonsSlider.js',
-'./js/mainPage/moviesByGenre.js',
-'./js/mainPage/search.js',
-'./js/mainPage/carousel.js']
+'./public/js/mainPage/main.js',
+'./public/js/mainPage/navbar.js',
+'./public/js/mainPage/burgerMenu.js',
+'./public/js/mainPage/infiniteScrolling.js',
+'./public/js/mainPage/enableDisableScroll.js',
+'./public/js/mainPage/buttonsSlider.js',
+'./public/js/mainPage/moviesByGenre.js',
+'./public/js/mainPage/search.js',
+'./public/js/mainPage/carousel.js']
 
 // JS tasks
 const bundleMainJs = () => {
@@ -33,7 +33,7 @@ const bundleMainJs = () => {
 }
 
 const bundleInfoJs = () => {
-    return src('./js/infoPage/info.js')
+    return src('./public/js/infoPage/info.js')
     .pipe(sourceMaps.init())
     .pipe(minifyJs())
     .pipe(concat('bundle.js'))
@@ -43,7 +43,7 @@ const bundleInfoJs = () => {
 
 // SASS tasks
 const scssTask = () => {
-    return src('./sass/main.scss', { sourcemaps: true })
+    return src('./public/sass/main.scss', { sourcemaps: true })
         .pipe(sass())
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(dest('./dist/sass', { sourcemaps: true }))
@@ -74,7 +74,7 @@ const browsersyncReload = (cb) => {
 const devWatch = () => {
     watch('*.html', browsersyncReload)
     watch(
-        ['./sass/**/*.scss', './js/**/*.js'],
+        ['./public/sass/**/*.scss', './public/js/**/*.js'],
         series(scssTask, bundleMainJs, bundleInfoJs, browsersyncReload)
     )
 }

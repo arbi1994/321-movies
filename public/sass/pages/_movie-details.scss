@@ -125,6 +125,10 @@
   }
 }
 
+.main-content {
+  min-width: 100%;
+}
+
 .movie-container {
   margin-top: 50vh;
   @include flex(row, center, center);
@@ -174,6 +178,7 @@
       position: relative;
       left: 0;
       top: 0;
+      width: 100%;
       z-index: 200;
 
       &::after {
@@ -183,7 +188,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.3);
       }
 
       &.active {
@@ -238,6 +243,7 @@
       @include media("<=tablet") {
         border-radius: 0;
         margin-right: 0;
+        width: 100%;
 
         &::after {
           content: "";
@@ -281,6 +287,7 @@
 
     &__details {
       flex: 1.5;
+      width: 100%;
       position: relative;
       padding: 1em;
       z-index: 100;
@@ -314,7 +321,7 @@
 
       @include media("<=tablet") {
         padding: 1em 2em;
-        width: 100vw;
+        //width: 100vw;
         box-shadow: inset -0px 50px 80px 10px $background;
         transition: none;
 
@@ -328,6 +335,7 @@
       p {
         color: $text;
         word-spacing: 0rem;
+        min-height: 1em;
       }
       h4 {
         font-weight: 700;
@@ -340,13 +348,8 @@
         margin: 1em 0 2em 0;
       }
       h5 {
-        background: linear-gradient($deg1, $search-1, $search-2);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-background-clip: text;
-        -moz-text-fill-color: transparent;
         font-weight: 700;
+        @include gradientColor();
 
         @include media("<desktop") {
           margin-bottom: 0.5rem;
@@ -371,43 +374,38 @@
 
     &__title {
       width: 100%;
-      height: 100%;
+      height: 5em;
       padding: 1em 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
 
       .title {
-        background: linear-gradient($deg1, $search-1, $search-2);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-background-clip: text;
-        -moz-text-fill-color: transparent;
         letter-spacing: 1px;
-        //margin-bottom: 10px;
+        min-width: 20em;
+
+        &.active {
+          @include gradientColor();
+        }
       }
 
       .rating {
         display: flex;
         align-items: center;
-        //margin-bottom: 10px;
-        background: linear-gradient($deg1, $search-1, $search-2);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-background-clip: text;
-        -moz-text-fill-color: transparent;
+
+        &.active {
+          @include gradientColor();
+        }
 
         .fa-star {
           margin-right: 0.5em;
           font-size: 1.6rem;
-          background: linear-gradient($deg1, $search-1, $search-2);
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          -moz-background-clip: text;
-          -moz-text-fill-color: transparent;
+          display: none;
+
+          &.active {
+            display: flex;
+            @include gradientColor();
+          }
         }
 
         h5 {
@@ -443,13 +441,33 @@
 
     &__description {
       margin: 1em 0 2em 0;
+
+      p {
+        min-height: 5em;
+      }
     }
 
     &__streaming {
+      .ott-titles {
+        width: 100%;
+        @include flex(row, flex-start, center);
+        margin-bottom: 1em;
+        padding: 1em 0;
+
+        @include media("<=tablet"){
+          justify-content: center;
+        }
+
+        img {
+          width: 10em;
+          margin-right: 5em;
+        }
+      }
+
       .platforms_rent,
       .platforms_buy {
         width: 100%;
-        margin-bottom: 2em;
+        margin: 1em 1em 1em 0;
         @include flex(row, flex-start, center);
         flex-wrap: wrap;
         color: white;
@@ -459,8 +477,8 @@
           list-style: none;
           width: 5em;
           height: 5em;
-          margin: 1em;
           overflow: hidden;
+          margin: 0 2em 2em 0;
 
           img {
             width: 100%;
@@ -470,6 +488,7 @@
 
         h3 {
           color: $text;
+          letter-spacing: 2px;
         }
       }
     }
@@ -479,7 +498,9 @@
 //Aside element with extra info
 aside {
   flex: 1;
-  height: 100%;
+  //height: 100%;
+  min-height: 25em;
+  width: 80em;
   margin-right: 2em;
   position: relative;
   left: 0;
@@ -500,6 +521,7 @@ aside {
 
   @include media("<=tablet") {
     margin-right: 0;
+    min-height: none;
 
     &.active {
       overflow: visible;
@@ -535,6 +557,7 @@ aside {
     &__img {
       width: 10em;
       height: 6em;
+      padding: 1em;
 
       img {
         width: 100%;
@@ -543,4 +566,91 @@ aside {
       }
     }
   }
+}
+
+.skeleton-loader {
+  position: relative;
+  min-height: 100%;
+  min-width: 5em;
+  box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
+  overflow: hidden;
+  background: rgb(143, 143, 143);
+  border-radius: 5px;
+  margin: 0.5em 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -150px;
+    top: 0;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      #e8e8e8 50%,
+      transparent 100%
+    );
+    animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes load {
+    from {
+      left: -150px;
+    }
+    to {
+      left: 100%;
+    }
+  }
+}
+
+.dropdown-toggle.btn-default {
+  color: #292b2c;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.bootstrap-select.show > .dropdown-menu > .dropdown-menu {
+  display: block;
+}
+.bootstrap-select > .dropdown-menu > .dropdown-menu li.hidden {
+  display: none;
+}
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0;
+  text-decoration: none;
+}
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a:hover {
+  background-color: #f4f4f4;
+}
+.bootstrap-select > .dropdown-toggle {
+  width: 100%;
+}
+.dropdown-menu > li.active > a {
+  color: #fff !important;
+  background-color: #337ab7 !important;
+}
+.bootstrap-select .check-mark {
+  line-height: 14px;
+}
+.bootstrap-select .check-mark::after {
+  font-family: "FontAwesome";
+  content: "\f00c";
+}
+.bootstrap-select button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+/* Make filled out selects be the same size as empty selects */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+  display: inline !important;
 }

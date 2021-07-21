@@ -1,4 +1,53 @@
+const asideProductionsEl = document.querySelector(".movie__image")
+const movieTitle = document.querySelector(".movie__title .title")
+const movieRating = document.querySelector(".movie__title .rating")
+const movieDetailsDescriptions = document.querySelectorAll(".movie__details p")
+
+const loadingTime = 2000 //2sec
+
+function addSkeletonLoader (img, title, rating, descriptions) {
+  img.classList.add("skeleton-loader")
+  title.classList.add("skeleton-loader")
+  rating.classList.add("skeleton-loader")
+  descriptions.forEach(description => {
+    description.classList.add("skeleton-loader")
+  })
+}
+addSkeletonLoader(asideProductionsEl, movieTitle, movieRating, movieDetailsDescriptions)
+
+
 const APIKEY = "f569c35640a9131fdf30825f47683372"; //api key
+
+async function displayMovieBackdropImg () {
+  const movieID = sessionStorage.getItem("movie id");
+  const url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=${APIKEY}&language=en-US`;
+
+  try{
+    //root path to the image files
+    const backgroundImgURL = "https://image.tmdb.org/t/p/original";
+    //response
+    const resp = await fetch(url);
+    //convert response to json format
+    const json = await resp.json();
+    console.log(json);
+
+    /**
+      * Display background img
+      */
+    function backgroundImg () {
+      let backgroundImg = document.querySelector(".movie-background img")
+
+      //if no belongs_to_collection or belongs_to_collection.backdrop_path available, display backdrop_path
+      json.belongs_to_collection == null || json.belongs_to_collection.backdrop_path == null
+      ? backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}` 
+      : backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
+    }
+    backgroundImg()
+  }catch(err){
+    console.log(err.message);
+  }
+}
+displayMovieBackdropImg()
 
 async function getMovieDetails() {
   const movieID = sessionStorage.getItem("movie id");
@@ -13,139 +62,169 @@ async function getMovieDetails() {
     const json = await resp.json();
     console.log(json);
 
-    /**
-     * Display background img
-     */
-    function backgroundImg () {
-      let backgroundImg = document.querySelector(".movie-background img")
+    const setAsideElement = () => {
+      /**
+       * Display video img
+       */
+      function setVideoImg () {
+        let videoImg = document.createElement("img")
 
-      //if no belongs_to_collection or belongs_to_collection.backdrop_path available, display backdrop_path
-      json.belongs_to_collection == null || json.belongs_to_collection.backdrop_path == null
-      ? backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}` 
-      : backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
-    }
-    backgroundImg()
+        videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
 
-    /**
-     * Display video img
-     */
-    function videoImg () {
-      let videoImg = document.querySelector(".movie__image img");
-      videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
+        videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
 
-      //if no backdrop_path available, display backdrop_path contained in belongs_to_collection
-      if(json.backdrop_path == null) videoImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
-    }
-    videoImg()
-
-    //Display productions imgs
-    function displayProductions(){
-      const logoImgUrl = "https://image.tmdb.org/t/p/original";
-      const aside = document.querySelector("aside")
-      console.log(json.production_companies)
-      const productionCompanies = json.production_companies
-
-      const productionContainer = document.createElement("div")
-      productionContainer.classList.add("production")
-      aside.appendChild(productionContainer)
-      
-      let imgDiv = null
-      let img = null
-
-      //create img elements
-      for(let i = 0; i < productionCompanies.length; i++){
-
-        imgDiv = document.createElement("div")
-        imgDiv.classList.add("production__img")
-        productionContainer.appendChild(imgDiv)
-
-        img = document.createElement("img") 
-        img.src = `${logoImgUrl}${productionCompanies[i].logo_path}`
-        imgDiv.appendChild(img)
-
-        //if there is no img available do not display at all
-        if(productionCompanies[i].logo_path == null){
-          imgDiv.style.display = "none"
+        //Remove skeleton-loader and append img to its parent
+        if(videoImg.src !== null){
+          asideProductionsEl.classList.remove("skeleton-loader")
+          asideProductionsEl.appendChild(videoImg)
         }
-
-        //if there is an img but is null then do not display all the production container
-        if(productionCompanies.length === 1 && productionCompanies[i].logo_path == null){
-          productionContainer.style.display = "none"
-          return
-        }
-
+       
+        //if no backdrop_path available, display backdrop_path contained in belongs_to_collection
+        if(json.backdrop_path == null) videoImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
       }
-      
-    }
-    displayProductions()
+      setVideoImg()
 
-    //Display movie title and set year relased
-    function setTitleAndYear(){
-      const releaseDate = json.release_date.split("")
-      releaseDate.splice(4, releaseDate.length)
-      const year = releaseDate.join("")
+      /**
+       * Display productions imgs
+       * @returns 
+       */
+      function displayProductions(){
+        const logoImgUrl = "https://image.tmdb.org/t/p/original";
+        const aside = document.querySelector("aside")
+        console.log(json.production_companies)
+        const productionCompanies = json.production_companies
+
+        const productionContainer = document.createElement("div")
+        productionContainer.classList.add("production")
+        aside.appendChild(productionContainer)
+        
+        let imgDiv = null
+        let img = null
+
+        //create img elements
+        for(let i = 0; i < productionCompanies.length; i++){
+
+          imgDiv = document.createElement("div")
+          imgDiv.classList.add("production__img")
+          productionContainer.appendChild(imgDiv)
+
+          img = document.createElement("img") 
+          img.src = `${logoImgUrl}${productionCompanies[i].logo_path}`
+          imgDiv.appendChild(img)
+
+          //if there is no img available do not display at all
+          if(productionCompanies[i].logo_path == null){
+            imgDiv.style.display = "none"
+          }
+
+          //if there is an img but is null then do not display all the production container
+          if(productionCompanies.length === 1 && productionCompanies[i].logo_path == null){
+            productionContainer.style.display = "none"
+            return
+          }
+
+        }
+        
+      }
+      displayProductions()
+    }
+    setAsideElement()
+
+    const setMovieDetails = () => {
+      //Display movie title and set year relased
+      function setTitleAndYear(){
+        const releaseDate = json.release_date.split("")
+        releaseDate.splice(4, releaseDate.length)
+        const year = releaseDate.join("")
+    
+        //set movie title
+        movieTitle.innerHTML = `${json.title} (${year})`;
+        console.log(movieTitle.innerText)
+
+        //Remove skeleton-loader when content is loaded
+        if(movieTitle.innerHTML !== ""){
+          movieTitle.classList.remove("skeleton-loader")
+          movieTitle.classList.add("active")
+        }
+
+        if(json.release_date === ""){
+          document.querySelector(".title").innerHTML = `${json.title}`;
+        }
+      }
+      setTitleAndYear()
+
+      //Display subheading info
+      function setSubheading(){
+        //create runtime element
+        const runtime = document.createElement("h6")
+        runtime.classList.add("duration")
+
+        //create divider element
+        const divider = document.createElement("span")
+        divider.classList.add("divider")
+
+        //create production country/ies
+        const prodCountries = document.createElement("h6")
+        prodCountries.classList.add("production-country")
+
+        //add childs elements to parent
+        const subHeading = document.querySelector(".movie__details--subheading")
+        subHeading.appendChild(runtime)
+        subHeading.appendChild(divider)
+        subHeading.appendChild(prodCountries)
+
+        runtime.innerHTML = json.runtime + " min"
+
+        prodCountries.innerText = json.production_countries[0].iso_3166_1
+      }
+      setSubheading()
+
+      //Display rating
+      function setRating(){
+        movieRating.innerHTML += `${json.vote_average}<h5>/10</h5>`
+
+        if(json.vote_average === 0){
+          movieRating.innerHTML = ""
+        }
+
+        //remove skeleton-loader
+        if(movieRating.innerHTML !== ""){
+          movieRating.classList.remove("skeleton-loader")
+          document.querySelector(".fa-star").classList.add("active")
+          movieRating.classList.add("active")
+        }
+      }
+      setRating()
+
+      //get movie genres
+      let genres = json.genres.map((genre) => genre.name);
+      genres = spaceAfterComma(genres);
+
+      //set movie genres
+      document.querySelector(".movie__genres p").innerHTML = `${genres}`;
+
+      //remove skeleton loader
+      if(document.querySelector(".movie__genres p").innerHTML !== ""){
+        document.querySelector(".movie__genres p").classList.remove("skeleton-loader")
+      }
+
+      //set movie description
+      document.querySelector(".movie__description p").innerHTML = `${json.overview}`;
+
+       //remove skeleton loader
+       if(document.querySelector(".movie__description p").innerHTML !== ""){
+        document.querySelector(".movie__description p").classList.remove("skeleton-loader")
+      }
+    }
+    setMovieDetails()
+
   
-      //set movie title
-      document.querySelector(".title").innerHTML = `${json.title} (${year})`;
-      
-      if(json.release_date === ""){
-        document.querySelector(".title").innerHTML = `${json.title}`;
-      }
-    }
-    setTitleAndYear()
-
-    //Display subheading info
-    function setSubheading(){
-      //create runtime element
-      const runtime = document.createElement("h6")
-      runtime.classList.add("duration")
-
-      //create divider element
-      const divider = document.createElement("span")
-      divider.classList.add("divider")
-
-      //create production country/ies
-      const prodCountries = document.createElement("h6")
-      prodCountries.classList.add("production-country")
-
-      //add childs elements to parent
-      const subHeading = document.querySelector(".movie__details--subheading")
-      subHeading.appendChild(runtime)
-      subHeading.appendChild(divider)
-      subHeading.appendChild(prodCountries)
-
-      runtime.innerHTML = json.runtime + " min"
-
-      prodCountries.innerText = json.production_countries[0].iso_3166_1
-    }
-    setSubheading()
-
-    //Display rating
-    function setRating(){
-      document.querySelector(".rating").innerHTML += `${json.vote_average}<h5>/10</h5>`
-
-      if(json.vote_average === 0){
-        document.querySelector(".rating").innerHTML = ""
-      }
-    }
-    setRating()
-
-    //get movie genres
-    let genres = json.genres.map((genre) => genre.name);
-    genres = spaceAfterComma(genres);
-    //set movie genres
-    document.querySelector(".movie__genres p").innerHTML = `${genres}`;
-
-    //set movie description
-    document.querySelector(
-    ".movie__description p"
-    ).innerHTML = `${json.overview}`;
-
+  
   } catch (err) {
     console.log(err.message);
   }
 }
-getMovieDetails();
+setTimeout(function(){getMovieDetails()}, loadingTime)
 
 async function getMovieCastDirectors() {
   const movieID = sessionStorage.getItem("movie id");
@@ -174,9 +253,12 @@ async function getMovieCastDirectors() {
       crew = crew.replace(/,/g, " ");
 
       //display
-      document.querySelector(
-      ".movie__director p"
-      ).innerHTML = crew;
+      document.querySelector(".movie__director p").innerHTML = crew;
+
+      //remove skeleton loader
+      if(document.querySelector(".movie__director p").innerHTML !== ""){
+        document.querySelector(".movie__director p").classList.remove("skeleton-loader")
+      }
   
       //set cast
       let cast = json.cast.map(cast => cast.name)
@@ -189,6 +271,11 @@ async function getMovieCastDirectors() {
       //display first five actors
       let castText = document.querySelector(".movie__main-cast p")
       castText.innerText = spaceAfterComma(castArr)
+
+      //remove skeleton loader
+      if(document.querySelector(".movie__main-cast p").innerHTML !== ""){
+        document.querySelector(".movie__main-cast p").classList.remove("skeleton-loader")
+      }
 
       let moreBtn = document.querySelector("#more") //target more button
 
@@ -216,7 +303,7 @@ async function getMovieCastDirectors() {
       console.log(err.message);
     }
 }
-getMovieCastDirectors();
+setTimeout(function(){getMovieCastDirectors()}, loadingTime);
 
 //put some space after comma for each word
 function spaceAfterComma(array) {
