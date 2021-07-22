@@ -539,19 +539,30 @@ closeBtn.addEventListener("click", (e) => {
 
 
 //------- Streaming/Buy services -------------//
+let resultsArr = []
+const strmPlatforms = document.querySelector(".platforms_rent") //rent div
+const buyPlatforms = document.querySelector(".platforms_buy") //buy div
+strmPlatforms.innerHTML = ""
+buyPlatforms.innerHTML = ""
 
 /**
  * Function to get the navigator language
  * @returns {String}
  */
-function getLang() {
+function getLocale() {
   if (navigator.languages != undefined) {
     //console.log(navigator.language.slice(-2))
+    // sessionStorage.setItem("locale", navigator.languages[0].slice(-2))
     return navigator.languages[0].slice(-2);
   }
   return navigator.language;
 }
-getLang()
+getLocale()
+
+function getCountryCode(){
+  return sessionStorage.getItem('country_code')
+}
+getCountryCode()
 
 /**
  * Get streaming and buy services data and display them
@@ -572,7 +583,7 @@ async function streamingServices(){
   console.log({results: results})
 
   //convert results object into an array of objects
-  const resultsArr = Object.entries(results)
+  resultsArr = Object.entries(results)
 
   /**
    * Display the data fetched
@@ -612,8 +623,11 @@ async function streamingServices(){
   resultsArr.forEach((result, index) => {
     const locale = result[0]
 
-    if(getLang() === locale){
-      console.log(result)
+    if(getCountryCode() === locale || getLocale() === locale){
+      
+      if(getCountryCode()){
+        getLocale = getCountryCode()
+      }
 
       result.forEach((res, index) => {
 
@@ -621,9 +635,6 @@ async function streamingServices(){
         if(typeof(res) === "object"){
 
           const linkToProvider = res.link
-
-          const strmPlatforms = document.querySelector(".platforms_rent") //rent div
-          const buyPlatforms = document.querySelector(".platforms_buy") //buy div
 
           for(let i = 0; i <= result.length; i++){
             const objKey = Object.keys(result[index])[i]
@@ -641,6 +652,12 @@ async function streamingServices(){
             }
           }
 
+          // if(sessionStorage.getItem('country_name') !== null && sessionStorage.getItem('country_code') !== result[0]){
+          //   console.log(sessionStorage.getItem('country_code'), result[0])
+
+      
+          // }
+
           //if there is no data in the streaming ul element, display message
           if(strmPlatforms.children.length === 0){
             strmPlatforms.innerHTML = "<h3>Not available</h3>"
@@ -650,6 +667,7 @@ async function streamingServices(){
           if(buyPlatforms.children.length === 0){
             buyPlatforms.innerHTML = "<h3>Not available</h3>"
           }
+        
         }
       })
     }
@@ -657,3 +675,83 @@ async function streamingServices(){
 }
 
 streamingServices()
+
+/**
+ * Populate dropdown element with country names
+ */
+async function populateDropDownEl() {
+
+  const url = `https://api.themoviedb.org/3/configuration/countries?api_key=${APIKEY}`
+
+  let country_select = document.querySelector("#country");
+  let countryLabel = document.querySelector(`.dropdown  label[for="country"]`)
+
+  let optionEl = null
+
+  try {
+    const resp = await fetch(url)
+    const json = await resp.json()
+    console.log(json)
+
+    json.forEach((country, index) => {
+      //create option element
+      optionEl = document.createElement("option")
+      //setting attributes
+      optionEl.value = country.iso_3166_1
+      optionEl.innerText = country.native_name
+      //append option el to its parent el
+      country_select.appendChild(optionEl)
+
+      //check if session storage is null
+      if(sessionStorage.getItem('country_name') == null){
+
+        //if locale value is same as one of the option elements value
+        //set label innerHTML equal to the relative country name value
+        if(getLocale() == optionEl.value){
+          console.log("Ok")
+          countryLabel.innerHTML = country.native_name
+        }
+       
+      }else{
+        countryLabel.innerHTML = sessionStorage.getItem('country_name')
+      }
+
+     
+      //check if country selected has streaming or buy provider
+      //if it doesn't then display a "Not available" message 
+ 
+      // if(sessionStorage.getItem('country_code') !== resultsArr[index][0]){
+
+      //   strmPlatforms.innerHTML = "<h3>Not available</h3>"
+      //   buyPlatforms.innerHTML = "<h3>Not available</h3>"
+      // }else{
+
+      // }
+     
+   
+    })
+
+    country_select.addEventListener('change', function (event) {
+
+      let selected_text = this.options[this.selectedIndex].text // selected option element value
+
+      let selected_value = this.value
+      let selected_country = selected_text
+      console.log(selected_country)
+
+      sessionStorage.setItem('country_code', selected_value)
+      sessionStorage.setItem('country_name', selected_country)
+     
+      // console.log(selected_text)
+      window.location.reload()
+    });
+
+    console.log(country_select.length, resultsArr.length)
+
+  
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+populateDropDownEl()
