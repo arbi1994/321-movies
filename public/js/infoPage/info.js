@@ -1,19 +1,19 @@
 const asideProductionsEl = document.querySelector(".movie__image")
-const movieTitle = document.querySelector(".movie__title .title")
+const movieTitle = document.querySelector(".movie__title")
 const movieRating = document.querySelector(".movie__title .rating")
 const movieDetailsDescriptions = document.querySelectorAll(".movie__details p")
 
-const loadingTime = 2000 //2sec
+const loadingTime = 1000 //2sec
 
-function addSkeletonLoader (img, title, rating, descriptions) {
+function addSkeletonLoader (img, title, descriptions) {
   img.classList.add("skeleton-loader")
   title.classList.add("skeleton-loader")
-  rating.classList.add("skeleton-loader")
+  //rating.classList.add("skeleton-loader")
   descriptions.forEach(description => {
     description.classList.add("skeleton-loader")
   })
 }
-addSkeletonLoader(asideProductionsEl, movieTitle, movieRating, movieDetailsDescriptions)
+addSkeletonLoader(asideProductionsEl, movieTitle, movieDetailsDescriptions)
 
 
 const APIKEY = "f569c35640a9131fdf30825f47683372"; //api key
@@ -138,13 +138,13 @@ async function getMovieDetails() {
         const year = releaseDate.join("")
     
         //set movie title
-        movieTitle.innerHTML = `${json.title} (${year})`;
+        document.querySelector(".movie__title .title").innerHTML = `${json.title} (${year})`;
         console.log(movieTitle.innerText)
 
         //Remove skeleton-loader when content is loaded
         if(movieTitle.innerHTML !== ""){
           movieTitle.classList.remove("skeleton-loader")
-          movieTitle.classList.add("active")
+          document.querySelector(".movie__title .title").classList.add("active")
         }
 
         if(json.release_date === ""){
@@ -189,7 +189,7 @@ async function getMovieDetails() {
 
         //remove skeleton-loader
         if(movieRating.innerHTML !== ""){
-          movieRating.classList.remove("skeleton-loader")
+          //movieRating.classList.remove("skeleton-loader")
           document.querySelector(".fa-star").classList.add("active")
           movieRating.classList.add("active")
         }
@@ -218,8 +218,6 @@ async function getMovieDetails() {
     }
     setMovieDetails()
 
-  
-  
   } catch (err) {
     console.log(err.message);
   }
@@ -404,6 +402,7 @@ const playMovieTrailer = async () => {
 }
 
 const playBtnChildren = document.querySelector(".movie__trailer") //target all movie__traile children
+playBtnChildren.style.display = "none"
 const playBtn = document.querySelector(".fa-play-circle") //target play button
 const closeBtn = document.querySelector(".fa-times-circle") //target close button
 closeBtn.style.display = "none" //set close button display to none as default
@@ -425,6 +424,7 @@ const showPlayBtn = () => {
   playBtnChildren.style.display = "block" //show play button
   closeBtn.style.display = "none" //remove close button
 }
+setTimeout(function(){showPlayBtn()}, loadingTime)
 
 /**
  * Added some box shadow inset to make background all around a bit darker

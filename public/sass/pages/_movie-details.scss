@@ -146,6 +146,7 @@
     padding: 2em 4em;
     z-index: 100;
     @include flex(row, center, flex-start);
+    width: 100%;
 
     @include media("<desktop", ">tablet") {
       padding: 0 3em;
@@ -373,8 +374,8 @@
     }
 
     &__title {
-      width: 100%;
-      height: 5em;
+      //width: 100%;
+      //height: 4em;
       padding: 1em 0;
       display: flex;
       justify-content: space-between;
@@ -382,7 +383,7 @@
 
       .title {
         letter-spacing: 1px;
-        min-width: 20em;
+        //min-width: 20em;
 
         &.active {
           @include gradientColor();
@@ -448,19 +449,35 @@
     }
 
     &__streaming {
-      .ott-titles {
-        width: 100%;
-        @include flex(row, flex-start, center);
-        margin-bottom: 1em;
-        padding: 1em 0;
+      overflow-x: hidden;
 
-        @include media("<=tablet") {
-          justify-content: center;
-        }
+      .header {
+        @include flex(row, space-around, center);
 
-        img {
-          width: 10em;
-          margin-right: 5em;
+        .ott-titles {
+          width: 100%;
+          @include flex(row, flex-start, center);
+          margin-bottom: 1em;
+          padding: 1em 0;
+          flex-wrap: wrap;
+  
+          @include media("<=tablet") {
+            justify-content: center;
+          }
+  
+          img {
+            width: 10em;
+            margin-right: 5em;
+  
+            @include media("<=tablet") {
+              width: 8em;
+              margin-right: 3em;
+            }
+
+            @include media("<=phoneL"){
+              width: 4em;
+            }
+          }
         }
       }
 
@@ -500,7 +517,8 @@ aside {
   flex: 1;
   //height: 100%;
   min-height: 25em;
-  width: 80em;
+  //width: auto;
+  //width: 80em;
   margin-right: 2em;
   position: relative;
   left: 0;
@@ -530,6 +548,10 @@ aside {
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
+  }
+
+  @include media("<=phoneL") {
+    min-height: 15em;
   }
 
   .production {
@@ -571,7 +593,8 @@ aside {
 .skeleton-loader {
   position: relative;
   min-height: 100%;
-  min-width: 5em;
+  width: 100%;
+  //min-width: 10em;
   box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
   overflow: hidden;
   background: rgb(143, 143, 143);
@@ -605,20 +628,42 @@ aside {
 }
 
 .dropdown {
-  border: 1px solid white;
-  min-width: 15em;
+  border: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient($deg1, $search-1, $search-2);
+  // border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  border-radius: 5px;
+  width: 20em;
   height: 3em;
   @include flex(row, space-around, center);
   padding: 1em;
 
   label[for="country"] {
     color: $text;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     letter-spacing: 1px;
     font-family: $font;
     margin-right: 1em;
+
+    @include media("<=phoneL"){
+      font-size: .8rem;
+    }
   }
   .country-dropdown {
     width: 1.5em;
+    border: none;
+    //visibility: hidden;
+
+    // &::after{
+    //   content: "";
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
+    // }
+  }
+
+  @include media("<=phoneL"){
+    width: 20em;
   }
 }

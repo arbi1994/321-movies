@@ -99,7 +99,8 @@
           <aside>
 
             <div class="movie__image">
-              <!-- <img src="" data-src="" alt="..." /> -->
+
+              <!-- <img src="" loading="lazy" alt=""> -->
 
               <div class="movie__trailer">
                 <i class="far fa-play-circle"></i>
@@ -146,19 +147,20 @@
             <hr />
 
           <div class="movie__streaming">
-            <div class="ott-titles">
-              <img src="./public/images/logos/justwatch_logo.svg">
-              <img src="./public/images/logos/tmdb_logo.svg">
 
+            <div class="header">
+              <div class="ott-titles">
+                <img src="./public/images/logos/justwatch_logo.svg">
+                <img src="./public/images/logos/tmdb_logo.svg">
+                <!-- <div id="selected_country"></div> -->
+              </div>
+  
               <div class="dropdown">
                 <label for="country">Select Country</label>
                 <select id="country" class="country-dropdown" name="country"></select>
               </div>
+            </div>
             
-
-              <!-- <div id="selected_country"></div> -->
-          </div>
-
           <div class="movie__streaming">
             <h5>Rent</h5>
             <ul class="platforms_rent"></ul>
