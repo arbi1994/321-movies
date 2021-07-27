@@ -450,6 +450,7 @@
 
     &__streaming {
       overflow-x: hidden;
+      margin-top: 2em;
 
       .header {
         @include flex(row, space-around, center);
@@ -462,7 +463,7 @@
           flex-wrap: wrap;
   
           @include media("<=tablet") {
-            justify-content: center;
+            //justify-content: center;
           }
   
           img {
@@ -636,7 +637,7 @@ aside {
   width: 20em;
   height: 3em;
   @include flex(row, space-around, center);
-  padding: 1em;
+  //padding: 1em;
 
   label[for="country"] {
     color: $text;
@@ -649,6 +650,7 @@ aside {
       font-size: .8rem;
     }
   }
+
   .country-dropdown {
     width: 1.5em;
     border: none;

@@ -60,11 +60,11 @@ async function getMovieDetails() {
     const resp = await fetch(url);
     //convert response to json format
     const json = await resp.json();
-    console.log(json);
+    //console.log(json);
 
     const setAsideElement = () => {
       /**
-       * Display video img
+       * Display video imgf
        */
       function setVideoImg () {
         let videoImg = document.createElement("img")
@@ -91,7 +91,7 @@ async function getMovieDetails() {
       function displayProductions(){
         const logoImgUrl = "https://image.tmdb.org/t/p/original";
         const aside = document.querySelector("aside")
-        console.log(json.production_companies)
+        //console.log(json.production_companies)
         const productionCompanies = json.production_companies
 
         const productionContainer = document.createElement("div")
@@ -139,7 +139,7 @@ async function getMovieDetails() {
     
         //set movie title
         document.querySelector(".movie__title .title").innerHTML = `${json.title} (${year})`;
-        console.log(movieTitle.innerText)
+        //console.log(movieTitle.innerText)
 
         //Remove skeleton-loader when content is loaded
         if(movieTitle.innerHTML !== ""){
@@ -544,6 +544,10 @@ const strmPlatforms = document.querySelector(".platforms_rent") //rent div
 const buyPlatforms = document.querySelector(".platforms_buy") //buy div
 strmPlatforms.innerHTML = ""
 buyPlatforms.innerHTML = ""
+let countries = []
+console.log(countries)
+let countriesIso = []
+
 
 /**
  * Function to get the navigator language
@@ -580,9 +584,12 @@ async function streamingServices(){
 
   //results
   const results = resp.results
-  console.log({results: results})
+  console.table(results)
 
   //convert results object into an array of objects
+  countriesIso = Object.entries(results).map(res => res[0])
+  console.log(countriesIso)
+
   resultsArr = Object.entries(results)
 
   /**
@@ -671,6 +678,7 @@ async function streamingServices(){
         }
       })
     }
+
   })
 }
 
@@ -691,30 +699,18 @@ async function populateDropDownEl() {
   try {
     const resp = await fetch(url)
     const json = await resp.json()
-    console.log(json)
+    //console.log(json)
 
     json.forEach((country, index) => {
-      //create option element
-      optionEl = document.createElement("option")
-      //setting attributes
-      optionEl.value = country.iso_3166_1
-      optionEl.innerText = country.native_name
-      //append option el to its parent el
-      country_select.appendChild(optionEl)
 
-      //check if session storage is null
-      if(sessionStorage.getItem('country_name') == null){
 
-        //if locale value is same as one of the option elements value
-        //set label innerHTML equal to the relative country name value
-        if(getLocale() == optionEl.value){
-          console.log("Ok")
-          countryLabel.innerHTML = country.native_name
-        }
-       
-      }else{
-        countryLabel.innerHTML = sessionStorage.getItem('country_name')
-      }
+      countries.push({
+        iso: country.iso_3166_1,
+        country: country.native_name
+      })
+      
+
+      //console.log(resultsArr[index][0])
 
      
       //check if country selected has streaming or buy provider
@@ -731,6 +727,41 @@ async function populateDropDownEl() {
    
     })
 
+    countriesIso.forEach((iso, index) => {
+      //create option element
+      optionEl = document.createElement("option")
+
+      //append option el to its parent el
+      country_select.appendChild(optionEl)
+
+      countries.forEach(country => {
+
+        if(country.iso == iso){
+          //setting attributes
+          optionEl.value = country.iso
+          optionEl.innerText = country.country
+        }
+      })
+    })
+
+    countries.forEach(country => {
+     
+      //if locale value is same as one of the option elements value
+      //set label text equal to the relative country name value
+      if(sessionStorage.getItem('country_name') == null){
+
+        if(country.iso === getLocale()){
+          countryLabel.innerHTML = country.country}
+        // }else{
+        //   countryLabel.innerHTML = "Select country"
+        // }
+
+      }else{
+        countryLabel.innerHTML = sessionStorage.getItem('country_name')
+      }
+    })
+   
+
     country_select.addEventListener('change', function (event) {
 
       let selected_text = this.options[this.selectedIndex].text // selected option element value
@@ -746,9 +777,7 @@ async function populateDropDownEl() {
       window.location.reload()
     });
 
-    console.log(country_select.length, resultsArr.length)
-
-  
+    //console.table(country_select.length, resultsArr.length)
 
   } catch (error) {
     console.log(error.message)
