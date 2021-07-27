@@ -37,10 +37,18 @@ async function displayMovieBackdropImg () {
     function backgroundImg () {
       let backgroundImg = document.querySelector(".movie-background img")
 
-      //if no belongs_to_collection or belongs_to_collection.backdrop_path available, display backdrop_path
-      json.belongs_to_collection == null || json.belongs_to_collection.backdrop_path == null
-      ? backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}` 
-      : backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
+      if(json.backdrop_path){
+        backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}`
+      }else{
+        //if no belongs_to_collection or belongs_to_collection.backdrop_path available, display backdrop_path
+        if(json.belongs_to_collection == null || json.belongs_to_collection.backdrop_path == null){
+          backgroundImg.src = `${backgroundImgURL}${json.backdrop_path}`
+        }else{
+          backgroundImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
+        }
+
+        return
+      }
     }
     backgroundImg()
   }catch(err){
@@ -69,10 +77,6 @@ async function getMovieDetails() {
       function setVideoImg () {
         let videoImg = document.createElement("img")
 
-        videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
-
-        videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
-
         //Remove skeleton-loader and append img to its parent
         if(videoImg.src !== null){
           asideProductionsEl.classList.remove("skeleton-loader")
@@ -80,7 +84,18 @@ async function getMovieDetails() {
         }
        
         //if no backdrop_path available, display backdrop_path contained in belongs_to_collection
-        if(json.backdrop_path == null) videoImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
+        if(json.backdrop_path){
+          videoImg.src = `${backgroundImgURL}${json.backdrop_path}`
+        }else{
+          //check if backdrop_path exists
+          if(json.belongs_to_collection == null || json.belongs_to_collection.backdrop_path == null){
+            asideProductionsEl.classList.remove("skeleton-loader")  
+            asideProductionsEl.appendChild(videoImg)
+          }else{
+            videoImg.src = `${backgroundImgURL}${json.belongs_to_collection.backdrop_path}`
+          }
+          return
+        }
       }
       setVideoImg()
 
@@ -173,9 +188,15 @@ async function getMovieDetails() {
         subHeading.appendChild(divider)
         subHeading.appendChild(prodCountries)
 
+        //display runtime
         runtime.innerHTML = json.runtime + " min"
 
-        prodCountries.innerText = json.production_countries[0].iso_3166_1
+        //check if production_countries array is empty
+        if(json.production_countries.length <= 0) return
+
+        const productions = json.production_countries[0].iso_3166_1
+
+        prodCountries.innerHTML = productions || ""
       }
       setSubheading()
 
@@ -199,6 +220,7 @@ async function getMovieDetails() {
       //get movie genres
       let genres = json.genres.map((genre) => genre.name);
       genres = spaceAfterComma(genres);
+      console.log(genres)
 
       //set movie genres
       document.querySelector(".movie__genres p").innerHTML = `${genres}`;
@@ -233,18 +255,19 @@ async function getMovieCastDirectors() {
       const resp = await fetch(url);
       //convert response to json format
       const json = await resp.json();
+      console.log(json)
+
+      //set director/s
+      let crew = json.crew.map(crew => {
+        if(crew.job == "Director"){
+          return crew.name
+        }
+      });
 
       //if cast elements are 1 or less than 1, remove more button
       if(json.cast.length <= 1){
         document.querySelector("#more").style.display = "none"
       }
-
-      //set director/s
-      let crew = json.crew.map(crew => {
-        if(crew.job == "Director"){
-            return crew.name
-        }
-      });
 
       //remove all commas
       crew = crew.toString();
@@ -275,6 +298,11 @@ async function getMovieCastDirectors() {
         document.querySelector(".movie__main-cast p").classList.remove("skeleton-loader")
       }
 
+      //check if cast array is empty
+      if(json.cast.length === 0){
+        document.querySelector(".movie__main-cast p").classList.remove("skeleton-loader")
+        document.querySelector(".movie__main-cast p").innerText = "NO DATA"
+      }
       let moreBtn = document.querySelector("#more") //target more button
 
       //bind more button to click event
@@ -342,6 +370,7 @@ const getMovieTrailer = async () => {
       //close coming-soon div
       document.querySelector(".coming-soon .fa-times").onclick = () => {
         document.querySelector(".coming-soon").classList.remove("active")
+        document.querySelector(".coming-soon h1").innerText = ""
       }
 
       return
