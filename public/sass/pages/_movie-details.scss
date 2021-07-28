@@ -446,7 +446,7 @@
       }
     }
 
-    &__streaming {
+    &__providers {
       overflow-x: hidden;
       margin-top: 2em;
 
@@ -508,6 +508,7 @@
         }
       }
     }
+
   }
 }
 
@@ -515,7 +516,7 @@
 aside {
   flex: 1;
   //height: 100%;
-  min-height: 25em;
+  min-height: 36em;
   //width: auto;
   //width: 80em;
   margin-right: 2em;

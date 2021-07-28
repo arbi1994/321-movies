@@ -191,12 +191,19 @@ async function getMovieDetails() {
         //display runtime
         runtime.innerHTML = json.runtime + " min"
 
+        if(json.runtime == null){
+          runtime.innerHTML = "N/A min"
+        }
+
         //check if production_countries array is empty
-        if(json.production_countries.length <= 0) return
+        if(json.production_countries.length <= 0){
+          prodCountries.innerHTML = "N/A"
+          return
+        } 
 
         const productions = json.production_countries[0].iso_3166_1
 
-        prodCountries.innerHTML = productions || ""
+        prodCountries.innerHTML = productions
       }
       setSubheading()
 
@@ -233,9 +240,14 @@ async function getMovieDetails() {
       //set movie description
       document.querySelector(".movie__description p").innerHTML = `${json.overview}`;
 
-       //remove skeleton loader
-       if(document.querySelector(".movie__description p").innerHTML !== ""){
+      //remove skeleton loader
+      if(document.querySelector(".movie__description p").innerHTML !== ""){
         document.querySelector(".movie__description p").classList.remove("skeleton-loader")
+      }
+
+      if(json.overview === ""){
+        document.querySelector(".movie__description p").classList.remove("skeleton-loader")
+        document.querySelector(".movie__description p").innerHTML = "NO DATA"
       }
     }
     setMovieDetails()
@@ -279,6 +291,12 @@ async function getMovieCastDirectors() {
       //remove skeleton loader
       if(document.querySelector(".movie__director p").innerHTML !== ""){
         document.querySelector(".movie__director p").classList.remove("skeleton-loader")
+      }
+
+      //check crew array length
+      if(json.crew.length === 0){
+        document.querySelector(".movie__director p").classList.remove("skeleton-loader")
+        document.querySelector(".movie__director p").innerHTML = "NO DATA"
       }
   
       //set cast
@@ -340,7 +358,7 @@ function spaceAfterComma(array) {
 }
 
 //----- Movie trailer ------//
-index = 0
+//index = 0
 
 /**
  * Get movies trailer data
@@ -386,20 +404,17 @@ const getMovieTrailer = async () => {
       const regex = /^.*(Final Trailer|Official Trailer|Trailer).*$/i;
       const found = str.match(regex)
 
-      console.log(found)
-
-      //if regex does not match (returns null) and the trailer type is not "Trailer" go check next result
-      //otherwise just return trailer key
-      if(found === null && videosArr[index].type !== "Trailer"){
-        index++
-      }else{
-        trailerKey = videosArr[index].key
-      }
+      return found
     }
   
     //check if video type and video name is a Trailer
     videosArr.forEach((video, index) => {
       checkName(video.name)
+
+      //check video type and video name 
+      if(checkName(video.name) !== null && video.type === "Trailer"){
+        trailerKey = video.key
+      }
     })
 
     if(videosArr.length === 1){
@@ -569,12 +584,13 @@ closeBtn.addEventListener("click", (e) => {
 
 //------- Streaming/Buy services -------------//
 let resultsArr = []
+const streamingContainer = document.querySelector(".movie__streaming")
+streamingContainer.style.display = "none"
 const strmPlatforms = document.querySelector(".platforms_rent") //rent div
 const buyPlatforms = document.querySelector(".platforms_buy") //buy div
 strmPlatforms.innerHTML = ""
 buyPlatforms.innerHTML = ""
 let countries = []
-console.log(countries)
 let countriesIso = []
 
 
@@ -613,13 +629,20 @@ async function streamingServices(){
 
   //results
   const results = resp.results
-  console.table(results)
+  //console.table(results)
 
   //convert results object into an array of objects
   countriesIso = Object.entries(results).map(res => res[0])
-  console.log(countriesIso)
+  //console.log(countriesIso)
 
   resultsArr = Object.entries(results)
+  console.log(resultsArr)
+
+  //check if resultsArr is empty
+  if(resultsArr.length === 0){
+    document.querySelector(".platforms_rent").innerHTML = "<h3>Not available</h3>"
+    document.querySelector(".platforms_buy").innerHTML = "<h3>Not available</h3>"
+  }
 
   /**
    * Display the data fetched
@@ -658,9 +681,11 @@ async function streamingServices(){
   
   resultsArr.forEach((result, index) => {
     const locale = result[0]
+    console.log(locale)
 
     if(getCountryCode() === locale || getLocale() === locale){
       
+      streamingContainer.style.display = "block"
       if(getCountryCode()){
         getLocale = getCountryCode()
       }
@@ -687,12 +712,6 @@ async function streamingServices(){
               })
             }
           }
-
-          // if(sessionStorage.getItem('country_name') !== null && sessionStorage.getItem('country_code') !== result[0]){
-          //   console.log(sessionStorage.getItem('country_code'), result[0])
-
-      
-          // }
 
           //if there is no data in the streaming ul element, display message
           if(strmPlatforms.children.length === 0){
@@ -738,22 +757,6 @@ async function populateDropDownEl() {
         country: country.native_name
       })
       
-
-      //console.log(resultsArr[index][0])
-
-     
-      //check if country selected has streaming or buy provider
-      //if it doesn't then display a "Not available" message 
- 
-      // if(sessionStorage.getItem('country_code') !== resultsArr[index][0]){
-
-      //   strmPlatforms.innerHTML = "<h3>Not available</h3>"
-      //   buyPlatforms.innerHTML = "<h3>Not available</h3>"
-      // }else{
-
-      // }
-     
-   
     })
 
     countriesIso.forEach((iso, index) => {
@@ -772,17 +775,24 @@ async function populateDropDownEl() {
         }
       })
     })
+ 
 
     countries.forEach(country => {
      
       //if locale value is same as one of the option elements value
       //set label text equal to the relative country name value
       if(sessionStorage.getItem('country_name') == null){
+        streamingContainer.style.display = "none"
+        // if(country.iso === getLocale()){
+        //   countryLabel.innerHTML = country.country
+        //   streamingContainer.style.display = "block"
+        //   return
+        // }
 
-        if(country.iso === getLocale()){
-          countryLabel.innerHTML = country.country}
-        // }else{
-        //   countryLabel.innerHTML = "Select country"
+        // if(country.iso !== getLocale()){
+        //   streamingContainer.style.display = "Select country"
+        //   streamingContainer.style.display = "none"
+        //   return
         // }
 
       }else{
