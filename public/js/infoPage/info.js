@@ -782,7 +782,9 @@ async function populateDropDownEl() {
       //if locale value is same as one of the option elements value
       //set label text equal to the relative country name value
       if(sessionStorage.getItem('country_name') == null){
+        
         streamingContainer.style.display = "none"
+
         // if(country.iso === getLocale()){
         //   countryLabel.innerHTML = country.country
         //   streamingContainer.style.display = "block"
