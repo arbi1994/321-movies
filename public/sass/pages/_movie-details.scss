@@ -46,6 +46,7 @@
       -moz-text-fill-color: transparent;
       cursor: pointer;
       padding: 0.5em;
+      z-index: 500
     }
 
     h1 {
@@ -431,7 +432,7 @@
         padding: 0.2rem 0.5rem;
         margin-top: 1rem;
         cursor: pointer;
-        background: linear-gradient(180deg, $search-1, $search-2);
+        background: linear-gradient($deg1, $search-1, $search-2);
       }
     }
 
@@ -538,6 +539,20 @@ aside {
     backdrop-filter: blur(0px);
     z-index: 200;
   }
+  
+  /* iPad Pro */
+  @media screen and (min-width: 1024px) and (min-height: 1366px) {
+    margin-right: 0;
+    min-height: none;
+
+    &.active {
+      overflow: visible;
+      left: 0;
+      transform: translate(0, 15%);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
 
   @include media("<=tablet") {
     margin-right: 0;
@@ -546,7 +561,7 @@ aside {
     &.active {
       overflow: visible;
       left: 0;
-      transform: translate(0, 50%);
+      transform: translate(0, 15%);
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
@@ -554,6 +569,10 @@ aside {
 
   @include media("<=phoneL") {
     min-height: 15em;
+
+    &.active {
+      transform: translate(0, 50%);
+    }
   }
 
   .production {
@@ -567,6 +586,14 @@ aside {
     border-top-right-radius: 10px;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
+
+    /* iPad Pro */
+    @media screen and (min-width: 1024px) and (min-height: 1366px) {
+      display: none;
+      border-radius: 0;
+      margin-bottom: 0;
+    }
+   
 
     @include media("<=tablet") {
       display: none;

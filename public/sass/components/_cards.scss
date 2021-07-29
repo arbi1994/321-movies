@@ -86,7 +86,7 @@
 
     .rating__stars {
       font-size: 1.6rem;
-      background: linear-gradient($deg2, #aab3ff77, #eca0ff77);
+      background: linear-gradient($deg1, #aab3ff77, #eca0ff77);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -106,7 +106,7 @@
         width: 0;
         display: flex;
         align-items: center;
-        background: linear-gradient($deg2, $search-1, $search-2);
+        background: linear-gradient($deg1, $search-1, $search-2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         -moz-background-clip: text;
