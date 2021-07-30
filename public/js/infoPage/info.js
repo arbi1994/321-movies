@@ -3,6 +3,9 @@ const movieTitle = document.querySelector(".movie__title")
 const movieRating = document.querySelector(".movie__title .rating")
 const movieDetailsDescriptions = document.querySelectorAll(".movie__details p")
 
+//page title
+let pageTitle = document.title
+
 const loadingTime = 1000 //2sec
 
 function addSkeletonLoader (img, title, descriptions) {
@@ -148,23 +151,30 @@ async function getMovieDetails() {
     const setMovieDetails = () => {
       //Display movie title and set year relased
       function setTitleAndYear(){
+        //title selector 
+        const title = document.querySelector(".movie__title .title")
         const releaseDate = json.release_date.split("")
         releaseDate.splice(4, releaseDate.length)
         const year = releaseDate.join("")
     
         //set movie title
-        document.querySelector(".movie__title .title").innerHTML = `${json.title} (${year})`;
+        title.innerHTML = `${json.title} (${year})`;
         //console.log(movieTitle.innerText)
 
         //Remove skeleton-loader when content is loaded
         if(movieTitle.innerHTML !== ""){
           movieTitle.classList.remove("skeleton-loader")
-          document.querySelector(".movie__title .title").classList.add("active")
+          title.classList.add("active")
         }
 
         if(json.release_date === ""){
-          document.querySelector(".title").innerHTML = `${json.title}`;
+          title.innerHTML = `${json.title}`;
         }
+
+        //set page title 
+        pageTitle = title.innerText
+
+        console.log(pageTitle)
       }
       setTitleAndYear()
 
@@ -825,3 +835,11 @@ async function populateDropDownEl() {
   }
 }
 populateDropDownEl()
+
+// ----------- Set page title ----------- //
+//console.log(pageTitle)
+
+window.onload = function() {
+
+  setTimeout(() => document.title = pageTitle, 1000)
+};
