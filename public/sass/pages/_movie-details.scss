@@ -87,11 +87,23 @@
     left: 0;
     width: 100%;
     height: 100%;
-    box-shadow: inset 0px -400px 400px 80px $background;
+    box-shadow: inset 0px -800px 500px 80px $background;
     transition: box-shadow 1s ease;
 
+    @include media("<=LGdesktop"){
+      box-shadow: inset 0px -500px 500px 80px $background;
+    }
+
     @include media("<=desktop") {
+      box-shadow: inset 0px -400px 200px 80px $background;
+    }
+
+    @include media("<=SMdesktop") {
       box-shadow: inset 0px -200px 200px 80px $background;
+    }
+
+    @include media("<=tablet") {
+      box-shadow: inset 0px -400px 200px 80px $background;
     }
   }
 
@@ -252,7 +264,7 @@
           left: 0;
           width: 100%;
           height: 100%;
-          box-shadow: inset 0px -50px 40px 10px $background;
+          box-shadow: inset 0px -50px 50px 10px $background;
         }
 
         &.active {
@@ -273,6 +285,10 @@
       }
 
       @include media("<=phoneL") {
+        &::after {
+          box-shadow: inset 0px -50px 50px 0px $background;
+        }
+
         &.active {
           transform: translate(0, 100%);
         }
@@ -322,7 +338,7 @@
       @include media("<=tablet") {
         padding: 1em 2em;
         //width: 100vw;
-        box-shadow: inset -0px 50px 80px 10px $background;
+        box-shadow: inset -0px 50px 50px 0px $background;
         transition: none;
 
         &::after {
@@ -664,6 +680,7 @@ aside {
   width: 25em;
   height: 3em;
   @include flex(row, space-around, center);
+  margin-right: 2em;
 
   label[for="country"] {
     color: $text;
@@ -708,9 +725,9 @@ aside {
     }
   }
  
-
   @include media("<=phoneL"){
     width: 25em;
     padding: 0 .5em;
+    margin-right: 0;
   }
 }

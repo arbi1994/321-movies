@@ -1,5 +1,10 @@
+@use "../abstracts" as *;
+
 header {
   overflow: hidden;
   position: relative;
-  //min-height: 100vh;
+  
+  @include media("<=SMdesktop"){
+    min-width: 110em;
+  }
 }

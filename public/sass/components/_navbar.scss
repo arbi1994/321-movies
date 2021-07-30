@@ -221,7 +221,7 @@
   }
 }
 
-@include media("<=LGdesktop", ">desktop") {
+@include media("<=4Kdesktop", ">SMdesktop") {
   .navbar {
     @include flex(row, space-between, center);
 

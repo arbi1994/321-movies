@@ -368,7 +368,6 @@ function spaceAfterComma(array) {
 }
 
 //----- Movie trailer ------//
-//index = 0
 
 /**
  * Get movies trailer data
