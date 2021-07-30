@@ -411,24 +411,32 @@ const getMovieTrailer = async () => {
      * @param {String} str 
      */
     function checkName (str) {
-      const regex = /^.*(Final Trailer|Official Trailer|Trailer).*$/i;
-      const found = str.match(regex)
+      const regex = /^.*(Official|Trailer).*$/gi;
+      const test = regex.test(str)
 
-      return found
+      return test
     }
   
-    //check if video type and video name is a Trailer
-    videosArr.forEach((video, index) => {
-      checkName(video.name)
+    /**
+     * Check if video.type and video.name is a Trailer
+     */
+    function findTrailer () {
 
-      //check video type and video name 
-      if(checkName(video.name) !== null && video.type === "Trailer"){
-        trailerKey = video.key
+      for(const video of videosArr){
+
+        //check video type and video name 
+        if(checkName(video.name) === true && video.type === "Trailer"){
+          trailerKey = video.key
+
+          break
+        }
       }
-    })
+    }
 
     if(videosArr.length === 1){
       trailerKey = videosArr[0].key
+    }else{
+      findTrailer()
     }
     
     console.log(trailerKey)
@@ -837,7 +845,6 @@ async function populateDropDownEl() {
 populateDropDownEl()
 
 // ----------- Set page title ----------- //
-//console.log(pageTitle)
 
 window.onload = function() {
 
