@@ -1,6 +1,13 @@
 @use "../abstracts" as *;
 @use "../base/font-face" as *;
 
+
+.info-header {
+  @include media("<=SMdesktop"){
+    min-width: 110em;
+  }
+}
+
 //Coming soon message
 .coming-soon {
   position: fixed;

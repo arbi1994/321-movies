@@ -4,7 +4,7 @@ header {
   overflow: hidden;
   position: relative;
   
-  @include media("<=SMdesktop"){
-    min-width: 110em;
-  }
+  // @include media("<=SMdesktop"){
+  //   min-width: 110em;
+  // }
 }
