@@ -1,9 +1,7 @@
 @use "../abstracts" as *;
 @use "../base/font-face" as *;
-
-
 .info-header {
-  @include media("<=SMdesktop"){
+  @include media("<=SMdesktop") {
     min-width: 110em;
   }
 }
@@ -53,7 +51,7 @@
       -moz-text-fill-color: transparent;
       cursor: pointer;
       padding: 0.5em;
-      z-index: 500
+      z-index: 500;
     }
 
     h1 {
@@ -97,8 +95,8 @@
     box-shadow: inset 0px -800px 500px 80px $background;
     transition: box-shadow 1s ease;
 
-    @include media("<=LGdesktop"){
-      box-shadow: inset 0px -500px 500px 80px $background;
+    @include media("<=LGdesktop") {
+      box-shadow: inset 0px -400px 400px 80px $background;
     }
 
     @include media("<=desktop") {
@@ -373,7 +371,7 @@
       h5 {
         font-weight: 700;
         @include gradientColor();
-        margin-bottom: .5em;
+        margin-bottom: 0.5em;
 
         @include media("<desktop") {
           margin-bottom: 0.5rem;
@@ -389,7 +387,7 @@
           margin: 0 1em;
         }
 
-        h6 {
+        p {
           font-weight: 500;
           color: $subHeading;
         }
@@ -406,7 +404,6 @@
 
       .title {
         letter-spacing: 1px;
-        //min-width: 20em;
 
         &.active {
           @include gradientColor();
@@ -473,35 +470,54 @@
 
     &__providers {
       overflow-x: hidden;
-      margin-top: 2em;
 
       .header {
-        @include flex(row, space-around, center);
-        margin-bottom: 3em;
+        margin-bottom: 2em;
+        height: 15em;
 
-        .ott-titles {
-          width: 100%;
-          @include flex(row, flex-start, center);
-          //margin-bottom: 1em;
-          padding: 1em 0;
-          //flex-wrap: wrap;
-  
-          @include media("<=tablet") {
-            //justify-content: center;
+        &__title {
+          @include flex(row, space-between, center);
+
+          h3 {
+            line-height: 1;
+            text-transform: uppercase;
+            -webkit-text-fill-color: transparent;
+            -moz-text-fill-color: transparent;
+            background: linear-gradient($deg1, $search-1, $search-2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -moz-background-clip: text;
           }
-  
-          img {
-            width: 10em;
-            margin-right: 5em;
-  
-            @include media("<=tablet") {
-              width: 8em;
-              margin-right: 3em;
+
+          .ott-titles {
+            //border: 1px solid white;
+
+            h6 {
+              text-align: right;
+              font-weight: 400;
+              padding-bottom: 0.5em;
             }
 
-            @include media("<=phoneL"){
-              width: 4em;
+            .providers {
+              @include flex(row, space-between, center);
+
+              img {
+                width: 6em;
+                padding: .5em 0 0 1em;
+
+                @include media("<=phoneL"){
+                  width: 4.5em;
+                }
+              }
             }
+          }
+        }
+
+        &__subheader {
+          margin: 3em 0;
+
+          @include media("<=phoneL"){
+            @include flex(row, center, center);
           }
         }
       }
@@ -509,7 +525,7 @@
       .platforms_rent,
       .platforms_buy {
         width: 100%;
-        margin: 1em 1em 1em 0;
+        margin: 1em 0 3em 0;
         @include flex(row, flex-start, center);
         flex-wrap: wrap;
         color: white;
@@ -528,13 +544,13 @@
           }
         }
 
-        h3 {
+        p {
           color: $text;
-          letter-spacing: 2px;
+          letter-spacing: 1px;
         }
+        
       }
     }
-
   }
 }
 
@@ -562,7 +578,7 @@ aside {
     backdrop-filter: blur(0px);
     z-index: 200;
   }
-  
+
   /* iPad Pro */
   @media screen and (min-width: 1024px) and (min-height: 1366px) {
     margin-right: 0;
@@ -616,7 +632,6 @@ aside {
       border-radius: 0;
       margin-bottom: 0;
     }
-   
 
     @include media("<=tablet") {
       display: none;
@@ -686,24 +701,24 @@ aside {
   border-radius: 5px;
   width: 25em;
   height: 3em;
-  @include flex(row, space-around, center);
-  margin-right: 2em;
+  @include flex(row, space-between, center);
 
   label[for="country"] {
     color: $text;
     font-size: 1.4rem;
     letter-spacing: 1px;
     font-family: $font;
-    margin-right: 1em;
+    margin-left: 1em;
 
-    @include media("<=phoneL"){
+    @include media("<=phoneL") {
       font-size: 1rem;
     }
   }
 
-  .select{
+  .select {
     position: relative;
     cursor: pointer;
+    margin-right: 1em;
 
     .fancyArrow {
       width: 100%;
@@ -711,7 +726,7 @@ aside {
       position: absolute;
       top: 0px;
       right: 0px;
-      background: url(/public/images/icons/arrow_down.svg) right / 90%  no-repeat $background;
+      background: url(/public/images/icons/arrow_down.svg) right / 90% no-repeat $background;
       pointer-events: none;
     }
 
@@ -721,20 +736,20 @@ aside {
       //padding: 2px 10px 2px 2px;
       outline: none;
       color: #74646e;
-      border: 1px solid #C8BFC4;
+      border: 1px solid #c8bfc4;
       border-radius: 4px;
       box-shadow: inset 1px 1px 2px #ddd8dc;
-      background: rgb(0, 0, 0); 
+      background: rgb(0, 0, 0);
 
-      option{
+      option {
         background: white;
       }
     }
   }
- 
-  @include media("<=phoneL"){
+
+  @include media("<=phoneL") {
     width: 25em;
-    padding: 0 .5em;
+    //padding: 0 0.5em;
     margin-right: 0;
   }
 }

@@ -4,7 +4,7 @@
 $minHeight: 102vh;
 
 .nav__menu--mobile {
-  @include flex(column, flex-start, center);
+  @include flex(column, center, center);
   position: fixed;
   top: -1rem;
   left: 100%;
@@ -12,28 +12,28 @@ $minHeight: 102vh;
   min-height: $minHeight;
   background: $background;
   z-index: 1000;
-  //overflow: auto;
-  //-webkit-overscroll-behavior-y: contain;
 
   transform: translateX(0);
-  transition: all 0.5s ease;
+  transition: all 0.5s ease-in-out;
 
   @include media(">tablet") {
     left: 100%;
   }
 
-  .menu--mobile__close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1;
+  .menu--mobile__close img{
     cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    z-index: 1;
+    height: 3em;
+    width: 3em;
   }
 
   .menu__list {
     width: 31.4rem;
-    min-height: 30.3rem;
-    margin-top: 3rem;
+    min-height: 30em;
+    //margin-top: 3rem;
     @include flex(column, space-around, center);
     @include media(">phoneL") {
       transform: translateY(50%);

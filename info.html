@@ -103,6 +103,8 @@
               <!-- <img src="" loading="lazy" alt=""> -->
 
               <div class="movie__trailer">
+     
+
                 <i class="far fa-play-circle"></i>
                 <div class="circle"></div>
                 <div class="circle_2"></div>
@@ -148,35 +150,51 @@
 
           <div class="movie__providers">
 
-            <div class="header">
-              <div class="ott-titles">
-                <img src="./public/images/logos/justwatch_logo.svg">
-                <img src="./public/images/logos/tmdb_logo.svg">
-                <!-- <div id="selected_country"></div> -->
-              </div>
-  
-              <div class="dropdown">
-                <label for="country">Select Country</label>
-                
-                <div class="select">
-                  <span class="fancyArrow"></span>
-                  <select id="country" class="country-dropdown" name="country">
-                    <option value=""></option>
-                  </select>
+            <header class="header">
+              <div class="header__title">
+                <h3>Watch It</h3>
+
+                 <div class="ott-titles">
+                  <h6>Provided by</h6>
+                  
+                  <div class="providers">
+                    <img src="./public/images/logos/justwatch_logo.svg">
+                    <img src="./public/images/logos/tmdb_logo.svg">
+                  </div>
+               
                 </div>
                 
+               
               </div>
-            </div>
             
-          <div class="movie__streaming">
-            <h5>Rent</h5>
-            <ul class="platforms_rent"></ul>
 
-            <h5>Buy</h5>
-            <ul class="platforms_buy"></ul>
+              <div class="header__subheader">
+              
+                
+    
+                <div class="dropdown">
+                  <label for="country">Select Country</label>
+                  
+                  <div class="select">
+                    <span class="fancyArrow"></span>
+                    <select id="country" class="country-dropdown" name="country">
+                      <option value=""></option>
+                    </select>
+                  </div>
+                  
+                </div>
+              </div>
+            </header>
+            
+            <section class="movie__streaming">
+              <h5>Rent</h5>
+              <ul class="platforms_rent"></ul>
+
+              <h5>Buy</h5>
+              <ul class="platforms_buy"></ul>
+            </section>
+
           </div>
-
-        </div>
       </section>
     </main>
 

@@ -135,11 +135,11 @@ async function getMovieDetails() {
             imgDiv.style.display = "none"
           }
 
-          //if there is an img but is null then do not display all the production container
-          if(productionCompanies.length === 1 && productionCompanies[i].logo_path == null){
-            productionContainer.style.display = "none"
-            return
-          }
+          // //if there is an img but is null then do not display all the production container
+          // if(productionCompanies.length === 1 && productionCompanies[i].logo_path == null){
+          //   productionContainer.style.display = "none"
+          //   return
+          // }
 
         }
         
@@ -181,7 +181,7 @@ async function getMovieDetails() {
       //Display subheading info
       function setSubheading(){
         //create runtime element
-        const runtime = document.createElement("h6")
+        const runtime = document.createElement("p")
         runtime.classList.add("duration")
 
         //create divider element
@@ -189,7 +189,7 @@ async function getMovieDetails() {
         divider.classList.add("divider")
 
         //create production country/ies
-        const prodCountries = document.createElement("h6")
+        const prodCountries = document.createElement("p")
         prodCountries.classList.add("production-country")
 
         //add childs elements to parent
@@ -467,12 +467,11 @@ playBtnChildren.style.display = "none"
 const playBtn = document.querySelector(".fa-play-circle") //target play button
 const closeBtn = document.querySelector(".fa-times-circle") //target close button
 closeBtn.style.display = "none" //set close button display to none as default
-
 /**
  * Hide play button and show close button
  * by changing their display attribute
  */
-const hidePlayBtn = () => {
+ const hidePlayBtn = () => {
   playBtnChildren.style.display = "none" //remove play button
   closeBtn.style.display = "block" //show close button
 }
@@ -486,7 +485,6 @@ const showPlayBtn = () => {
   closeBtn.style.display = "none" //remove close button
 }
 setTimeout(function(){showPlayBtn()}, loadingTime)
-
 /**
  * Added some box shadow inset to make background all around a bit darker
  * so that it gives that feel of cinema mode
@@ -528,20 +526,18 @@ const cinemaEffectOff = () => {
   //remove box shadow
   document.querySelector(".movie-background").classList.remove("active")
 }
-
 /**
  * Remove iframe element
  * @param {DOM element} iframe 
  */
-function removeIframe(iframe){
+ function removeIframe(iframe){
   const iframeContainer = document.querySelector(".movie__image")
   iframeContainer.removeChild(iframe)
 }
-
 /**
  * Create iframe element
  */
-function createIframe(){
+ function createIframe(){
   const iframeContainer = document.querySelector(".movie__image")
 
   const iframe = document.createElement("iframe")
@@ -609,19 +605,16 @@ strmPlatforms.innerHTML = ""
 buyPlatforms.innerHTML = ""
 let countries = []
 let countriesIso = []
-
-
 /**
  * Function to get the navigator language
  * @returns {String}
  */
 function getLocale() {
-  if (navigator.languages != undefined) {
-    //console.log(navigator.language.slice(-2))
-    // sessionStorage.setItem("locale", navigator.languages[0].slice(-2))
+  if (navigator.languages !== undefined) {
+    console.log(navigator.languages[0].slice(-2))
     return navigator.languages[0].slice(-2);
   }
-  return navigator.language;
+  // return navigator.language;
 }
 getLocale()
 
@@ -646,19 +639,26 @@ async function streamingServices(){
 
   //results
   const results = resp.results
-  //console.table(results)
+  //console.log(results)
 
   //convert results object into an array of objects
   countriesIso = Object.entries(results).map(res => res[0])
-  //console.log(countriesIso)
+  console.log(countriesIso)
+
+  //if there is no country available with any streaming and/or service provider,
+  //do not display anything
+  if(countriesIso.length === 0) {
+    document.querySelector("#country").style.display = "none"
+    return
+  }
 
   resultsArr = Object.entries(results)
   console.log(resultsArr)
 
   //check if resultsArr is empty
   if(resultsArr.length === 0){
-    document.querySelector(".platforms_rent").innerHTML = "<h3>Not available</h3>"
-    document.querySelector(".platforms_buy").innerHTML = "<h3>Not available</h3>"
+    strmPlatforms.innerHTML = "<h3>Not available</h3>"
+    buyPlatforms.innerHTML = "<h3>Not available</h3>"
   }
 
   /**
@@ -703,6 +703,7 @@ async function streamingServices(){
     if(getCountryCode() === locale || getLocale() === locale){
       
       streamingContainer.style.display = "block"
+
       if(getCountryCode()){
         getLocale = getCountryCode()
       }
@@ -732,12 +733,12 @@ async function streamingServices(){
 
           //if there is no data in the streaming ul element, display message
           if(strmPlatforms.children.length === 0){
-            strmPlatforms.innerHTML = "<h3>Not available</h3>"
+            strmPlatforms.innerHTML = "<p>Not available</p>"
           }
 
           //if there is no data in the buy ul element, display message
           if(buyPlatforms.children.length === 0){
-            buyPlatforms.innerHTML = "<h3>Not available</h3>"
+            buyPlatforms.innerHTML = "<p>Not available</p>"
           }
         
         }
@@ -764,10 +765,8 @@ async function populateDropDownEl() {
   try {
     const resp = await fetch(url)
     const json = await resp.json()
-    //console.log(json)
 
     json.forEach((country, index) => {
-
 
       countries.push({
         iso: country.iso_3166_1,
@@ -802,20 +801,10 @@ async function populateDropDownEl() {
         
         streamingContainer.style.display = "none"
 
-        // if(country.iso === getLocale()){
-        //   countryLabel.innerHTML = country.country
-        //   streamingContainer.style.display = "block"
-        //   return
-        // }
-
-        // if(country.iso !== getLocale()){
-        //   streamingContainer.style.display = "Select country"
-        //   streamingContainer.style.display = "none"
-        //   return
-        // }
-
       }else{
         countryLabel.innerHTML = sessionStorage.getItem('country_name')
+
+        streamingContainer.style.display = "block"
       }
     })
    

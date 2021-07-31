@@ -260,7 +260,7 @@ const animateHeroContainer = () => {
   
   let tl = anime.timeline({
     easing: 'easeInOutCirc',
-    duration: 700
+    duration: 1000
   })
 
   tl
@@ -280,7 +280,7 @@ const animateHeroContainer = () => {
   .add({
     targets: '.from-bottom',
     bottom: 0,
-  })
+  }, "-=700")
 }
 
 //Page logic
