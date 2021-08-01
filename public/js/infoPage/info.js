@@ -247,6 +247,12 @@ async function getMovieDetails() {
         document.querySelector(".movie__genres p").classList.remove("skeleton-loader")
       }
 
+      //if there is no data in genres array display message
+      if(genres.length === 0){
+        document.querySelector(".movie__genres p").innerHTML = "NO DATA"
+        document.querySelector(".movie__genres p").classList.remove("skeleton-loader")
+      }
+
       //set movie description
       document.querySelector(".movie__description p").innerHTML = `${json.overview}`;
 
