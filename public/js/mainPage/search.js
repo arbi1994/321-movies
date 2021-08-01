@@ -29,6 +29,11 @@ function showSearchWindow(){
   document.querySelector(".navbar__input").addEventListener("mouseout", () => {
     document.querySelector(".underline").style.background = "#f4f0fa00"
   })
+
+  searchWindowInput.addEventListener("submit", () => {
+    enableScroll(searchWindow)
+    window.scrollBy(0, 500);
+  })
 }
 showSearchWindow()
 
@@ -161,8 +166,6 @@ const initResults = (e) => {
   getSearchedMovies()
 
   enableScroll(document.querySelector(".search__window"))
-
-  window.location.href = "#movies"
 }
 
 /**
@@ -205,5 +208,5 @@ window.onload(sessionStorage.clear()) //clear session storage on page reload
 
 document.body.onscroll = () => {
   const distanceFromTop = document.querySelector(".hero__container").getBoundingClientRect().top * -1
-  console.log(distanceFromTop)
+  //console.log(distanceFromTop)
 }

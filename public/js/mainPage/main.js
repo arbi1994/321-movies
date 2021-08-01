@@ -99,12 +99,12 @@ const displayMovies = async (url) => {
                         <img src="${imageURL}${posterPath}${imageKitTransformation}" data-lazy="${imageURL}${posterPath}" alt="">
   
                         <div class="cards__title">
-                          <h6>${movieTitle}</h6>
+                          <h5>${movieTitle}</h5>
                         </div>
 
                         <div class="cards__rating">
 
-                          <h6>Rating</h6>
+                          <h5>Rating</h5>
   
                           <div class="rating__stars">
                             <i class="fas fa-star"></i>
@@ -289,6 +289,7 @@ window.onload = () => {
   getMovies()
   animateHeroContainer()
 }
+
 
 
 

@@ -59,8 +59,8 @@
     }
     transition: top 0.5s ease;
     cursor: auto;
-    h6 {
-      font-weight: 600;
+    h5 {
+      font-weight: 500;
     }
   }
 
@@ -80,12 +80,12 @@
     @include flex(row, space-between, center);
     transition: bottom 0.5s ease;
     cursor: auto;
-    h6 {
+    h5 {
       font-weight: 400;
     }
 
     .rating__stars {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       background: linear-gradient($deg1, #aab3ff77, #eca0ff77);
       background-clip: text;
       -webkit-background-clip: text;
