@@ -11,7 +11,7 @@ const loadingTime = 1000 //2sec
 function addSkeletonLoader (img, title, descriptions) {
   img.classList.add("skeleton-loader")
   title.classList.add("skeleton-loader")
-  //rating.classList.add("skeleton-loader")
+
   descriptions.forEach(description => {
     description.classList.add("skeleton-loader")
   })
@@ -844,3 +844,4 @@ window.onload = function() {
 
   setTimeout(() => document.title = pageTitle, 1000)
 };
+

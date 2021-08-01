@@ -34,7 +34,15 @@
   const logo = document.querySelector(".navbar__logo")
   if(logo !== null){
       logo.onclick = () => {
-      window.location.reload()
+        window.location.reload()
     }
   }
+
+  const aboutLink = document.querySelector(".about")
+  console.log(aboutLink)
+
+  aboutLink.addEventListener("click", () => {
+    console.log("OK")
+    window.open("/about.html", "_blank")
+  })
 }

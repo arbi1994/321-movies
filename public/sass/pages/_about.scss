@@ -1,0 +1,76 @@
+@use "../abstracts/" as *;
+@use "../base/" as *;
+
+.about {
+  //border: 1px solid white;
+  position: relative;
+  top: 130px;
+  left: 0;
+  min-height: 73vh;
+  padding: 2em 3em;
+  @include flex(column, center, center);
+
+  hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, $search-1, rgba(183, 112, 201, 0.2));
+    color: white;
+    margin: 2em 0 2em 0;
+  }
+
+  &__header {
+    //border: 1px solid white;
+    width: 100%;
+    padding: 1em;
+    text-align: center;
+
+    h2 {
+      -webkit-text-fill-color: transparent;
+      -moz-text-fill-color: transparent;
+      background: linear-gradient($deg1, $search-1, $search-2);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+    }
+  }
+
+  &__description {
+    //border: 1px solid white;
+    padding: 0 2em 2em 2em;
+    text-align: center;
+
+    p {
+      font-weight: 500;
+      margin-bottom: 2em;
+
+      a[title="tmdb"] {
+        color: rgba(1, 180, 228);
+        text-decoration: none;
+      }
+
+      a[title="justwatch"] {
+        color: #fbc500;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+footer {
+  //border: 1px solid white;
+  position: relative;
+  top: 130px;
+  left: 0;
+  width: 100%;
+  min-height: 10vh;
+  color: white;
+  @include flex(row, center, center);
+
+  span {
+    p {
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
