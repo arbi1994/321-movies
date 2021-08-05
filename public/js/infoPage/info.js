@@ -292,17 +292,16 @@ async function getMovieCastDirectors() {
         }
       });
 
+      let directors = crew.filter(crew => crew !== undefined).toString()
+      directors = directors.replace(/,/g, ", ")  //replace comma with comma and space
+
       //if cast elements are 1 or less than 1, remove more button
       if(json.cast.length <= 1){
         document.querySelector("#more").style.display = "none"
       }
 
-      //remove all commas
-      crew = crew.toString();
-      crew = crew.replace(/,/g, " ");
-
       //display
-      document.querySelector(".movie__director p").innerHTML = crew;
+      document.querySelector(".movie__director p").innerHTML = directors;
 
       //remove skeleton loader
       if(document.querySelector(".movie__director p").innerHTML !== ""){
@@ -310,7 +309,7 @@ async function getMovieCastDirectors() {
       }
 
       //check crew array length
-      if(json.crew.length === 0){
+      if(json.crew.length === 0 || crew === ""){
         document.querySelector(".movie__director p").classList.remove("skeleton-loader")
         document.querySelector(".movie__director p").innerHTML = "NO DATA"
       }
