@@ -758,27 +758,30 @@ streamingServices()
 /**
  * Populate dropdown element with country names
  */
-async function populateDropDownEl() {
+async function getLocationsData() {
 
   const url = `https://api.themoviedb.org/3/configuration/countries?api_key=${APIKEY}`
 
+  try {
+    const resp = await fetch(url)
+    const json = await resp.json()
+
+    return json
+
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+getLocationsData()
+
+async function populateDropDown(){
   let country_select = document.querySelector("#country");
   let countryLabel = document.querySelector(`.dropdown  label[for="country"]`)
 
   let optionEl = null
 
   try {
-    const resp = await fetch(url)
-    const json = await resp.json()
-
-    json.forEach((country, index) => {
-
-      countries.push({
-        iso: country.iso_3166_1,
-        country: country.native_name
-      })
-      
-    })
+    const locationJson = await getLocationsData()
 
     countriesIso.forEach((iso, index) => {
       //create option element
@@ -787,33 +790,26 @@ async function populateDropDownEl() {
       //append option el to its parent el
       country_select.appendChild(optionEl)
 
-      countries.forEach(country => {
-
-        if(country.iso == iso){
-          //setting attributes
-          optionEl.value = country.iso
-          optionEl.innerText = country.country
+      for(let {english_name: countryName, iso_3166_1: countryCode} of locationJson){
+        if(countryCode === iso){
+          optionEl.value = countryCode
+          optionEl.innerText = countryName
         }
-      })
+      }
+
     })
  
+    //check if we have anything in sessionStorage
+    if(sessionStorage.getItem('country_name') == null){
+      
+      streamingContainer.style.display = "none"
+    }
+    else{
+      countryLabel.innerHTML = sessionStorage.getItem('country_name')
 
-    countries.forEach(country => {
-     
-      //if locale value is same as one of the option elements value
-      //set label text equal to the relative country name value
-      if(sessionStorage.getItem('country_name') == null){
-        
-        streamingContainer.style.display = "none"
-
-      }else{
-        countryLabel.innerHTML = sessionStorage.getItem('country_name')
-
-        streamingContainer.style.display = "block"
-      }
-    })
-   
-
+      streamingContainer.style.display = "block"
+    }
+  
     country_select.addEventListener('change', function (event) {
 
       let selected_text = this.options[this.selectedIndex].text // selected option element value
@@ -828,14 +824,12 @@ async function populateDropDownEl() {
       // console.log(selected_text)
       window.location.reload()
     });
-
-    //console.table(country_select.length, resultsArr.length)
-
-  } catch (error) {
+  }catch(error){
     console.log(error.message)
   }
 }
-populateDropDownEl()
+
+populateDropDown()
 
 // ----------- Set page title ----------- //
 
