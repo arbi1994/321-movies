@@ -603,7 +603,7 @@ closeBtn.addEventListener("click", (e) => {
 //------- Streaming/Buy services -------------//
 let resultsArr = []
 const streamingContainer = document.querySelector(".movie__streaming")
-streamingContainer.style.display = "none"
+// streamingContainer.style.display = "none"
 const strmPlatforms = document.querySelector(".platforms_rent") //rent div
 const buyPlatforms = document.querySelector(".platforms_buy") //buy div
 strmPlatforms.innerHTML = ""
@@ -624,7 +624,7 @@ function getLocale() {
 getLocale()
 
 function getCountryCode(){
-  return sessionStorage.getItem('country_code')
+  return localStorage.getItem('country_code')
 }
 getCountryCode()
 
@@ -705,13 +705,7 @@ async function streamingServices(){
     const locale = result[0]
     console.log(locale)
 
-    if(getCountryCode() === locale || getLocale() === locale){
-      
-      streamingContainer.style.display = "block"
-
-      if(getCountryCode()){
-        getLocale = getCountryCode()
-      }
+    if(getCountryCode() === locale){
 
       result.forEach((res, index) => {
 
@@ -756,7 +750,7 @@ async function streamingServices(){
 streamingServices()
 
 /**
- * Populate dropdown element with country names
+ * Get locations data
  */
 async function getLocationsData() {
 
@@ -774,9 +768,13 @@ async function getLocationsData() {
 }
 getLocationsData()
 
+/**
+ * Populate dropdown element with country names
+ */
 async function populateDropDown(){
   let country_select = document.querySelector("#country");
   let countryLabel = document.querySelector(`.dropdown  label[for="country"]`)
+  countryLabel.innerHTML = "Select country"
 
   let optionEl = null
 
@@ -791,25 +789,43 @@ async function populateDropDown(){
       country_select.appendChild(optionEl)
 
       for(let {english_name: countryName, iso_3166_1: countryCode} of locationJson){
+
         if(countryCode === iso){
           optionEl.value = countryCode
           optionEl.innerText = countryName
         }
+
       }
 
-    })
- 
-    //check if we have anything in sessionStorage
-    if(sessionStorage.getItem('country_name') == null){
-      
-      streamingContainer.style.display = "none"
-    }
-    else{
-      countryLabel.innerHTML = sessionStorage.getItem('country_name')
+      function dropDownValidation(){
+        //check if we have anything in sessionStorage
+        if(localStorage.getItem('country_name') !== null && localStorage.getItem('country_code') === iso){
+          countryLabel.innerHTML = localStorage.getItem('country_name')
+          streamingContainer.style.display = "block"
+        }
 
-      streamingContainer.style.display = "block"
-    }
-  
+        //if there is no data in the streaming ul element, display message
+        if(strmPlatforms.children.length === 0){
+          countryLabel.innerHTML = localStorage.getItem('country_name')
+          strmPlatforms.innerHTML = "<p>Not available</p>"
+        }
+
+        //if there is no data in the buy ul element, display message
+        if(buyPlatforms.children.length === 0){
+          countryLabel.innerHTML = localStorage.getItem('country_name')
+          buyPlatforms.innerHTML = "<p>Not available</p>"
+        }
+
+        //check if we localStorage is empty
+        if(localStorage.getItem('country_name') === null){
+          countryLabel.innerHTML = "Select country"
+          streamingContainer.style.display = "none"
+        }
+      }
+
+      dropDownValidation()
+    })
+
     country_select.addEventListener('change', function (event) {
 
       let selected_text = this.options[this.selectedIndex].text // selected option element value
@@ -818,8 +834,8 @@ async function populateDropDown(){
       let selected_country = selected_text
       console.log(selected_country)
 
-      sessionStorage.setItem('country_code', selected_value)
-      sessionStorage.setItem('country_name', selected_country)
+      localStorage.setItem('country_code', selected_value)
+      localStorage.setItem('country_name', selected_country)
      
       // console.log(selected_text)
       window.location.reload()
