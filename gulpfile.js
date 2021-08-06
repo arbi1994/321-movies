@@ -44,7 +44,7 @@ const bundleMainJs = () => {
         .pipe(minifyJs())
         .pipe(concat('bundle.js'))
         .pipe(sourceMaps.write())
-        .pipe((dest('./dist/js/main')))
+        .pipe((dest('./dist')))
 }
 
 const bundleInfoJs = () => {
@@ -53,7 +53,7 @@ const bundleInfoJs = () => {
         .pipe(minifyJs())
         .pipe(concat('bundle.js'))
         .pipe(sourceMaps.write())
-        .pipe((dest('./dist/js/info')))
+        .pipe((dest('./dist')))
 }
 
 // SASS tasks
@@ -61,7 +61,7 @@ const scssTask = () => {
     return src('./public/sass/main.scss', { sourcemaps: true })
         .pipe(sass())
         .pipe(postcss([autoprefixer(), cssnano()]))
-        .pipe(dest('./dist/sass', { sourcemaps: true }))
+        .pipe(dest('./dist', { sourcemaps: true }))
 }
 
 //HTML tasks
