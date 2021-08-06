@@ -2,7 +2,6 @@
   "name": "321-movies_local",
   "version": "1.0.0",
   "description": "a website where you can find all the info about worldwide movies",
-  "main": "/public/js/mainPage/main.js",
   "scripts": {
     "watch:sass": "sass --watch sass/main.scss:css/style.css",
     "devserver": "live-server",
