@@ -11,7 +11,6 @@ const cssnano = require('cssnano')
 const browsersync = require('browser-sync').create()
 
 const mainJsFiles = [
-    './config.js',
     './node_modules/animejs/lib/anime.min.js',
     './public/js/mainPage/main.js',
     './public/js/mainPage/navbar.js',
@@ -25,7 +24,6 @@ const mainJsFiles = [
 ]
 
 const infoJsFiles = [
-    './config.js',
     './public/js/infoPage/info.js',
     './public/js/infoPage/pageTitle.js',
     './public/js/infoPage/trailer.js',
