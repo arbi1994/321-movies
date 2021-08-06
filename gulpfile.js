@@ -94,6 +94,7 @@ exports.watch = series(
     browserSyncServe,
     devWatch
 )
+
 // Run all tasks all together with default property
 exports.build = series(
     scssTask,
