@@ -15,29 +15,29 @@ const imagemin = require('gulp-imagemin')
 const cache = require('gulp-cache')
 
 const mainJsFiles = [
-    '/node_modules/animejs/lib/anime.min.js',
-    '/public/js/mainPage/main.js',
-    '/public/js/mainPage/navbar.js',
-    '/public/js/mainPage/burgerMenu.js',
-    '/public/js/mainPage/infiniteScrolling.js',
-    '/public/js/mainPage/enableDisableScroll.js',
-    '/public/js/mainPage/buttonsSlider.js',
-    '/public/js/mainPage/moviesByGenre.js',
-    '/public/js/mainPage/search.js',
-    '/public/js/mainPage/carousel.js',
+    './node_modules/animejs/lib/anime.min.js',
+    './public/js/mainPage/main.js',
+    './public/js/mainPage/navbar.js',
+    './public/js/mainPage/burgerMenu.js',
+    './public/js/mainPage/infiniteScrolling.js',
+    './public/js/mainPage/enableDisableScroll.js',
+    './public/js/mainPage/buttonsSlider.js',
+    './public/js/mainPage/moviesByGenre.js',
+    './public/js/mainPage/search.js',
+    './public/js/mainPage/carousel.js',
 ]
 
 const infoJsFiles = [
-    '/public/js/infoPage/info.js',
-    '/public/js/infoPage/pageTitle.js',
-    '/public/js/infoPage/trailer.js',
-    '/public/js/infoPage/watchBuyProviders.js',
+    './public/js/infoPage/info.js',
+    './public/js/infoPage/pageTitle.js',
+    './public/js/infoPage/trailer.js',
+    './public/js/infoPage/watchBuyProviders.js',
 ]
 
 const htmlFiles = [
-    '/public/index.html',
-    '/public/about.html',
-    '/public/info.html',
+    './public/index.html',
+    './public/about.html',
+    './public/info.html',
 ]
 
 // JS tasks
@@ -64,7 +64,7 @@ const bundleInfoJs = () => {
 
 // SASS tasks
 const scssTask = () => {
-    return src('/public/sass/main.scss')
+    return src('./public/sass/main.scss')
         .pipe(sass())
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(dest('dist'))
@@ -84,7 +84,7 @@ const htmlTaks = () => {
 
 // Images
 const images = async () => {
-    return src('/public/images/**/*.svg')
+    return src('./public/images/**/*.svg')
         .pipe( cache( imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }) ))
         .pipe( dest('dist') )
         .pipe( notify( { message: 'Images task complete.' } ) )
@@ -115,7 +115,7 @@ const browsersyncReload = (cb) => {
 const devWatch = () => {
     watch('*.html', browsersyncReload)
     watch(
-        ['/public/sass/**/*.scss', './public/js/**/*.js'],
+        ['./public/sass/**/*.scss', './public/js/**/*.js'],
         series(scssTask, bundleMainJs, bundleInfoJs, browsersyncReload)
     )
 }
