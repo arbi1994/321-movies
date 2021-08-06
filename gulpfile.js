@@ -87,12 +87,17 @@ const devWatch = () => {
     )
 }
 
-// Run all tasks all together with default property
-exports.build = series(
+exports.watch = series(
     scssTask,
     bundleMainJs,
     bundleInfoJs,
     browserSyncServe,
     devWatch
+)
+// Run all tasks all together with default property
+exports.build = series(
+    scssTask,
+    bundleMainJs,
+    bundleInfoJs
 )
 
