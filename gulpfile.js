@@ -11,22 +11,25 @@ const cssnano = require('cssnano')
 const browsersync = require('browser-sync').create()
 
 const mainJsFiles = [
-'./config.js',
-'./node_modules/animejs/lib/anime.min.js',
-'./public/js/mainPage/main.js',
-'./public/js/mainPage/navbar.js',
-'./public/js/mainPage/burgerMenu.js',
-'./public/js/mainPage/infiniteScrolling.js',
-'./public/js/mainPage/enableDisableScroll.js',
-'./public/js/mainPage/buttonsSlider.js',
-'./public/js/mainPage/moviesByGenre.js',
-'./public/js/mainPage/search.js',
-'./public/js/mainPage/carousel.js',
+    './config.js',
+    './node_modules/animejs/lib/anime.min.js',
+    './public/js/mainPage/main.js',
+    './public/js/mainPage/navbar.js',
+    './public/js/mainPage/burgerMenu.js',
+    './public/js/mainPage/infiniteScrolling.js',
+    './public/js/mainPage/enableDisableScroll.js',
+    './public/js/mainPage/buttonsSlider.js',
+    './public/js/mainPage/moviesByGenre.js',
+    './public/js/mainPage/search.js',
+    './public/js/mainPage/carousel.js',
 ]
 
 const infoJsFiles = [
     './config.js',
-    './public/js/infoPage/info.js'
+    './public/js/infoPage/info.js',
+    './public/js/infoPage/pageTitle.js',
+    './public/js/infoPage/trailer.js',
+    './public/js/infoPage/watchBuyProviders.js',
 ]
 
 // JS tasks
@@ -41,11 +44,11 @@ const bundleMainJs = () => {
 
 const bundleInfoJs = () => {
     return src(infoJsFiles)
-    .pipe(sourceMaps.init())
-    .pipe(minifyJs())
-    .pipe(concat('bundle.js'))
-    .pipe(sourceMaps.write())
-    .pipe((dest('./dist/js/info')))
+        .pipe(sourceMaps.init())
+        .pipe(minifyJs())
+        .pipe(concat('bundle.js'))
+        .pipe(sourceMaps.write())
+        .pipe((dest('./dist/js/info')))
 }
 
 // SASS tasks
