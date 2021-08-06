@@ -62,6 +62,7 @@ const browserSyncServe = (cb) => {
     browsersync.init({
         server: {
             baseDir: './',
+            index: 'index.html'
         },
         notify: {
             styles: {
@@ -99,6 +100,7 @@ exports.watch = series(
 exports.build = series(
     scssTask,
     bundleMainJs,
-    bundleInfoJs
+    bundleInfoJs,
+    browserSyncServe,
 )
 
