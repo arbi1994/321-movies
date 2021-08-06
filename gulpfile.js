@@ -35,9 +35,9 @@ const infoJsFiles = [
 ]
 
 const htmlFiles = [
-    'index.html',
-    'about.html',
-    'info.html',
+    'public/index.html',
+    'public/about.html',
+    'public/info.html',
 ]
 
 // JS tasks
