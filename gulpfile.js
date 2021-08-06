@@ -90,7 +90,7 @@ const devWatch = () => {
 }
 
 // Run all tasks all together with default property
-exports.default = series(
+exports.build = series(
     scssTask,
     bundleMainJs,
     bundleInfoJs,
