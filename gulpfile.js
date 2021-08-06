@@ -13,6 +13,9 @@ const htmlmin = require('gulp-htmlmin')
 const notify = require('gulp-notify')
 const imagemin = require('gulp-imagemin')
 const cache = require('gulp-cache')
+const exec = require('child_process').exec; // run command-line programs from gulp
+const execSync = require('child_process').execSync; // command-line reports
+
 
 const mainJsFiles = [
     'node_modules/animejs/lib/anime.min.js',
@@ -119,6 +122,30 @@ const devWatch = () => {
         series(scssTask, bundleMainJs, bundleInfoJs, browsersyncReload)
     )
 }
+
+// Commit and push files to Git
+function git(done) {
+    return exec('git add . && git commit -m "netlify deploy" && git push');
+    done();
+}
+  
+// Watch for netlify deployment
+function netlify(done) {
+    return new Promise(function(resolve, reject) {
+        console.log(execSync('netlify watch').toString());
+        resolve();
+        });
+}
+
+// Preview Deployment
+function netlifyOpen(done) {
+    return exec('netlify open:site');
+    done();
+}
+
+// Deploy command
+exports.deploy = series(git, netlify, netlifyOpen);
+  
 
 exports.watch = series(
     htmlTaks,
