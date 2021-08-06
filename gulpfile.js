@@ -10,6 +10,9 @@ const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 const browsersync = require('browser-sync').create()
 const htmlmin = require('gulp-htmlmin')
+const notify = require('gulp-notify')
+const imagemin = require('gulp-imagemin')
+const cache = require('gulp-cache')
 
 const mainJsFiles = [
     'node_modules/animejs/lib/anime.min.js',
@@ -45,6 +48,8 @@ const bundleMainJs = () => {
         .pipe(concat('bundle.js'))
         .pipe(sourceMaps.write())
         .pipe((dest('dist')))
+        .pipe( notify( { message: 'jsMain task complete.' } ) )
+
 }
 
 const bundleInfoJs = () => {
@@ -54,6 +59,7 @@ const bundleInfoJs = () => {
         .pipe(concat('bundle.js'))
         .pipe(sourceMaps.write())
         .pipe((dest('dist')))
+        .pipe( notify( { message: 'jsInfo task complete.' } ) )
 }
 
 // SASS tasks
@@ -62,6 +68,7 @@ const scssTask = () => {
         .pipe(sass())
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(dest('dist', { sourcemaps: true }))
+        .pipe( notify( { message: 'CSS task complete.' } ) )
 }
 
 //HTML tasks
@@ -71,7 +78,16 @@ const htmlTaks = () => {
             collapseWhitespace: true,
             removeComments: true
         }))
-        .pipe(dest('dist',));
+        .pipe(dest('dist'))
+        .pipe( notify( { message: 'HTML task complete.' } ) )
+}
+
+// Images
+const images = async () => {
+    return src('public/images/**/*.svg')
+        .pipe( cache( imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }) ))
+        .pipe( dest('dist') )
+        .pipe( notify( { message: 'Images task complete.' } ) )
 }
 
 // Browsersync
@@ -115,6 +131,7 @@ exports.watch = series(
 
 // Run all tasks all together with default property
 exports.build = series(
+    images,
     htmlTaks,
     scssTask,
     bundleMainJs,
