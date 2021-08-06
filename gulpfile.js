@@ -11,6 +11,7 @@ const cssnano = require('cssnano')
 const browsersync = require('browser-sync').create()
 
 const mainJsFiles = [
+'./config.js',
 './node_modules/animejs/lib/anime.min.js',
 './public/js/mainPage/main.js',
 './public/js/mainPage/navbar.js',
@@ -20,7 +21,13 @@ const mainJsFiles = [
 './public/js/mainPage/buttonsSlider.js',
 './public/js/mainPage/moviesByGenre.js',
 './public/js/mainPage/search.js',
-'./public/js/mainPage/carousel.js']
+'./public/js/mainPage/carousel.js',
+]
+
+const infoJsFiles = [
+    './config.js',
+    './public/js/infoPage/info.js'
+]
 
 // JS tasks
 const bundleMainJs = () => {
@@ -33,7 +40,7 @@ const bundleMainJs = () => {
 }
 
 const bundleInfoJs = () => {
-    return src('./public/js/infoPage/info.js')
+    return src(infoJsFiles)
     .pipe(sourceMaps.init())
     .pipe(minifyJs())
     .pipe(concat('bundle.js'))

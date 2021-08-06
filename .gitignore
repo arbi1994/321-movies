@@ -105,3 +105,6 @@ dist
 
 # dotenv file
 /.env
+
+# config file
+/config.js

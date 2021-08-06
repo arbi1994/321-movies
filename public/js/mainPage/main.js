@@ -1,6 +1,7 @@
 const cardsContainer = document.querySelector(".cards__container") //get cards container where we are going to display our cards
 const genreBtns = document.querySelectorAll(".genre_btn") //select all buttons
-const APIKEY = "f569c35640a9131fdf30825f47683372" //api key
+//const APIKEY = "f569c35640a9131fdf30825f47683372" //api key
+const APIKEY = config.API_KEY;
 let movies = [] //empty movies array where we are going to store our movies data
 let genre = "" 
 let endPoint = ""
