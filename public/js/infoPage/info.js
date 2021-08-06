@@ -461,7 +461,7 @@ const playMovieTrailer = async () => {
   if(trailerKey === undefined) return
 
   setTimeout(() => {
-    document.querySelector(".movie__image iframe").src = `https://www.youtube.com/embed/${trailerKey}?modestbranding=0&autoplay=1&mute=0&controls=1&loop=1&rel=0&showinfo=0>`
+    document.querySelector(".movie__image iframe").src = `https://www.youtube.com/embed/${trailerKey}?modestbranding=1&autoplay=1&mute=0&controls=1&loop=1&rel=0&showinfo=0>`
   }, 1000)
 
   return trailerKey
@@ -653,7 +653,9 @@ async function streamingServices(){
   //if there is no country available with any streaming and/or service provider,
   //do not display anything
   if(countriesIso.length === 0) {
-    document.querySelector("#country").style.display = "none"
+    document.querySelector(".header__subheader").style.display = "none"
+    document.querySelector(".movie__streaming").style.display = "none"
+    document.querySelector(".header__title h3").innerHTML += "<h4>(not available)</h4>"
     return
   }
 

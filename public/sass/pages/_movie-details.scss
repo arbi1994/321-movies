@@ -473,7 +473,7 @@
 
       .header {
         margin-bottom: 2em;
-        height: 15em;
+        //height: 15em;
 
         &__title {
           @include flex(row, space-between, center);
@@ -487,6 +487,12 @@
             background-clip: text;
             -webkit-background-clip: text;
             -moz-background-clip: text;
+
+            @include flex(row, space-between, center);
+          }
+
+          h4 {
+            margin-left: .5em;
           }
 
           .ott-titles {
@@ -503,9 +509,9 @@
 
               img {
                 width: 6em;
-                padding: .5em 0 0 1em;
+                padding: 0.5em 0 0 1em;
 
-                @include media("<=phoneL"){
+                @include media("<=phoneL") {
                   width: 4.5em;
                 }
               }
@@ -516,7 +522,7 @@
         &__subheader {
           margin: 3em 0;
 
-          @include media("<=phoneL"){
+          @include media("<=phoneL") {
             @include flex(row, center, center);
           }
         }
@@ -548,7 +554,6 @@
           color: $text;
           letter-spacing: 1px;
         }
-        
       }
     }
   }
@@ -726,7 +731,8 @@ aside {
       position: absolute;
       top: 0px;
       right: 0px;
-      background: url(/public/images/icons/arrow_down.svg) right / 90% no-repeat $background;
+      background: url(/public/images/icons/arrow_down.svg) right / 90% no-repeat
+        $background;
       pointer-events: none;
     }
 
