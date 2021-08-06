@@ -60,12 +60,12 @@ const scssTask = () => {
 
 //HTML tasks
 const htmlTaks = () => {
-    return src('./*.html')
+    return src('./*.html', { sourcemaps: true })
         .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true
         }))
-        .pipe(dest('./dist'));
+        .pipe(dest('./dist', {sourcemaps: true}));
 }
 
 // Browsersync
