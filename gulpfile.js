@@ -31,6 +31,12 @@ const infoJsFiles = [
     './public/js/infoPage/watchBuyProviders.js',
 ]
 
+const htmlFiles = [
+    './index.html',
+    './about.html',
+    './info.html',
+]
+
 // JS tasks
 const bundleMainJs = () => {
     return src(mainJsFiles)
@@ -60,20 +66,19 @@ const scssTask = () => {
 
 //HTML tasks
 const htmlTaks = () => {
-    return src('./*.html', { sourcemaps: true })
+    return src(htmlFiles)
         .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true
         }))
-        .pipe(dest('./dist', {sourcemaps: true}));
+        .pipe(dest('./dist',));
 }
 
 // Browsersync
 const browserSyncServe = (cb) => {
     browsersync.init({
         server: {
-            baseDir: './',
-            index: 'index.html'
+            baseDir: './'
         },
         notify: {
             styles: {
