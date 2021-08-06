@@ -9,6 +9,7 @@ const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 const browsersync = require('browser-sync').create()
+const htmlmin = require('gulp-htmlmin')
 
 const mainJsFiles = [
     './node_modules/animejs/lib/anime.min.js',
@@ -57,6 +58,16 @@ const scssTask = () => {
         .pipe(dest('./dist/sass', { sourcemaps: true }))
 }
 
+//HTML tasks
+const htmlTaks = () => {
+    return src('./*.html')
+        .pipe(htmlmin({
+            collapseWhitespace: true,
+            removeComments: true
+        }))
+        .pipe(dest('./dist'));
+}
+
 // Browsersync
 const browserSyncServe = (cb) => {
     browsersync.init({
@@ -89,6 +100,7 @@ const devWatch = () => {
 }
 
 exports.watch = series(
+    htmlTaks,
     scssTask,
     bundleMainJs,
     bundleInfoJs,
@@ -98,9 +110,9 @@ exports.watch = series(
 
 // Run all tasks all together with default property
 exports.build = series(
+    htmlTaks,
     scssTask,
     bundleMainJs,
     bundleInfoJs,
-    browserSyncServe,
 )
 
