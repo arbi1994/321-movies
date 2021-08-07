@@ -9,6 +9,7 @@ const postcss = require('gulp-postcss')
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 const browsersync = require('browser-sync').create()
+
 const htmlmin = require('gulp-htmlmin')
 const notify = require('gulp-notify')
 const imagemin = require('gulp-imagemin')
@@ -94,7 +95,8 @@ const images = async () => {
 const browserSyncServe = (cb) => {
     browsersync.init({
         server: {
-            baseDir: './'
+            baseDir: './',
+            index: './dist/index.html',
         },
         notify: {
             styles: {
@@ -120,8 +122,8 @@ const devWatch = () => {
     )
 }
   
-
 exports.watch = series(
+    images,
     htmlTaks,
     scssTask,
     bundleMainJs,
