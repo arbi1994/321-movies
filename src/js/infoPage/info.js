@@ -18,8 +18,6 @@ function addSkeletonLoader (img, title, descriptions) {
 }
 addSkeletonLoader(asideProductionsEl, movieTitle, movieDetailsDescriptions)
 
-
-//const APIKEY = "f569c35640a9131fdf30825f47683372"; //api key
 const APIKEY = config.API_KEY;
 
 async function displayMovieBackdropImg () {
