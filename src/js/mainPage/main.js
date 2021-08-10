@@ -231,7 +231,7 @@ const getRatings = (movie) => {
 const linkMovieDetails = (id) => {
   sessionStorage.setItem("movie id", id); //save id to session storage
 
-  window.open("/dist/info.html", "_blank"); //when click on a movie, link to movies details
+  window.open("/info.html", "_blank"); //when click on a movie, link to movies details
 
   console.log("linked");
 }
