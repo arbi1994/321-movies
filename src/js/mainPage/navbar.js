@@ -39,7 +39,6 @@
   }
 
   const aboutLink = document.querySelector(".about")
-  console.log(aboutLink)
 
   aboutLink.addEventListener("click", () => {
     console.log("OK")

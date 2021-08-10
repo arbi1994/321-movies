@@ -731,7 +731,7 @@ aside {
       position: absolute;
       top: 0px;
       right: 0px;
-      background: url(/public/images/icons/arrow_down.svg) right / 90% no-repeat
+      background: url(/src/images/icons/arrow_down.svg) right / 90% no-repeat
         $background;
       pointer-events: none;
     }
@@ -755,7 +755,6 @@ aside {
 
   @include media("<=phoneL") {
     width: 25em;
-    //padding: 0 0.5em;
     margin-right: 0;
   }
 }
